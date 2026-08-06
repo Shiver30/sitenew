@@ -1,6 +1,6 @@
 <?php
 
-require_once "../Site-Trabalho-3-ano/funcoes/funcoes.php";
+require_once "funcoes/funcoes.php";
 
 // INICIO
 $nome = $_POST['nome'];
@@ -19,6 +19,6 @@ $cidade = $_POST['cidade'];
 
 
 
-$cadastro = cadastrarUsuario($conexao)
+$cadastro = cadastrarUsuario($conexao, )
 
 ?>

@@ -39,5 +39,7 @@ session_start();
 
 
     </form>
+
+    <a href="../index.php"><button>Voltar</button></a>
 </body>
 </html>

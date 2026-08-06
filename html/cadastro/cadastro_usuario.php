@@ -1,3 +1,10 @@
+<?php
+    require_once "../conexao.php";
+
+    $sql = "SELECT * FROM estado ORDER BY estado_nome";
+    $resultado = mysqli_query($conexao, $sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,8 +90,8 @@
         <br><br>
 
         <p>Cidade:</p>
-        <select name="cidade" id="cidade" required>
-            <option value="">Selecione uma cidade</option>
+        <select name="cidade" id="cidade" required> <br>
+            <option value="">Selecione uma cidade</option> 
 
 
             <script>
@@ -104,11 +111,13 @@
             </script>
         </select>
 
-
+         <br> <br>
         <button type="submit">Prosseguir Cadastro</button>
 
 
     </form>
+
+    <br> <a href="../index.php"><button>Voltar</button></a>
 </body>
 
 </html>
