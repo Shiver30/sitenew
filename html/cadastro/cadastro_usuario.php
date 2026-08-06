@@ -95,7 +95,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
 
         <p>Cidade:</p>
 
-        <<select name="cidade" id="cidade">
+        <select name="cidade" id="cidade">
             <option value="">Selecione um Estado</option>
             </select>
 
@@ -119,7 +119,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
 
             cidades.forEach(function(item) {
 
-                if (item.estado_id == idEstado) {
+                if (item.cidade_estado_id == idEstado) {
 
                     cidade.innerHTML +=
                         `<option value="${item.cidade_id}">
