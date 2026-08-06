@@ -1,8 +1,18 @@
 <?php
-    require_once "../conexao.php";
+require_once "../conexao.php";
 
-    $sql = "SELECT * FROM estado ORDER BY estado_nome";
-    $resultado = mysqli_query($conexao, $sql);
+$sqlEstados = "SELECT * FROM estado ORDER BY estado_nome";
+$resultadoEstados = mysqli_query($conexao, $sqlEstados);
+
+
+$sqlCidades = "SELECT * FROM cidade ORDER BY cidade_nome";
+$resultadoCidades = mysqli_query($conexao, $sqlCidades);
+
+$cidades = [];
+
+while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
+    $cidades[] = $cidade;
+}
 ?>
 
 <!DOCTYPE html>
@@ -68,54 +78,60 @@
         <h3>Endereço:</h3>
 
         <p>Estado:</p>
-        <select name="estado" id="estado" required>
-            <option value="">Selecione um estado</option>
+        <select name="estado" id="estado">
+            <option value="">Selecione um Estado</option>
 
-            <script>
-                function listar($conexao) {
-                    $sql = "SELECT * FROM estado ORDER BY estado_nome";
-                    $comando = mysqli_prepare($conexao, $sql);
-                    mysqli_stmt_execute($comando);
-                    $resultado = mysqli_stmt_get_result($comando);
-                    $lista_estados = [];
-                    while ($estado = mysqli_fetch_assoc($resultado)) {
-                        $lista_estados[] = $estado;
-                    }
-                    mysqli_stmt_close($comando);
-                    return $lista_estados;
-                }
-            </script>
+            <?php while ($estado = mysqli_fetch_assoc($resultadoEstados)) { ?>
+
+                <option value="<?= $estado['estado_id']; ?>">
+                    <?= $estado['estado_nome']; ?>
+                </option>
+
+            <?php } ?>
 
         </select>
+
         <br><br>
 
         <p>Cidade:</p>
-        <select name="cidade" id="cidade" required> <br>
-            <option value="">Selecione uma cidade</option> 
 
+        <<select name="cidade" id="cidade">
+            <option value="">Selecione um Estado</option>
+            </select>
 
-            <script>
-                function listarCidades($conexao, $estado_id) {
-                    $sql = "SELECT * FROM cidade WHERE estado_id = ? ORDER BY cidade_nome";
-                    $comando = mysqli_prepare($conexao, $sql);
-                    mysqli_stmt_bind_param($comando, 'i', $estado_id);
-                    mysqli_stmt_execute($comando);
-                    $resultado = mysqli_stmt_get_result($comando);
-                    $lista_cidades = [];
-                    while ($cidade = mysqli_fetch_assoc($resultado)) {
-                        $lista_cidades[] = $cidade;
-                    }
-                    mysqli_stmt_close($comando);
-                    return $lista_cidades;
-                }
-            </script>
-        </select>
-
-         <br> <br>
-        <button type="submit">Prosseguir Cadastro</button>
+            <br> <br>
+            <button type="submit">Prosseguir Cadastro</button>
 
 
     </form>
+
+    <script>
+        const cidades = <?= json_encode($cidades); ?>;
+
+        const estado = document.getElementById("estado");
+        const cidade = document.getElementById("cidade");
+
+        estado.addEventListener("change", function() {
+
+            const idEstado = this.value;
+
+            cidade.innerHTML = '<option value="">Selecione uma cidade</option>';
+
+            cidades.forEach(function(item) {
+
+                if (item.estado_id == idEstado) {
+
+                    cidade.innerHTML +=
+                        `<option value="${item.cidade_id}">
+                    ${item.cidade_nome}
+                </option>`;
+
+                }
+
+            });
+
+        });
+    </script>
 
     <br> <a href="../index.php"><button>Voltar</button></a>
 </body>

@@ -8,7 +8,7 @@
 <body>
     
     <h1>Olá mundo</h1>
-    <a href="cadastro/cadastro_usuario.php">Página Cadastro</a>
+    <a href="cadastro/cadastro_usuario.php">Página Cadastro</a> <br>
     <a href="cadastro/cadastro_servico.php">Página Endereço</a>
 
 </body>
