@@ -1,6 +1,6 @@
 <?php
-
-require_once "funcoes/funcoes.php";
+require_once "../sitenew/html/conexao.php";
+require_once "../sitenew/html/salvar/funcoes/funcoes.php";
 
 // INICIO
 $nome = $_POST['nome'];
@@ -8,7 +8,7 @@ $email = $_POST['email'];
 $senha = $_POST['senha'];
 
 //DADOS PE$SSOAIS
-$data = $_POST['data_nascimento'];
+$idade = $_POST['dataNascimento'];
 $cpf = $_POST['cpf'];
 $sexo = $_POST['sexo'];
 $foto = $_POST['foto'];
@@ -19,6 +19,6 @@ $cidade = $_POST['cidade'];
 
 
 
-$cadastro = cadastrarUsuario($conexao, )
+$cadastro = cadastrarUsuario($conexao)
 
 ?>

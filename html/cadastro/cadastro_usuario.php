@@ -28,7 +28,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
 
     <h1>Cadastro</h1>
 
-    <form action="salvar/s_usuario.php" method="post" onsubmit="return validarSenha()" enctype="multipart/form-data">
+    <form action="../salvar/s_usuario.php" method="post" onsubmit="return validarSenha()" enctype="multipart/form-data">
 
         <p>Nome:</p>
         <input type="text" placeholder="Digite seu nome completo" name="nome" required><br>
@@ -37,10 +37,10 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
         <input type="email" placeholder="Digite seu email" name="email" required><br>
 
         <p>Senha:</p>
-        <input type="text" placeholder="Digite sua senha" id="senha" name="senha" required><br>
+        <input type="password" placeholder="Digite sua senha" id="senha" name="senha" required><br>
 
         <p>Confirme sua senha:</p>
-        <input type="text" placeholder="Confirme sua senha" id="senhaConfirmacao" name="senhaConfirmacao" required><br>
+        <input type="password" placeholder="Confirme sua senha" id="senhaConfirmacao" name="senhaConfirmacao" required><br>
 
         <script>
             function validarSenha() {
@@ -58,7 +58,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
         <h3>Dados Pessoais:</h3>
 
         <p>Data de nascimento:</p>
-        <input type="text" placeholder="Digite sua data de nascimento" name="data_nascimento" required><br>
+        <input type="date" placeholder="Digite sua data de nascimento" name="dataNascimento" required><br>
 
         <p>CPF:</p>
         <input type="text" placeholder="Digite seu CPF" name="cpf" required><br>
