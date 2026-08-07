@@ -51,8 +51,7 @@ CREATE TABLE IF NOT EXISTS `banco`.`avaliacao` (
     FOREIGN KEY (`avaliacao_usuarios_id`)
     REFERENCES `banco`.`usuarios` (`usuarios_id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
@@ -104,9 +103,7 @@ CREATE TABLE IF NOT EXISTS `banco`.`endereco` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
+DEFAULT CHARACTER SET = utf8mb3;
 
 -- -----------------------------------------------------
 -- Table `banco`.`mensagem`
