@@ -87,8 +87,6 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `banco`.`endereco` (
   `endereco-id` INT NOT NULL AUTO_INCREMENT,
-  `endereco_estado` VARCHAR(90) NOT NULL,
-  `endereco_cidade` VARCHAR(250) NOT NULL,
   `endereco_usuarios_id` INT NOT NULL,
   `endereco_cidade_id` INT NOT NULL,
   PRIMARY KEY (`endereco-id`),
