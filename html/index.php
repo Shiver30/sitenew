@@ -30,11 +30,10 @@ if (!isset($_SESSION['id'])) {
         }
         ?>
      </div>
-    
-    <h1>Olá mundo</h1>
+
     <a href="cadastro/cadastro_usuario.php">Página Cadastro</a> <br>
     <a href="cadastro/cadastro_servico.php">Página Endereço</a> <br>
-    <a href="cadastro/cadastro_logui.php">Página de Loguin</a> <br>
+    <a href="cadastro/login.php">Página de Login</a> <br>
 
 
 </body>

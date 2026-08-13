@@ -27,7 +27,7 @@
 
     // Função para cadastrar usuariono banco de dados ( tem que colocar as imagens )
 
-    function cadastrarUsuario($conexao,$nome, $idade, $cpf, $sexo, $email, $senha, $foto) {
+    function cadastrarUsuario($conexao, $nome, $idade, $cpf, $sexo, $email, $senha, $foto) {
         $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_idade, usuarios_cpf, usuarios_sexo, usuarios_email, usuarios_senha, usuarios_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
         $comando = mysqli_prepare($conexao, $sql);
         mysqli_stmt_bind_param($comando, "sssssss", $nome, $idade, $cpf, $sexo, $email, $senha, $img );
@@ -35,9 +35,10 @@
         $usuario_id = mysqli_insert_id($conexao);
         mysqli_stmt_close($comando);
 
-        if {
-            sql = "INSERT INTO "
-        }
+        // if {
+        //     sql = "INSERT INTO " // q tipo de estrutura é essa mano?
+
+        // }
 
 
     }

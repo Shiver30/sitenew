@@ -2,12 +2,13 @@
 require_once "../sitenew/html/conexao.php";
 require_once "../sitenew/html/funcoes/funcoes.php";
 
+
 // INICIO
 $nome = $_POST['nome'];
 $email = $_POST['email'];
 $senha = $_POST['senha'];
 
-//DADOS PE$SSOAIS
+//DADOS PESSOAIS
 $idade = $_POST['dataNascimento'];
 $cpf = $_POST['cpf'];
 $sexo = $_POST['sexo'];
