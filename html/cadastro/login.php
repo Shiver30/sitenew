@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-require_once "funcoes.php";
+require_once "../funcoes/funcoes.php";
 
     if (isset($_POST['enviar'])) {
 
@@ -28,16 +27,16 @@ require_once "funcoes.php";
     <title>Document</title>
 </head>
 <body>
-    <form action="salvar_loguin.php">
+    <form method= "POST">
         <h1>Loguin</h1>
 
         <p>Email:</p> <br>
-        <input type="text" name = "email">
+        <input type="text" name = "email" required >
 
         <p>senha:</p>
-        <input type="password" name = "senha" >
+        <input type="password" name = "senha" required >
 
-        <button type = "submit">Enviar</button>
+        <button type = "submit" name= "enviar">Enviar</button>
     </form>
 </body>
 </html>

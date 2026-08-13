@@ -1,38 +1,43 @@
 <?php
-    session_start();
-    require_once "conexao.php"
+require_once "../conexao.php";
 
-?>
+// Cadastro e Login
+
+//LOGUIN
+function login($conexao, $email, $senha) {
+    $sql = "SELECT * FROM usuarios WHERE usuarios_email = ? AND usuarios_senha = ?";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("ss", $email, $senha);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    
+    if ($resultado->num_rows > 0) {
+        $usuario = $resultado->fetch_assoc();
+        
+        $_SESSION['usuario'] = $usuario['nome'];
+        $_SESSION['id'] = $usuario['id'];
+        
+        return true;
+    }
+        
+    return false;
+}
+// CADASTRO
+    function cadastrarUsuario($conexao, $nome, $idade, $cpf, $sexo, $email, $senha, $foto) {
+        $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_idade, usuarios_cpf, usuarios_sexo, usuarios_email, usuarios_senha, usuarios_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
+        $comando = mysqli_prepare($conexao, $sql);
+        mysqli_stmt_bind_param($comando, "sssssss", $nome, $idade, $cpf, $sexo, $email, $senha, $foto );
+        mysqli_stmt_execute($comando);
+        mysqli_stmt_close($comando);
 
 
+    }
 
-<?php
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// cadastro e loguin
-        // loguin
+// Funcões da Pagina
 
-        login($conexao, $email, $senha){
-           $sql = "SELECT * FROM usuarios where usuarios_email = ? and usuarios_senha = ?";
-           $stmt = $conexao->prepare($sql);
-           $stmt->bind_param("ss", $cpf, $senha);
-           $stmt->execute();
-           $resultado = $stmt->get_result();
-           //OBJETO->ATRIBUTO/AÇÃO QUE ESSE OBJETO FAZ
-           
-           if ($resultado->num_rows > 0){
-               $usuario = $resultado->fetch_assoc();
-
-               $_SESSION['usuario'] = $usuario['nome'];
-               $_SESSION['id'] = $usuario['id'];
-               $_SESSION['tipo'] = $usuario['tipo'];
-
-               return true;
-           }
-
-           return false;
-       }
-
-    // Função para pesquisar 
+//     Função para pesquisar 
 
     function pesquisar($conexao, $termo){
         $sql = "SELECT FROM usuarios WHERE usuarios_nome LIKE ? ";
@@ -49,22 +54,6 @@
         return $usuarios;
     }
 
-    // Função para cadastrar usuariono banco de dados ( tem que colocar as imagens )
-
-    function cadastrarUsuario($conexao, $nome, $idade, $cpf, $sexo, $email, $senha, $foto) {
-        $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_idade, usuarios_cpf, usuarios_sexo, usuarios_email, usuarios_senha, usuarios_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
-        $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_bind_param($comando, "sssssss", $nome, $idade, $cpf, $sexo, $email, $senha, $foto );
-        mysqli_stmt_execute($comando);
-        mysqli_stmt_close($comando);
-
-        // if {
-        //     sql = "INSERT INTO " // q tipo de estrutura é essa mano?
-
-        // }
-
-
-    }
     // Função para listar os estados e cidades do banco de dados
 
     function listarEstados($conexao) {
