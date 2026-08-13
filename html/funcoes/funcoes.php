@@ -6,7 +6,7 @@
 
 
 
-<script>
+<?php
 
     // Função para pesquisar 
 
@@ -72,4 +72,4 @@
     }
 
 
-</script>
+?>
