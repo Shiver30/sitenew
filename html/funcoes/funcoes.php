@@ -13,7 +13,6 @@
 
         login($conexao, $email, $senha){
            $sql = "SELECT * FROM usuarios where usuarios_email = ? and usuarios_senha = ?";
-
            $stmt = $conexao->prepare($sql);
            $stmt->bind_param("ss", $cpf, $senha);
            $stmt->execute();
