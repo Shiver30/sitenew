@@ -8,6 +8,31 @@
 
 <?php
 
+// cadastro e loguin
+        // loguin
+
+        login($conexao, $email, $senha){
+           $sql = "SELECT * FROM usuarios where usuarios_email = ? and usuarios_senha = ?";
+
+           $stmt = $conexao->prepare($sql);
+           $stmt->bind_param("ss", $cpf, $senha);
+           $stmt->execute();
+           $resultado = $stmt->get_result();
+           //OBJETO->ATRIBUTO/AÇÃO QUE ESSE OBJETO FAZ
+           
+           if ($resultado->num_rows > 0){
+               $usuario = $resultado->fetch_assoc();
+
+               $_SESSION['usuario'] = $usuario['nome'];
+               $_SESSION['id'] = $usuario['id'];
+               $_SESSION['tipo'] = $usuario['tipo'];
+
+               return true;
+           }
+
+           return false;
+       }
+
     // Função para pesquisar 
 
     function pesquisar($conexao, $termo){
@@ -30,9 +55,8 @@
     function cadastrarUsuario($conexao, $nome, $idade, $cpf, $sexo, $email, $senha, $foto) {
         $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_idade, usuarios_cpf, usuarios_sexo, usuarios_email, usuarios_senha, usuarios_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
         $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_bind_param($comando, "sssssss", $nome, $idade, $cpf, $sexo, $email, $senha, $img );
+        mysqli_stmt_bind_param($comando, "sssssss", $nome, $idade, $cpf, $sexo, $email, $senha, $foto );
         mysqli_stmt_execute($comando);
-        $usuario_id = mysqli_insert_id($conexao);
         mysqli_stmt_close($comando);
 
         // if {

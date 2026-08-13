@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+require_once "funcoes.php";
+
+    if (isset($_POST['enviar'])) {
+
+        $email = $_POST['email'] ?? '';
+        $senha = $_POST['senha'] ?? '';
+
+        $sucesso = login($conexao, $email, $senha);
+
+        if ($sucesso) {
+            header("Location: ../index.php");
+            exit;
+        } else {
+            echo "Erro no login.";
+        }
+        
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
