@@ -37,7 +37,7 @@
 
     function pesquisar($conexao, $termo){
         $sql = "SELECT FROM usuarios WHERE usuarios_nome LIKE ? ";
-        $comando = mysql_prepare($conexao, $sql);
+        $comando = mysqli_prepare($conexao, $sql);
         $termo = "%termo%";
         mysqli_stmt_bind_param($comando, "s", $termo);
         mysqli_stmt_execute($comando);
