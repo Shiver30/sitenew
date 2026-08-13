@@ -1,5 +1,10 @@
 <?php
+<<<<<<< Updated upstream
 require_once "../conexao.php";
+=======
+    session_start();
+    require_once "../sitenew/html/conexao.php"
+>>>>>>> Stashed changes
 
 // Cadastro e Login
 
@@ -37,23 +42,71 @@ function login($conexao, $email, $senha) {
 
 // Funcões da Pagina
 
+<<<<<<< Updated upstream
 //     Função para pesquisar 
+=======
+        function login($conexao, $email, $senha){
+           $sql = "SELECT * FROM usuarios where usuarios_email = ? and usuarios_senha = ?";
+
+           $stmt = $conexao->prepare($sql);
+           $stmt->bind_param("ss", $email, $senha);
+           $stmt->execute();
+           $resultado = $stmt->get_result();
+           //OBJETO->ATRIBUTO/AÇÃO QUE ESSE OBJETO FAZ
+           
+           if ($resultado->num_rows > 0){
+               $usuario = $resultado->fetch_assoc();
+
+               $_SESSION['usuario'] = $usuario['nome'];
+               $_SESSION['id'] = $usuario['id'];
+               $_SESSION['tipo'] = $usuario['tipo'];
+
+               return true;
+           }
+
+           return false;
+       }
+
+    // Função para pesquisar 
+>>>>>>> Stashed changes
 
     function pesquisar($conexao, $termo){
-        $sql = "SELECT FROM usuarios WHERE usuarios_nome LIKE ? ";
+        $sql = "SELECT * FROM usuarios WHERE usuarios_nome LIKE ? ";
         $comando = mysqli_prepare($conexao, $sql);
-        $termo = "%termo%";
+        $termo = "%".$termo."%";
         mysqli_stmt_bind_param($comando, "s", $termo);
         mysqli_stmt_execute($comando);
         $resultado = mysqli_stmt_get_result($comando);
         $usuarios = [];
-        while ($usuarios = mysqli_fetch_assoc($resultado)) {
-            $usuarios = $usuarios_dados;
+        while ($usuario = mysqli_fetch_assoc($resultado)) {
+            $usuarios[] = $usuario;
         }
         mysqli_stmt_close($comando);
         return $usuarios;
     }
 
+<<<<<<< Updated upstream
+=======
+    // Função para cadastrar usuariono banco de dados ( tem que colocar as imagens )
+
+    function cadastrarUsuario($conexao, $nome, $idade, $cpf, $sexo, $email, $senha, $foto) {
+        $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_idade, usuarios_cpf, usuarios_sexo, usuarios_email, usuarios_senha, usuarios_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
+        // $comando = mysqli_prepare($conexao, $sql);
+        // mysqli_stmt_bind_param($comando, "sssssss", $nome, $idade, $cpf, $sexo, $email, $senha, $foto );
+        // mysqli_stmt_execute($comando);
+        // mysqli_stmt_close($comando);
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("sssssss", $nome, $idade, $cpf, $sexo, $email, $senha, $foto );
+        return $stmt->execute();
+        // if {
+        //     sql = "INSERT INTO " // q tipo de estrutura é essa mano?
+
+        // }
+
+
+
+    }
+>>>>>>> Stashed changes
     // Função para listar os estados e cidades do banco de dados
 
     function listarEstados($conexao) {
@@ -63,7 +116,7 @@ function login($conexao, $email, $senha) {
     $resultado = mysqli_stmt_get_result($comando);
     $lista_estados = [];
     while ($estado = mysqli_fetch_assoc($resultado)) {
-        $lista_estados = $estado_dados;
+    $lista_estados[] = $estado;
     }
     mysqli_stmt_close($comando);
     return $lista_estados;
@@ -76,8 +129,9 @@ function login($conexao, $email, $senha) {
     mysqli_stmt_execute($comando);
     $resultado = mysqli_stmt_get_result($comando);
     $lista_cidades = [];
+    $lista_cidades = [];
     while ($cidade = mysqli_fetch_assoc($resultado)) {
-        $lista_cidades = $cidade_dados;
+    $lista_cidades[] = $cidade;
     }
     mysqli_stmt_close($comando);
     return $lista_cidades;

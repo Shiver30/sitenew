@@ -1,5 +1,6 @@
 <?php
-require_once "../conexao.php";
+require_once "../sitenew/html/conexao.php";
+require_once "../sitenew/html/funcoes/funcoes.php";
 
 $sqlEstados = "SELECT * FROM estado ORDER BY estado_nome";
 $resultadoEstados = mysqli_query($conexao, $sqlEstados);
@@ -21,14 +22,14 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cadastro Usuário</title>
 </head>
 
 <body>
 
     <h1>Cadastro</h1>
 
-    <form action="../salvar/s_usuario.php" method="post" onsubmit="return validarSenha()" enctype="multipart/form-data">
+    <form action="" method="post" onsubmit="return validarSenha()" enctype="multipart/form-data">
 
         <p>Nome:</p>
         <input type="text" placeholder="Digite seu nome completo" name="nome" required><br>
