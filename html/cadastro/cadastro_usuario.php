@@ -1,6 +1,6 @@
 <?php
-require_once "../sitenew/html/conexao.php";
-require_once "../sitenew/html/funcoes/funcoes.php";
+require_once "../conexao.php";
+require_once "../funcoes/funcoes.php";
 
 $sqlEstados = "SELECT * FROM estado ORDER BY estado_nome";
 $resultadoEstados = mysqli_query($conexao, $sqlEstados);
@@ -14,7 +14,52 @@ $cidades = [];
 while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
     $cidades[] = $cidade;
 }
+
+ if(isset($_POST['enviar'])){
+    $nome = $_POST['nome']?? '';
+    $email = $_POST['email']?? '';
+    $senha = $_POST['senha']?? '';
+
+    //Dados do Usuario
+    $data = $_POST['data']?? '';
+    $cpf = $_POST['cpf']?? '';
+    $sexo = $_POST['sexo']?? '';
+    $foto = $_FILES['foto']?? '';
+
+    //Endereço
+    $estado = $_POST['estado'];
+    $cidade = $_POST['cidade']
+
+    ($foto && $foto['error'] === UPLOAD_ERR_OK){
+
+        $upload = uploadCapa($foto);
+
+        if ($upload){
+
+            $foto_user = $caminho
+
+            $salvar = cadastraUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user);
+
+            if ($salvar){
+                
+            }else {
+                $mensagem = "<p style='color: red;'>Erro ao salvar no banco de dados.</p>";
+            }
+
+
+        }else {
+            $mensagem = "<p style='color: red;'>Erro ao fazer upload da imagem (formato inválido ou maior que 2MB).</p>";
+        }
+
+
+    }else {
+        $mensagem = "<p style='color: red;'>Por favor, selecione uma foto de perfil válida.</p>";
+    }
+
+ }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +104,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
         <h3>Dados Pessoais:</h3>
 
         <p>Data de nascimento:</p>
-        <input type="date" placeholder="Digite sua data de nascimento" name="dataNascimento" required><br>
+        <input type="date" placeholder="Digite sua data de nascimento" name="data" required><br>
 
         <p>CPF:</p>
         <input type="text" placeholder="Digite seu CPF" name="cpf" required><br>
@@ -134,7 +179,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
         });
     </script>
 
-    <br> <a href="../index.php"><button>Voltar</button></a>
+    <br> <a href="../index.php" name= "enviar"><button>Voltar</button></a>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once "../sitenew/html/conexao.php";
+    require_once "../conexao.php";
 
 // Cadastro e Login
 
@@ -24,15 +24,51 @@ function login($conexao, $email, $senha) {
     return false;
 }
 // CADASTRO
-    function cadastrarUsuario($conexao, $nome, $idade, $cpf, $sexo, $email, $senha, $foto) {
-        $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_idade, usuarios_cpf, usuarios_sexo, usuarios_email, usuarios_senha, usuarios_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
+    function cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user) {
+
+        $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_email, usuarios_senha, usuarios_idade, usuarios_cpf, usuarios_sexo, usuarios_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
         $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_bind_param($comando, "sssssss", $nome, $idade, $cpf, $sexo, $email, $senha, $foto );
-        mysqli_stmt_execute($comando);
+        mysqli_stmt_bind_param($comando, "sssssss", $nome, $email, $senha
+        , $data, $cpf, $sexo, $foto_user);
+
+        if (mysqli_stmt_execute($comando)) {
+        $idCriado = mysqli_stmt_insert_id($comando); // Pega o ID da sessão atual
         mysqli_stmt_close($comando);
+        return $idCriado; // Retorna o ID do usuário inserido
+        }
+        mysqli_stmt_close($comando);
+        return false;
 
 
     }
+
+// UPLOAD FOTO 
+
+    function uploadCapa ($foto){
+        $diretorio = 'uploads/capas/';
+        $extensao = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
+        $permitidas = ['jpg', 'jpeg', 'png'];
+
+        if(!in_array($extensao, $permitidas)){ 
+            return false;
+        }
+
+        if($foto['size']> 1024 * 1024 * 2){ // permite até 2MB
+            return false;
+        }
+
+        $nomeArquivo = uniqid() . "_" . $foto['name'];
+        $caminho = $diretorio . $nomeArquivo; // uploads/capas/13516516has5_arvore.png
+        
+        if (move_uploaded_file($foto['tmp_name'], $caminho)){
+            return $caminho;
+        }
+
+        return false;
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Funcões da Pagina
 
     // Função para pesquisar
