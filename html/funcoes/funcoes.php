@@ -1,4 +1,4 @@
-<?php
+    <?php
 // require_once "../conexao.php";
 
 // Cadastro e Login
@@ -37,8 +37,7 @@ function logout()
     session_destroy();
 }
 
-
-
+ 
 // CADASTRO
 function cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user)
 {
@@ -75,7 +74,7 @@ function cadastroEndereco($conexao,$salvar , $cidade) {
 
 function uploadCapa($foto)
 {
-    $diretorio = 'uploads/capas/';
+    $diretorio = '../.../fotos/';
     $extensao = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
     $permitidas = ['jpg', 'jpeg', 'png'];
 
