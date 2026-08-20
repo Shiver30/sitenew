@@ -1,109 +1,146 @@
 <?php
-    session_start();
-    require_once "../conexao.php";
+require_once "../conexao.php";
 
 // Cadastro e Login
 
 //LOGUIN
-function login($conexao, $email, $senha) {
+// function login($conexao, $email, $senha)
+// {
+//     $sql = "SELECT * FROM usuarios WHERE usuarios_email = ? AND usuarios_senha = ?";
+//     $stmt = $conexao->prepare($sql);
+//     $stmt->bind_param("ss", $email, $senha);
+//     $stmt->execute();
+//     $resultado = $stmt->get_result();
+
+//     if ($resultado->num_rows > 0) {
+//         $usuario = $resultado->fetch_assoc();
+
+//         $_SESSION['usuario'] = $usuario['usuarios_nome'];
+//         $_SESSION['id'] = $usuario['usuarios_id'];
+
+//         return true;
+//     }
+
+//     return false;
+// }
+
+function login($conexao, $email, $senha)
+{
     $sql = "SELECT * FROM usuarios WHERE usuarios_email = ? AND usuarios_senha = ?";
     $stmt = $conexao->prepare($sql);
+    
+    if (!$stmt) {
+        return false;
+    }
     $stmt->bind_param("ss", $email, $senha);
     $stmt->execute();
     $resultado = $stmt->get_result();
-    
+
     if ($resultado->num_rows > 0) {
         $usuario = $resultado->fetch_assoc();
-        
-        $_SESSION['usuario'] = $usuario['nome'];
-        $_SESSION['id'] = $usuario['id'];
+
+        $_SESSION['usuario'] = $usuario['usuarios_nome'];
+        $_SESSION['id'] = $usuario['usuarios_id'];
+        $stmt->close();
         
         return true;
     }
-        
+    $stmt->close();
+
     return false;
 }
+
+
+
+
 // CADASTRO
-    function cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user) {
+function cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user)
+{
 
-        $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_email, usuarios_senha, usuarios_idade, usuarios_cpf, usuarios_sexo, usuarios_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
-        $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_bind_param($comando, "sssssss", $nome, $email, $senha
-        , $data, $cpf, $sexo, $foto_user);
+    $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_email, usuarios_senha, usuarios_idade, usuarios_cpf, usuarios_sexo, usuario_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "sssssss", $nome, $email, $senha, $data, $cpf, $sexo, $foto_user
+    );
 
-        if (mysqli_stmt_execute($comando)) {
+    if (mysqli_stmt_execute($comando)) {
         $idCriado = mysqli_stmt_insert_id($comando); // Pega o ID da sessão atual
         mysqli_stmt_close($comando);
         return $idCriado; // Retorna o ID do usuário inserido
-        }
-        mysqli_stmt_close($comando);
-        return false;
-
-
     }
+    mysqli_stmt_close($comando);
+    return false;
+}
+
+// Cadastro edereço
+
+function cadastroEndereco($conexao,) {}
 
 // UPLOAD FOTO 
 
-    function uploadCapa ($foto){
-        $diretorio = 'uploads/capas/';
-        $extensao = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
-        $permitidas = ['jpg', 'jpeg', 'png'];
+function uploadCapa($foto)
+{
+    $diretorio = 'uploads/capas/';
+    $extensao = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
+    $permitidas = ['jpg', 'jpeg', 'png'];
 
-        if(!in_array($extensao, $permitidas)){ 
-            return false;
-        }
-
-        if($foto['size']> 1024 * 1024 * 2){ // permite até 2MB
-            return false;
-        }
-
-        $nomeArquivo = uniqid() . "_" . $foto['name'];
-        $caminho = $diretorio . $nomeArquivo; // uploads/capas/13516516has5_arvore.png
-        
-        if (move_uploaded_file($foto['tmp_name'], $caminho)){
-            return $caminho;
-        }
-
+    if (!in_array($extensao, $permitidas)) {
         return false;
     }
+
+    if ($foto['size'] > 1024 * 1024 * 2) { // permite até 2MB
+        return false;
+    }
+
+    $nomeArquivo = uniqid() . "_" . $foto['name'];
+    $caminho = $diretorio . $nomeArquivo; // uploads/capas/13516516has5_arvore.png
+
+    if (move_uploaded_file($foto['tmp_name'], $caminho)) {
+        return $caminho;
+    }
+
+    return false;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Funcões da Pagina
 
-    // Função para pesquisar
+// Função para pesquisar
 
-    function pesquisar($conexao, $termo){
-        $sql = "SELECT * FROM usuarios WHERE usuarios_nome LIKE ? ";
-        $comando = mysqli_prepare($conexao, $sql);
-        $termo = "%".$termo."%";
-        mysqli_stmt_bind_param($comando, "s", $termo);
-        mysqli_stmt_execute($comando);
-        $resultado = mysqli_stmt_get_result($comando);
-        $usuarios = [];
-        while ($usuario = mysqli_fetch_assoc($resultado)) {
-            $usuarios[] = $usuario;
-        }
-        mysqli_stmt_close($comando);
-        return $usuarios;
+function pesquisar($conexao, $termo)
+{
+    $sql = "SELECT * FROM usuarios WHERE usuarios_nome LIKE ? ";
+    $comando = mysqli_prepare($conexao, $sql);
+    $termo = "%" . $termo . "%";
+    mysqli_stmt_bind_param($comando, "s", $termo);
+    mysqli_stmt_execute($comando);
+    $resultado = mysqli_stmt_get_result($comando);
+    $usuarios = [];
+    while ($usuario = mysqli_fetch_assoc($resultado)) {
+        $usuarios[] = $usuario;
     }
-    
-    // Função para listar os estados e cidades do banco de dados
+    mysqli_stmt_close($comando);
+    return $usuarios;
+}
 
-    function listarEstados($conexao) {
+// Função para listar os estados e cidades do banco de dados
+
+function listarEstados($conexao)
+{
     $sql = "SELECT * FROM estado ORDER BY estado_nome";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_execute($comando);
     $resultado = mysqli_stmt_get_result($comando);
     $lista_estados = [];
     while ($estado = mysqli_fetch_assoc($resultado)) {
-    $lista_estados[] = $estado;
+        $lista_estados[] = $estado;
     }
     mysqli_stmt_close($comando);
     return $lista_estados;
-    }
+}
 
-    function listarCidades($conexao, $estado_id) {
+function listarCidades($conexao, $estado_id)
+{
     $sql = "SELECT * FROM cidade WHERE estado_id = ? ORDER BY cidade_nome";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $estado_id);
@@ -112,11 +149,8 @@ function login($conexao, $email, $senha) {
     $lista_cidades = [];
     $lista_cidades = [];
     while ($cidade = mysqli_fetch_assoc($resultado)) {
-    $lista_cidades[] = $cidade;
+        $lista_cidades[] = $cidade;
     }
     mysqli_stmt_close($comando);
     return $lista_cidades;
-    }
-
-
-?>
+}

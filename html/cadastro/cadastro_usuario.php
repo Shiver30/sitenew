@@ -15,7 +15,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
     $cidades[] = $cidade;
 }
 
- if(isset($_POST['enviar'])){
+if(isset($_POST['enviar'])){
     $nome = $_POST['nome']?? '';
     $email = $_POST['email']?? '';
     $senha = $_POST['senha']?? '';
@@ -28,28 +28,33 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
 
     //Endereço
     $estado = $_POST['estado'];
-    $cidade = $_POST['cidade']
+    $cidade = $_POST['cidade'];
 
-    ($foto && $foto['error'] === UPLOAD_ERR_OK){
+    if ($foto && $foto['error'] === UPLOAD_ERR_OK){
 
         $upload = uploadCapa($foto);
 
         if ($upload){
 
-            $foto_user = $caminho
+            $foto_user = $upload;
 
-            $salvar = cadastraUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user);
+            $salvar = cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $upload);
 
             if ($salvar){
+
+                // $salvar está com o valor do id do usuario
+
+                $fim = cadastroEndereco($conexao, $salidade);
+
                 
+                }else {
+                    $mensagem = "<p style='color: red;'>Erro ao salvar no banco de dados.</p>";
+                }
+
+
             }else {
-                $mensagem = "<p style='color: red;'>Erro ao salvar no banco de dados.</p>";
+                $mensagem = "<p style='color: red;'>Erro ao fazer upload da imagem (formato inválido ou maior que 2MB).</p>";
             }
-
-
-        }else {
-            $mensagem = "<p style='color: red;'>Erro ao fazer upload da imagem (formato inválido ou maior que 2MB).</p>";
-        }
 
 
     }else {
@@ -71,6 +76,8 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
 </head>
 
 <body>
+
+    <a href="../index.php">Voltar</a>
 
     <h1>Cadastro</h1>
 
@@ -142,7 +149,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
         <p>Cidade:</p>
 
         <select name="cidade" id="cidade">
-            <option value="">Selecione um Estado</option>
+            <option value="">Selecione uma Cidade</option>
             </select>
 
             <br> <br>
@@ -179,7 +186,7 @@ while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
         });
     </script>
 
-    <br> <a href="../index.php" name= "enviar"><button>Voltar</button></a>
+    <br> <a href="../index.php"><button>Voltar</button></a>
 </body>
 
 </html>

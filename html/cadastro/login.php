@@ -28,7 +28,7 @@ require_once "../funcoes/funcoes.php";
 </head>
 <body>
     <form method= "POST">
-        <h1>Loguin</h1>
+        <h1>Login</h1>
 
         <p>Email:</p> <br>
         <input type="text" name = "email" required >
