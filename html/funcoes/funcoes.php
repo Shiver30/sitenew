@@ -1,28 +1,7 @@
 <?php
-require_once "../conexao.php";
+// require_once "../conexao.php";
 
 // Cadastro e Login
-
-//LOGUIN
-// function login($conexao, $email, $senha)
-// {
-//     $sql = "SELECT * FROM usuarios WHERE usuarios_email = ? AND usuarios_senha = ?";
-//     $stmt = $conexao->prepare($sql);
-//     $stmt->bind_param("ss", $email, $senha);
-//     $stmt->execute();
-//     $resultado = $stmt->get_result();
-
-//     if ($resultado->num_rows > 0) {
-//         $usuario = $resultado->fetch_assoc();
-
-//         $_SESSION['usuario'] = $usuario['usuarios_nome'];
-//         $_SESSION['id'] = $usuario['usuarios_id'];
-
-//         return true;
-//     }
-
-//     return false;
-// }
 
 function login($conexao, $email, $senha)
 {
@@ -50,6 +29,13 @@ function login($conexao, $email, $senha)
     return false;
 }
 
+// Logout
+
+function logout()
+{
+    session_unset();
+    session_destroy();
+}
 
 
 
@@ -73,7 +59,17 @@ function cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $
 
 // Cadastro edereço
 
-function cadastroEndereco($conexao,) {}
+function cadastroEndereco($conexao,$salvar , $cidade) {
+
+    $sql = "INSERT INTO endereco (endereco_usuarios_id, endereco_cidade_id) VALUES (?, ?,)";
+
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "ii", $salvar, $cidade);
+    mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    return true;
+
+}
 
 // UPLOAD FOTO 
 

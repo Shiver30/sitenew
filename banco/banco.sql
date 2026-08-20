@@ -5758,6 +5758,11 @@ INSERT INTO cidade (cidade_codigo, cidade_nome, cidade_estado_id) values
 ('5222302','Vila Propício', 9),
 ('5300108','Brasília', 7);
 
+INSERT INTO usuarios
+(usuarios_nome, usuarios_email, usuarios_senha, usuarios_idade, usuarios_cpf, usuarios_sexo, usuario_img)
+VALUES ('Usuario Teste', 'teste@email.com', '123456', '2000-05-15', '12345678900', 'm', 'teste.jpg');
+
+
 DROP TABLE IF EXISTS `banco`.`view1`;
 USE `banco`;
 

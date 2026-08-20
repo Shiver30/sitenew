@@ -14,10 +14,10 @@ $cidades = [];
 while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
     $cidades[] = $cidade;
 }
-
+ 
 if(isset($_POST['enviar'])){
-    $nome = $_POST['nome']?? '';
-    $email = $_POST['email']?? '';
+    $nome = $_POST['nome']?? '';    
+    $email = $_POST['email']?? ''; 
     $senha = $_POST['senha']?? '';
 
     //Dados do Usuario
@@ -42,19 +42,19 @@ if(isset($_POST['enviar'])){
 
             if ($salvar){
 
-                // $salvar está com o valor do id do usuario
+                // $salvar está com o valor do id do usuario;
 
-                $fim = cadastroEndereco($conexao, $salidade);
+                $fim = cadastroEndereco($conexao, $salvar, $cidade); 
 
                 
-                }else {
-                    $mensagem = "<p style='color: red;'>Erro ao salvar no banco de dados.</p>";
-                }
-
-
             }else {
-                $mensagem = "<p style='color: red;'>Erro ao fazer upload da imagem (formato inválido ou maior que 2MB).</p>";
+                $mensagem = "<p style='color: red;'>Erro ao salvar no banco de dados.</p>";
             }
+
+
+        }else {
+            $mensagem = "<p style='color: red;'>Erro ao fazer upload da imagem (formato inválido ou maior que 2MB).</p>";
+        }
 
 
     }else {
