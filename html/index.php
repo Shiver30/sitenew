@@ -260,12 +260,12 @@ if (isset($_GET['logout'])) {
         <section class="cards">
 
             <div class="card">
-                <h3>👤 Usuários</h3>
+               <button> <h3>👤 Usuários</h3> </button>
                 <p>Área destinada ao gerenciamento dos usuários cadastrados.</p>
             </div>
 
             <div class="card">
-                <h3>📋 Cadastro</h3>
+               <a href="cadastro/cadastro_servico.php"> <h3>📋 Cadastro</h3> </a>
                 <p>Crie sua conta para ter acesso aos recursos do sistema.</p>
             </div>
 
