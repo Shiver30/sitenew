@@ -34,7 +34,7 @@ if (isset($_POST['enviar'])) {
 
         $upload = uploadCapa($foto);
 
-        if ($upload) {
+        if (isset($upload)){
 
             $foto_user = $upload;
 
@@ -49,7 +49,8 @@ if (isset($_POST['enviar'])) {
                 $upload
             );
 
-            if ($salvar) {
+            if (isset($salvar)){
+
 
                 // $salvar contém o ID do usuário
                 $fim = cadastroEndereco(
@@ -64,6 +65,16 @@ if (isset($_POST['enviar'])) {
                     Erro ao salvar no banco de dados.
                 </p>";
 
+                if (isset($fim)){
+                    header ("Location: ../index.php");
+                }else{
+                    echo"<p style='color: red;'>Erro ao salvar o endereço.</p>";
+                    exit();
+                }
+
+                
+            }else {
+                $mensagem = "<p style='color: red;'>Erro ao salvar no banco de dados.</p>";
             }
 
         } else {
@@ -422,6 +433,8 @@ if (isset($_POST['enviar'])) {
 
     <header>
 
+    <form action="" method="post" onsubmit="return validarSenha()" enctype="multipart/form-data">
+
         <div class="logo">
             Cadastro de Usuário
         </div>
@@ -776,11 +789,60 @@ if (isset($_POST['enviar'])) {
 
     </footer>
 
-
-
     <!-- =========================
          JAVASCRIPT
     ========================= -->
+        <h3>Dados Pessoais:</h3>
+
+        <p>Data de nascimento:</p>
+        <input type="date" placeholder="Digite sua data de nascimento" name="data" required><br>
+
+        <p>CPF:</p>
+        <input type="text" placeholder="Digite seu CPF" name="cpf" required><br>
+
+        <p>Sexo:</p>
+        <select name="sexo" id="sexo" required>
+            <option value="m">Masculino</option>
+            <option value="f">Feminino</option>
+            <option value="o">Outro</option>
+        </select>
+        <br><br>
+
+        <p>foto de perfil:</p>
+        <input type="file" name="foto" id="foto" accept="image/*">
+        <br><br>
+
+        <h3>Endereço:</h3>
+
+        <p>Estado:</p>
+        <select name="estado" id="estado">
+            <option value="">Selecione um Estado</option>
+
+            <?php while ($estado = mysqli_fetch_assoc($resultadoEstados)) { ?>
+
+                <option value="<?= $estado['estado_id']; ?>">
+                    <?= $estado['estado_nome']; ?>
+                </option>
+
+            <?php } ?>
+
+        </select>
+
+        <br><br>
+
+        <p>Cidade:</p>
+
+        <select name="cidade" id="cidade">
+            <option value="">Selecione uma Cidade</option>
+            </select>
+
+            <br> <br>
+
+        <button type="submit" name="enviar">Cadastrar</button>;
+        
+    </form>
+
+
 
     <script>
 
@@ -852,8 +914,6 @@ if (isset($_POST['enviar'])) {
         });
 
     </script>
-
-
 </body>
 
 </html>
