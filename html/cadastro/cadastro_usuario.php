@@ -73,10 +73,7 @@ if (isset($_POST['enviar'])) {
                 }
 
                 
-            }else {
-                $mensagem = "<p style='color: red;'>Erro ao salvar no banco de dados.</p>";
             }
-
         } else {
 
             $mensagem = "<p class='mensagem erro'>

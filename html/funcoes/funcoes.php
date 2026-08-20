@@ -74,7 +74,7 @@ function cadastroEndereco($conexao,$salvar , $cidade) {
 
 function uploadCapa($foto)
 {
-    $diretorio = '../.../fotos/';
+    $diretorio = '../fotos/';
     $extensao = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
     $permitidas = ['jpg', 'jpeg', 'png'];
 
