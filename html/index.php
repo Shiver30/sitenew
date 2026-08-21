@@ -246,7 +246,7 @@ if (isset($_GET['logout'])) {
                 <h1>Seja bem-vindo,<?= htmlspecialchars($_SESSION['usuario']) ?>!</h1>
                 <p>É bom ter você de volta.Você está conectado ao sistema.</p>
             <?php else: ?>
-                <h1>Bem-vindo ao nosso site!</h1>
+                <h1>Bem-vindo ao WorkMatch!</h1>
                 <p>Você está acessando como visitante.Faça login ou crie uma conta para acessartodos os recursos disponíveis.</p>
             <?php endif; ?>
 
