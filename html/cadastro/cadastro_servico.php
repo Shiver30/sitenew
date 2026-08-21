@@ -1,6 +1,29 @@
 <?php
 session_start();
 
+require_once "../conexao.php";
+require_once "../funcoes/funcoes.php";
+
+
+if (isset($_POST['cadastro'])) {
+
+    $id = $_SESSION['id'] ?? null;
+    $nomeServico = $_POST['nome_servico'];
+    $tipoServico = $_POST['tipoServico'];
+    $descricaoServico = $_POST['descricao_servico'];
+
+    $salvar = cadastroServico($conexao, $id, $nomeServico, $tipoServico, $descricaoServico);
+
+        if (isset($salvar)) {
+              header("Location: ../index.php");
+        } else {
+            echo "<script>alert('Erro ao cadastrar serviço.');</script>";
+        }
+
+    exit;
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -222,7 +245,7 @@ session_start();
 
             <h1>Cadastro de Serviço</h1>
 
-            <form action="funcoes/funcoes.php" method="post">
+            <form action="" method="post">
 
                 <!-- NOME DO SERVIÇO -->
                 <div class="campo">
@@ -315,7 +338,8 @@ session_start();
 
                     <button
                         type="submit"
-                        class="btn btn-cadastrar">
+                        class="btn btn-cadastrar"
+                        name = "cadastro">
                         Cadastrar Serviço
                     </button>
 

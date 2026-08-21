@@ -94,6 +94,19 @@ function uploadCapa($foto)
     return false;
 }
 
+function cadastroServico($conexao, $id, $nomeServico, $tipoServico, $descricaoServico)
+{
+    $sql = "INSERT INTO servico (servico_id, servico_nome, servico_descricao, servico_classe) VALUES (?, ?, ?, ?)";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "isss", $id, $nomeServico, $descricaoServico, $tipoServico); 
+    if (mysqli_stmt_execute($comando)) {
+        mysqli_stmt_close($comando);
+        return true;
+    }
+    mysqli_stmt_close($comando);
+    return false;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Funcões da Pagina
