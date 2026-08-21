@@ -260,7 +260,7 @@ if (isset($_GET['logout'])) {
         <section class="cards">
 
             <div class="card">
-               <button> <h3>👤 Usuários</h3> </button>
+                <h3>👤 Usuários</h3>
                 <p>Área destinada ao gerenciamento dos usuários cadastrados.</p>
             </div>
 

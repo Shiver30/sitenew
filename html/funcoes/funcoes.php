@@ -1,5 +1,6 @@
-    <?php
-// require_once "../conexao.php";
+<?php
+
+require_once "../conexao.php";
 
 // Cadastro e Login
 
@@ -37,15 +38,12 @@ function logout()
     session_destroy();
 }
 
- 
 // CADASTRO
 function cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user)
 {
-
-    $sql = "INSERT INTO usuarios ( usuarios_nome, usuarios_email, usuarios_senha, usuarios_idade, usuarios_cpf, usuarios_sexo, usuario_img ) VALUES (?, ?, ?, ?, ?, ?, ? )";
+    $sql = "INSERT INTO usuarios (usuarios_nome, usuarios_email, usuarios_senha, usuarios_idade, usuarios_cpf, usuarios_sexo, usuario_img) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "sssssss", $nome, $email, $senha, $data, $cpf, $sexo, $foto_user
-    );
+    mysqli_stmt_bind_param($comando, "sssssss", $nome, $email, $senha, $data, $cpf, $sexo, $foto_user);
 
     if (mysqli_stmt_execute($comando)) {
         $idCriado = mysqli_stmt_insert_id($comando); // Pega o ID da sessão atual
@@ -56,18 +54,18 @@ function cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $
     return false;
 }
 
-// Cadastro edereço
+// Cadastro endereço
 
-function cadastroEndereco($conexao,$salvar , $cidade) {
-
-    $sql = "INSERT INTO endereco (endereco_usuarios_id, endereco_cidade_id) VALUES (?, ?,)";
+function cadastroEndereco($conexao, $salvar, $cidade) {
+    $sql = "INSERT INTO endereco (endereco_usuarios_id, endereco_cidade_id) VALUES (?, ?)";
 
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "ii", $salvar, $cidade);
-    mysqli_stmt_execute($comando);
+    // Alterado para "is" para aceitar o ID do usuário (int) e a Cidade (int)
+    mysqli_stmt_bind_param($comando, "ii", $salvar, $cidade); 
+    $resultado = mysqli_stmt_execute($comando);
     mysqli_stmt_close($comando);
-    return true;
-
+    
+    return $resultado;
 }
 
 // UPLOAD FOTO 
@@ -149,3 +147,5 @@ function listarCidades($conexao, $estado_id)
     mysqli_stmt_close($comando);
     return $lista_cidades;
 }
+
+?>

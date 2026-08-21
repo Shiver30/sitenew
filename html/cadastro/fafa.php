@@ -5,7 +5,6 @@ require_once "../funcoes/funcoes.php";
 $sqlEstados = "SELECT * FROM estado ORDER BY estado_nome";
 $resultadoEstados = mysqli_query($conexao, $sqlEstados);
 
-
 $sqlCidades = "SELECT * FROM cidade ORDER BY cidade_nome";
 $resultadoCidades = mysqli_query($conexao, $sqlCidades);
 
@@ -41,27 +40,20 @@ if(isset($_POST['enviar'])){
             $salvar = cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $upload);
 
             if ($salvar){
-
                 // $salvar está com o valor do id do usuario;
-
                 $fim = cadastroEndereco($conexao, $salvar, $cidade); 
-
-                
             }else {
                 $mensagem = "<p style='color: red;'>Erro ao salvar no banco de dados.</p>";
             }
-
 
         }else {
             $mensagem = "<p style='color: red;'>Erro ao fazer upload da imagem (formato inválido ou maior que 2MB).</p>";
         }
 
-
     }else {
         $mensagem = "<p style='color: red;'>Por favor, selecione uma foto de perfil válida.</p>";
     }
-
- }
+}
 ?>
 
 
@@ -135,7 +127,6 @@ if(isset($_POST['enviar'])){
             <option value="">Selecione um Estado</option>
 
             <?php while ($estado = mysqli_fetch_assoc($resultadoEstados)) { ?>
-
                 <option value="<?= $estado['estado_id']; ?>">
                     <?= $estado['estado_nome']; ?>
                 </option>
