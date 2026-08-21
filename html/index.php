@@ -262,8 +262,8 @@ if (isset($_GET['logout'])) {
             </div>
 
             <div class="card">
-               <a href="cadastro/cadastro_servico.php"> <h3>📋 Cadastro</h3> </a>
-                <p>Crie sua conta para ter acesso aos recursos do sistema.</p>
+               <a href="cadastro/cadastro_servico.php"> <h3>📋 Cadastro de serviços</h3> </a>
+                <p>Adicione sua área de atuação.</p>
             </div>
 
             <div class="card">
