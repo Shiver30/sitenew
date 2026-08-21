@@ -45,6 +45,9 @@ if (isset($_POST['enviar'])) {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
 
@@ -88,9 +91,10 @@ if (isset($_POST['enviar'])) {
         ========================= */
 
         main {
+            width: 100%;
             max-width: 550px;
-            margin: 60px auto;
-            padding: 0 20px;
+            margin: auto;
+            padding: 40px 20px;
         }
 
         /* =========================
@@ -217,13 +221,12 @@ if (isset($_POST['enviar'])) {
         ========================= */
 
         footer {
-            margin-top: 50px;
+            margin-top: auto;
             background-color: #222;
             color: white;
             text-align: center;
             padding: 20px;
         }
-
 
         /* =========================
            RESPONSIVIDADE
