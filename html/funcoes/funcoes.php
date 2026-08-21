@@ -1,6 +1,10 @@
 <?php
+<<<<<<< HEAD
 
 require_once __DIR__ . '/../conexao.php';
+=======
+require_once "../conexao.php";
+>>>>>>> 8c4e551be9d7ecb76245386361121058d234dda3
 
 // Cadastro e Login
 
