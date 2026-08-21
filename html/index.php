@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 require_once "conexao.php";
@@ -38,9 +37,7 @@ if (isset($_GET['logout'])) {
             color: #333;
         }
 
-        /* =========================
-           CABEÇALHO
-        ========================= */
+           /* CABEÇALHO */
 
         header {
             background-color: #222;

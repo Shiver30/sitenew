@@ -1,5 +1,4 @@
 <?php
-
 require_once "../conexao.php";
 
 // Cadastro e Login
