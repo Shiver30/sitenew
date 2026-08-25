@@ -3,20 +3,18 @@ session_start();
 require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
 
-$resultado ="SN";
+$resultado = '';
 
-if (isser($_POST['enviar'])){
+if (isset($_POST['enviar'])){
 
-    $termo = $_POST['pesquisa']?? = '';
+    $termo = $_POST['pesquisa']?? '';
 
     if ($termo != ''){
-        $resultado = pesquisar($conaxao, $termo);
+        $resultado = pesquisar($conexao, $termo);
 
     }else{
         echo "Você não escreveu nada";
     }
-
-    $resultado = pesquisar($conexao, )
 }
 ?>
 
@@ -43,9 +41,21 @@ if (isser($_POST['enviar'])){
 
 <?php
 
-if ($resultado != "termo"){
+if ($resultado != ''){
 
-    while()
+    echo "<table border='1'>";
+    echo "<tr><th>Nome</th></tr>";
+
+    while($nome = mysqli_fetch_assoc($resultado)){
+        $nome_fim = htmlspecialchars($nome['usuarios_nome']);
+
+        echo"<tr>";
+             echo"<td>{$nome_fim}</td>";
+         echo"</tr>";
+
+    }
+}elseif (isset($_POST['enviar'])) {
+    echo "<p>Nenhum usuário encontrado.</p>";
 }
 ?>
 

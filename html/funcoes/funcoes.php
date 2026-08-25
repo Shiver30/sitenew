@@ -121,16 +121,17 @@ function pesquisar($conexao, $termo)
     mysqli_stmt_bind_param($comando, "s", $termo);
     mysqli_stmt_execute($comando);
     $resultado = mysqli_stmt_get_result($comando);
-    $usuarios = [];
-    while ($usuario = mysqli_fetch_assoc($resultado)) {
-        $usuarios[] = $usuario;
-    }
-    mysqli_stmt_close($comando);
-    return $usuarios;
+    return $resultado;
 }
 
 // Função para listar os estados e cidades do banco de dados
 
+// $usuarios = [];
+// while ($usuario = mysqli_fetch_assoc($resultado)) {
+//     $usuarios[] = $usuario;
+// }
+// mysqli_stmt_close($comando);
+// return $usuarios;
 function listarEstados($conexao)
 {
     $sql = "SELECT * FROM estado ORDER BY estado_nome";
