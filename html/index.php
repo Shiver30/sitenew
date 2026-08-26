@@ -403,7 +403,7 @@ footer {
             </div>
 
             <div class="card">
-               <a href="cadastro/cadastro_servico.php"> <h3>📋 Cadastro de serviços</h3> </a>
+               <h3>📋 Cadastro de serviços</h3>
                 <p>Adicione sua área de atuação.</p>
             </div>
 

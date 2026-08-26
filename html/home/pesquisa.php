@@ -3,14 +3,14 @@ session_start();
 require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
 
-$resultado = '';
+$resultado = null;
 
 if (isset($_POST['enviar'])){
 
     $termo = $_POST['pesquisa']?? '';
 
     if ($termo != ''){
-        $resultado = pesquisar($conexao, $termo);
+        $resultado = pesquisarNome($conexao, $termo);
 
     }else{
         echo "Você não escreveu nada";
@@ -25,7 +25,7 @@ if (isset($_POST['enviar'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pesquisa de Usuario</title>
 </head>
 <body>
 
@@ -38,24 +38,30 @@ if (isset($_POST['enviar'])){
 
 </form>
 
+<a href="home.php"> <button>Voltar</button></a>
+
 
 <?php
 
-if ($resultado > 0){
+if ($resultado !== null && $resultado !== false) {
 
-    echo "<table border='1'>";
-    echo "<tr><th>Nome</th></tr>";
+    if (mysqli_num_rows($resultado) > 0) {
 
-    while($nome = mysqli_fetch_assoc($resultado)){
-        $nome_fim = htmlspecialchars($nome['usuarios_nome']);
+        echo "<table border='1'>";
+        echo "<tr><th>Nome</th></tr>";
 
-        echo"<tr>";
-             echo"<td>{$nome_fim}</td>";
-         echo"</tr>";
+        while($nome = mysqli_fetch_assoc($resultado)){
+            $nome_fim = htmlspecialchars($nome['usuarios_nome']);
+            echo "<tr>";
+            echo "<td>{$nome_fim}</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
 
+    } else {
+
+        echo "<p>Nenhum usuário encontrado.</p>";
     }
-}elseif (isset($_POST['enviar'])) {
-    echo "<p>Nenhum usuário encontrado.</p>";
 }
 ?>
 

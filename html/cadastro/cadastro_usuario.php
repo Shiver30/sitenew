@@ -30,36 +30,66 @@ if (isset($_POST['enviar'])) {
     $estado = $_POST['estado'] ?? '';
     $cidade = $_POST['cidade'] ?? '';
 
-    if ($foto ) {
-
-        $upload = uploadCapa($foto);
-
-        if (isset($upload)) {
-
-            $foto_user = $upload;
-            $salvar = cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $upload);
-
-            if (isset($salvar)) {
-                // $salvar contém o ID do usuário
-                $fim = cadastroEndereco($conexao, $salvar, $cidade);
+        
+        if (isset($foto) && !empty($foto['name'])) {
+            $upload = uploadCapa($foto);
+            if (isset($upload)) {
+                $foto_user = $upload;
             } else {
-                $mensagem = "<p class='mensagem erro'>
-                    Erro ao salvar no banco de dados.
-                </p>";
-
+                $mensagem = "<p class='mensagem erro'>Erro ao fazer upload da imagem. O formato pode ser inválido ou o arquivo pode ter mais de 2MB.</p>";
+                $foto_user = null;
+            }
+        } else {
+            $foto_user = "../fotos/upadr.jpeg";
+        }
+        
+        if ($foto_user !== null) {
+            $salvar = cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user);
+            if (isset($salvar)) {
+                $fim = cadastroEndereco($conexao, $salvar, $cidade);
+            
                 if (isset($fim)) {
                     header("Location: ../index.php");
+                    exit();
                 } else {
                     echo "<p style='color: red;'>Erro ao salvar o endereço.</p>";
                     exit();
                 }
+            } else {
+                $mensagem = "<p class='mensagem erro'>Erro ao salvar no banco de dados.</p>";
             }
-        } else {
-            $mensagem = "<p class='mensagem erro'>Erro ao fazer upload da imagem. O formato pode ser inválido ou o arquivo pode ter mais de 2MB.</p>";
         }
-    } else {
-        $mensagem = "<p class='mensagem erro'>Por favor, selecione uma foto de perfil válida.</p>";
-    }
+
+    // if ($foto ) {
+
+    //     $upload = uploadCapa($foto);
+
+    //     if (isset($upload)) {
+
+    //         $foto_user = $upload;
+    //         $salvar = cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $upload);
+
+    //         if (isset($salvar)) {
+    //             // $salvar contém o ID do usuário
+    //             $fim = cadastroEndereco($conexao, $salvar, $cidade);
+    //         } else {
+    //             $mensagem = "<p class='mensagem erro'>
+    //                 Erro ao salvar no banco de dados.
+    //             </p>";
+
+    //             if (isset($fim)) {
+    //                 header("Location: ../index.php");
+    //             } else {
+    //                 echo "<p style='color: red;'>Erro ao salvar o endereço.</p>";
+    //                 exit();
+    //             }
+    //         }
+    //     } else {
+    //         $mensagem = "<p class='mensagem erro'>Erro ao fazer upload da imagem. O formato pode ser inválido ou o arquivo pode ter mais de 2MB.</p>";
+    //     }
+    // } else {
+    //     $mensagem = "<p class='mensagem erro'>Por favor, selecione uma foto de perfil válida.</p>";
+    // }
 }
 ?>
 

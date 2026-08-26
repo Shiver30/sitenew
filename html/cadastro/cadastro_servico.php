@@ -331,7 +331,7 @@ if (isset($_POST['cadastro'])) {
                 <div class="botoes">
 
                     <a
-                        href="../index.php"
+                        href="../home/home.php"
                         class="btn btn-voltar">
                         Voltar
                     </a>

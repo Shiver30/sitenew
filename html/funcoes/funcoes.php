@@ -109,11 +109,11 @@ function cadastroServico($conexao, $id, $nomeServico, $tipoServico, $descricaoSe
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Funcões da Pagina
+// FUNÇÕES DA PÁGINA
 
 // Função para pesquisar
 
-function pesquisar($conexao, $termo)
+function pesquisarNome($conexao, $termo)
 {
     $sql = "SELECT * FROM usuarios WHERE usuarios_nome LIKE ? ";
     $comando = mysqli_prepare($conexao, $sql);
@@ -126,12 +126,6 @@ function pesquisar($conexao, $termo)
 
 // Função para listar os estados e cidades do banco de dados
 
-// $usuarios = [];
-// while ($usuario = mysqli_fetch_assoc($resultado)) {
-//     $usuarios[] = $usuario;
-// }
-// mysqli_stmt_close($comando);
-// return $usuarios;
 function listarEstados($conexao)
 {
     $sql = "SELECT * FROM estado ORDER BY estado_nome";
