@@ -30,7 +30,7 @@ if (isset($_POST['enviar'])) {
     $estado = $_POST['estado'] ?? '';
     $cidade = $_POST['cidade'] ?? '';
 
-    if ($foto && $foto['error'] === UPLOAD_ERR_OK) {
+    if ($foto ) {
 
         $upload = uploadCapa($foto);
 
@@ -442,7 +442,7 @@ if (isset($_POST['enviar'])) {
                     <!-- FOTO -->
                     <div class="campo campo-foto">
                         <label for="foto">Foto de perfil:</label>
-                        <input type="file" name="foto" id="foto" accept="image/*" required>
+                        <input type="file" name="foto" id="foto" accept="image/*" >
                         <span class="ajuda">
                             Selecione uma imagem para usar como foto de perfil.
                             Tamanho máximo: 2MB.

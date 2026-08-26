@@ -41,7 +41,7 @@ if (isset($_POST['enviar'])){
 
 <?php
 
-if ($resultado != ''){
+if ($resultado > 0){
 
     echo "<table border='1'>";
     echo "<tr><th>Nome</th></tr>";

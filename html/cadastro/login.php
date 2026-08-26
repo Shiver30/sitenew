@@ -12,7 +12,7 @@ if (isset($_POST['enviar'])) {
     $sucesso = login($conexao, $email, $senha);
 
     if ($sucesso) {
-        header("Location: ../index.php");
+        header("Location: ../home/home.php");
         exit;
     } else {
         $mensagem = "Erro no login.";
