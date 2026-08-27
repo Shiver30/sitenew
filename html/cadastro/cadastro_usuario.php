@@ -486,7 +486,7 @@ if (isset($_POST['enviar'])) {
             </form>
 
             <script>
-                // Função de validação de senha via JavaScript
+                // Função de validar senha
                 function validarSenha() {
                     const senha = document.getElementById("senha").value;
                     const senhaConfirmacao = document.getElementById("senhaConfirmacao").value;
@@ -498,6 +498,7 @@ if (isset($_POST['enviar'])) {
                     return true;
                 }
 
+                // função da cidade e estado nas opções
                 const cidades = <?= json_encode($cidades); ?>;
 
                 const estado = document.getElementById("estado");
