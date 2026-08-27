@@ -346,7 +346,7 @@ footer {
             <?php if (isset($_SESSION['usuario'])): ?>
                 <a href="#">Meu Perfil</a>
             <?php else: ?>
-                <a href="cadastro/login.php">Login</a>
+                <a href="login.php">Login</a>
             <?php endif; ?>
         </nav>
 
@@ -358,18 +358,18 @@ footer {
 
         <?php if (isset($_SESSION['usuario'])): ?>
 
-            <div class="usuario-logado">
+            <!-- <div class="usuario-logado">
                 <strong>Olá,<?= htmlspecialchars($_SESSION['usuario']) ?>!</strong>
                 <p>Você está logado no sistema.</p>
                 <a href="index.php?logout=1" class="btn-sair">Sair</a>
-            </div>
+            </div> -->
 
         <?php else: ?>
 
             <div class="usuario-visitante">
                 <strong>Olá, visitante!</strong>
                 <p>Você está navegando como visitante.</p>
-                <a href="cadastro/login.php" class="btn-login">Entrar</a>
+                <a href="login.php" class="btn-login">Entrar</a>
                 <a href="cadastro/cadastro_usuario.php" class="btn-cadastro">Criar conta</a>
             </div>
 
@@ -380,7 +380,7 @@ footer {
     <!-- CONTEÚDO PRINCIPAL -->
 
     <main>
-
+<!-- 
         <section class="bem-vindo">
 
             <?php if (isset($_SESSION['usuario'])): ?>
@@ -391,7 +391,7 @@ footer {
                 <p>Você está acessando como visitante.Faça login ou crie uma conta para acessartodos os recursos disponíveis.</p>
             <?php endif; ?>
 
-        </section>
+        </section> -->
 
          <!-- CARDS -->
 

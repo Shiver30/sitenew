@@ -3,6 +3,8 @@ session_start();
 require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
 
+verificarLogin();
+
 $resultado = null;
 
 if (isset($_POST['enviar'])){

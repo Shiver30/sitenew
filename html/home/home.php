@@ -11,6 +11,8 @@ if (isset($_GET['logout'])) {
     header("Location: ../index.php");
     exit;
 }
+
+verificarLogin();
 ?>
 
 <!DOCTYPE html>
@@ -34,25 +36,14 @@ if (isset($_GET['logout'])) {
                 <a href="../index.php?logout=1" class="btn-sair">Sair</a>
             </div>
 
-        <?php else: ?>
-
-            <div class="usuario-visitante">
-                <strong>Olá, visitante!</strong>
-                <p>Você está navegando como visitante.</p>
-                <a href="cadastro/login.php" class="btn-login">Entrar</a>
-                <a href="cadastro/cadastro_usuario.php" class="btn-cadastro">Criar conta</a>
-            </div>
-
-        <?php endif; ?>
-
-        <?php
+<?php
 
 // Substitua 'id' pelo nome correto do índice da sessão do seu usuário (ex: 'usuario_id')
-if (isset($_SESSION['id'])) {
-    $id_usuario = $_SESSION['id'];
+if (isset($_SESSION['usuarios_id'])) {
+    $id_usuario = $_SESSION['usuarios_id'];
 
     // 1. Consulta o banco buscando o caminho da foto
-    $sql = "SELECT usuario_img FROM usuarios WHERE id = $id_usuario";
+    $sql = "SELECT usuario_img FROM usuarios WHERE usuario_img = $id_usuario";
     $resultado = mysqli_query($conexao, $sql);
 
     if ($resultado && mysqli_num_rows($resultado) > 0) {
@@ -76,13 +67,16 @@ if (isset($_SESSION['id'])) {
     echo "<img src='../caminho/das/fotos/padrao.png' alt='Foto padrão' width='100'>";
 }
 ?>
-
+    <?php endif;?>
     </section>
 
 
     <h1>Home</h1>
     <a href="pesquisa.php">Pesquisa de usuarios</a></A> <br>
-    <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a></A>
+    <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a> <br>
+    <a href="../logout.php">Deslogar</a>
+
+    
 
 </body>
 </html>

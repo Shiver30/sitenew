@@ -19,8 +19,8 @@ function login($conexao, $email, $senha)
     if ($resultado->num_rows > 0) {
         $usuario = $resultado->fetch_assoc();
 
-        $_SESSION['usuario'] = $usuario['usuarios_nome'];
-        $_SESSION['id'] = $usuario['usuarios_id'];
+        $_SESSION['usuario_nome'] = $usuario['usuarios_nome'];
+        $_SESSION['usuarios_id'] = $usuario['usuarios_id'];
         $stmt->close();
         
         return true;
@@ -30,12 +30,25 @@ function login($conexao, $email, $senha)
     return false;
 }
 
+// vereficar loguin
+
+function verificarLogin(){
+    // return isset($_SESSION['usuario']);
+    if (!isset($_SESSION['usuarios_id'])) {
+        header("Location: ../login.php");
+    exit;
+    }
+}
+
 // Logout
 
 function logout()
 {
     session_unset();
     session_destroy();
+
+    header("Location: login.php");
+    exit;
 }
 
 // CADASTRO
@@ -94,16 +107,37 @@ function uploadCapa($foto)
     return false;
 }
 
-function cadastroServico($conexao, $id, $nomeServico, $tipoServico, $descricaoServico)
+function cadastroServico($conexao, $idUsuario, $nomeServico, $tipoServico, $descricaoServico)
 {
-    $sql = "INSERT INTO servico (servico_id, servico_nome, servico_descricao, servico_classe) VALUES (?, ?, ?, ?)";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "isss", $id, $nomeServico, $descricaoServico, $tipoServico); 
-    if (mysqli_stmt_execute($comando)) {
-        mysqli_stmt_close($comando);
-        return true;
+    $sqlServico = "INSERT INTO servico (servico_nome, servico_descricao, servico_classe) VALUES (?, ?, ?)";
+    $stmtServico = mysqli_prepare($conexao, $sqlServico);
+    
+    if (!$stmtServico) {
+        return false;
     }
-    mysqli_stmt_close($comando);
+
+    mysqli_stmt_bind_param($stmtServico, "sss", $nomeServico, $descricaoServico, $tipoServico);
+    
+    if (mysqli_stmt_execute($stmtServico)) {
+        // 2. Pega o ID gerado para o novo serviço
+        $idServicoCriado = mysqli_insert_id($conexao);
+        mysqli_stmt_close($stmtServico);
+
+        // 3. Vincula o novo serviço ao usuário na tabela 'usn'
+        $sqlUsn = "INSERT INTO usn (usn_servico_id, usn_usuarios_id) VALUES (?, ?)";
+        $stmtUsn = mysqli_prepare($conexao, $sqlUsn);
+
+        if ($stmtUsn) {
+            mysqli_stmt_bind_param($stmtUsn, "ii", $idServicoCriado, $idUsuario);
+            $sucesso = mysqli_stmt_execute($stmtUsn);
+            mysqli_stmt_close($stmtUsn);
+
+            return $sucesso; // Retorna true se salvou na tabela usn
+        }
+    } else {
+        mysqli_stmt_close($stmtServico);
+    }
+
     return false;
 }
 

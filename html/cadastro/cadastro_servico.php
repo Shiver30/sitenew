@@ -4,18 +4,20 @@ session_start();
 require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
 
+verificarLogin();
+
 
 if (isset($_POST['cadastro'])) {
 
-    $id = $_SESSION['id'] ?? null;
+    $idUsuario = $_SESSION['usuarios_id'] ?? null;
     $nomeServico = $_POST['nome_servico'];
     $tipoServico = $_POST['tipoServico'];
     $descricaoServico = $_POST['descricao_servico'];
 
-    $salvar = cadastroServico($conexao, $id, $nomeServico, $tipoServico, $descricaoServico);
+    $salvar = cadastroServico($conexao, $idUsuario, $nomeServico, $tipoServico, $descricaoServico);
 
         if (isset($salvar)) {
-              header("Location: ../index.php");
+              header("Location: ../home/home.php");
         } else {
             echo "<script>alert('Erro ao cadastrar serviço.');</script>";
         }

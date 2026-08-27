@@ -49,7 +49,7 @@ if (isset($_POST['enviar'])) {
                 $fim = cadastroEndereco($conexao, $salvar, $cidade);
             
                 if (isset($fim)) {
-                    header("Location: ../index.php");
+                    header("Location: ../login.php");
                     exit();
                 } else {
                     echo "<p style='color: red;'>Erro ao salvar o endereço.</p>";
@@ -59,37 +59,6 @@ if (isset($_POST['enviar'])) {
                 $mensagem = "<p class='mensagem erro'>Erro ao salvar no banco de dados.</p>";
             }
         }
-
-    // if ($foto ) {
-
-    //     $upload = uploadCapa($foto);
-
-    //     if (isset($upload)) {
-
-    //         $foto_user = $upload;
-    //         $salvar = cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $upload);
-
-    //         if (isset($salvar)) {
-    //             // $salvar contém o ID do usuário
-    //             $fim = cadastroEndereco($conexao, $salvar, $cidade);
-    //         } else {
-    //             $mensagem = "<p class='mensagem erro'>
-    //                 Erro ao salvar no banco de dados.
-    //             </p>";
-
-    //             if (isset($fim)) {
-    //                 header("Location: ../index.php");
-    //             } else {
-    //                 echo "<p style='color: red;'>Erro ao salvar o endereço.</p>";
-    //                 exit();
-    //             }
-    //         }
-    //     } else {
-    //         $mensagem = "<p class='mensagem erro'>Erro ao fazer upload da imagem. O formato pode ser inválido ou o arquivo pode ter mais de 2MB.</p>";
-    //     }
-    // } else {
-    //     $mensagem = "<p class='mensagem erro'>Por favor, selecione uma foto de perfil válida.</p>";
-    // }
 }
 ?>
 
@@ -517,6 +486,18 @@ if (isset($_POST['enviar'])) {
             </form>
 
             <script>
+                // Função de validação de senha via JavaScript
+                function validarSenha() {
+                    const senha = document.getElementById("senha").value;
+                    const senhaConfirmacao = document.getElementById("senhaConfirmacao").value;
+
+                    if (senha !== senhaConfirmacao) {
+                        alert("As senhas não coincidem!");
+                        return false;
+                    }
+                    return true;
+                }
+
                 const cidades = <?= json_encode($cidades); ?>;
 
                 const estado = document.getElementById("estado");
@@ -554,7 +535,7 @@ if (isset($_POST['enviar'])) {
     <footer>
 
         <p>
-            &copy; 2026 - Sistema de Serviços
+            &copy; 2026 - WorkMach
         </p>
 
     </footer>
