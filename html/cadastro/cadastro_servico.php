@@ -272,45 +272,16 @@ if (isset($_POST['cadastro'])) {
 
                     <select name="tipoServico" id="tipoServico" required>
 
-                        <option value="Aulas Particulares">
-                            Aulas Particulares
-                        </option>
-
-                        <option value="Reformas e Reparos">
-                            Reformas e Reparos
-                        </option>
-
-                        <option value="Cuidados Pessoais">
-                            Cuidados Pessoais
-                        </option>
-
-                        <option value="Eventos e Entretenimento">
-                            Eventos e Entretenimento
-                        </option>
-
-                        <option value="Serviços Domésticos">
-                            Serviços Domésticos
-                        </option>
-
-                        <option value="Tecnologia e Informática">
-                            Tecnologia e Informática
-                        </option>
-
-                        <option value="Saúde e Bem-estar">
-                            Saúde e Bem-estar
-                        </option>
-
-                        <option value="Transporte e Mudanças">
-                            Transporte e Mudanças
-                        </option>
-
-                        <option value="Consultoria e Negócios">
-                            Consultoria e Negócios
-                        </option>
-
-                        <option value="Outros Serviços">
-                            Outros Serviços
-                        </option>
+                        <option value="Aulas Particulares">Aulas Particulares</option>
+                        <option value="Reformas e Reparos">Reformas e Reparos</option>
+                        <option value="Cuidados Pessoais">Cuidados Pessoais</option>
+                        <option value="Eventos e Entretenimento">Eventos e Entretenimento</option>
+                        <option value="Serviços Domésticos">Serviços Domésticos</option>
+                        <option value="Tecnologia e Informática">Tecnologia e Informática</option>
+                        <option value="Saúde e Bem-estar">Saúde e Bem-estar</option>
+                        <option value="Transporte e Mudanças">Transporte e Mudanças</option>
+                        <option value="Consultoria e Negócios">Consultoria e Negócios</option>
+                        <option value="Outros Serviços">Outros Serviços</option>
 
                     </select>
                 </div>

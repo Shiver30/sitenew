@@ -1,8 +1,13 @@
 <?php
+
 session_start();
 
 require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
+
+// ===============================
+// LOGOUT
+// ===============================
 
 if (isset($_GET['logout'])) {
 
@@ -12,71 +17,291 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
+// ===============================
+// VERIFICA SE O USUÁRIO ESTÁ LOGADO
+// ===============================
+
 verificarLogin();
+
+// ===============================
+// DADOS DO USUÁRIO
+// ===============================
+
+$nome_usuario = $_SESSION['usuario_nome'] ?? 'Usuário';
+$id_usuario = $_SESSION['usuarios_id'] ?? null;
+
+
+// ===============================
+// FOTO DO USUÁRIO
+// ===============================
+
+$caminho_foto = "../imagens/padrao.png";
+
+if ($id_usuario !== null) {
+
+    $id_usuario = (int) $id_usuario;
+
+    $sql = "SELECT usuario_img FROM usuarios WHERE usuarios_id = ?";
+
+    $stmt = $conexao->prepare($sql);
+
+    if ($stmt) {
+
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows > 0) {
+
+            $usuario = $resultado->fetch_assoc();
+
+            if (!empty($usuario['usuario_img'])) {
+
+                $caminho_foto = $usuario['usuario_img'];
+            }
+        }
+
+        $stmt->close();
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home WorkMach</title>
-    
+
+    <title>WorkMatch</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #222;
+            color: white;
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .btn-sair {
+            background-color: #dc3545;
+            color: white;
+
+            padding: 10px 18px;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .btn-sair:hover {
+            background-color: #c82333;
+        }
+
+        main {
+            max-width: 900px;
+
+            margin: 40px auto;
+
+            padding: 20px;
+        }
+
+        .usuario-area {
+            background-color: white;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+
+            margin-bottom: 30px;
+        }
+
+        .foto-usuario {
+            width: 100px;
+
+            height: 100px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 3px solid #007bff;
+        }
+
+        .usuario-info h1 {
+            margin-bottom: 10px;
+        }
+
+        .usuario-info p {
+            color: #666;
+        }
+
+        .menu {
+            background-color: white;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .menu h2 {
+            margin-bottom: 20px;
+        }
+
+        .menu a {
+            display: block;
+
+            background-color: #007bff;
+
+            color: white;
+
+            padding: 14px;
+
+            margin-bottom: 10px;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            font-weight: bold;
+        }
+
+        .menu a:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+
+            padding: 20px;
+
+            color: #777;
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            main {
+                margin: 20px auto;
+            }
+
+            .usuario-area {
+                flex-direction: column;
+
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 <body>
+
+<header>
+
+    <div class="logo">WorkMatch</div>
+    <a href="../index.php?logout=1" class="btn-sair">Sair</a>
+
+</header>
+
+
+<main>
+
+
+    <!-- ===============================
+         USUÁRIO LOGADO
+    ================================ -->
 
     <section class="usuario-area">
 
-        <?php if (isset($_SESSION['usuario'])): ?>
+        <img src="<?= htmlspecialchars($caminho_foto) ?>"alt="Foto do usuário" class="foto-usuario">
 
-            <div class="usuario-logado">
-                <strong>Olá,<?= htmlspecialchars($_SESSION['usuario']) ?>!</strong>
-                <p>Você está logado no sistema.</p>
-                <a href="../index.php?logout=1" class="btn-sair">Sair</a>
-            </div>
+        <div class="usuario-info">
 
-<?php
+            <h1>Olá, <?= htmlspecialchars($nome_usuario) ?>!</h1>
+            <p>Você está logado no sistema.</p>
 
-// Substitua 'id' pelo nome correto do índice da sessão do seu usuário (ex: 'usuario_id')
-if (isset($_SESSION['usuarios_id'])) {
-    $id_usuario = $_SESSION['usuarios_id'];
+        </div>
 
-    // 1. Consulta o banco buscando o caminho da foto
-    $sql = "SELECT usuario_img FROM usuarios WHERE usuario_img = $id_usuario";
-    $resultado = mysqli_query($conexao, $sql);
-
-    if ($resultado && mysqli_num_rows($resultado) > 0) {
-        $usuario = mysqli_fetch_assoc($resultado);
-        $caminho_banco = $usuario['usuarios_foto']; // Ex: "imagens/usuarios/foto.jpg"
-
-        // 2. O IF verifica se o campo NÃO está vazio
-        if (!empty($caminho_banco)) {
-            // Se tem caminho no banco, mostra a foto do usuário
-            echo "<img src='{$caminho_banco}' alt='Foto do usuário' width='100'>";
-        } else {
-            // Se o campo estiver vazio, mostra a foto padrão
-            echo "<img src='../caminho/das/fotos/padrao.png' alt='Foto padrão' width='100'>";
-        }
-    } else {
-        // Se não encontrar o registro do usuário
-        echo "<img src='../caminho/das/fotos/padrao.png' alt='Foto padrão' width='100'>";
-    }
-} else {
-    // Se o usuário não estiver logado
-    echo "<img src='../caminho/das/fotos/padrao.png' alt='Foto padrão' width='100'>";
-}
-?>
-    <?php endif;?>
     </section>
 
 
-    <h1>Home</h1>
-    <a href="pesquisa.php">Pesquisa de usuarios</a></A> <br>
-    <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a> <br>
-    <a href="../logout.php">Deslogar</a>
+    <!-- ===============================
+         MENU
+    ================================ -->
 
-    
+    <section class="menu">
+
+        <h2>Menu</h2>
+        <a href="pesquisa.php">Pesquisa de usuários</a>
+        <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
+        <a href="pesquisa_servico.php">Pesquisar Serviços</a>
+        <a href="../chat/lista_conversas.php">Lista de conversas</a>
+
+    </section>
+
+
+</main>
+
+
+<footer>
+
+    <p>
+        &copy; 2026 - WorkMatch
+    </p>
+
+</footer>
+
 
 </body>
+
 </html>

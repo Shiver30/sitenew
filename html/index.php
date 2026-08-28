@@ -406,7 +406,7 @@ footer {
                <h3>📋 Cadastro de serviços</h3>
                 <p>Adicione sua área de atuação.</p>
             </div>
-
+            
             <div class="card">
                 <h3>🔐 Segurança</h3>
                 <p>Faça login para acessar recursos exclusivos.</p>
@@ -414,8 +414,7 @@ footer {
 
             <div class="card">
                 <h3>🏠 Início</h3>
-                <p>Esta é a página inicial do sistema.
-                </p>
+                <p>Esta é a página inicial do sistema.</p>
             </div>
 
         </section>

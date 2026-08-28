@@ -190,4 +190,67 @@ function listarCidades($conexao, $estado_id)
     return $lista_cidades;
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+// CHAT DE USUARIOS //
+// ( NÃO MISTURAR AS OUTRAS FUNÇÕES A ESTA ÁREA) //
+
+function listarConversas($conexao, $id_usuario_logado) {
+    // Busca conversas onde o usuário logado é o usuario_1 ou usuario_2
+    $sql = "SELECT c.conversa_id, u.usuarios_nome, u.usuario_img 
+            FROM conversas c
+            JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
+            WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) 
+            AND u.usuarios_id != ?"; // Para não trazer o nome do próprio usuário logado
+
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
+    mysqli_stmt_execute($comando);
+    
+    $resultado = mysqli_stmt_get_result($comando);
+    $lista_conversas = [];
+    while ($conversa = mysqli_fetch_assoc($resultado)) {
+        $lista_conversas[] = $conversa;
+    }
+    mysqli_stmt_close($comando);
+    return $lista_conversas;
+}
+
+function buscarServicosPorCategoria($conexao, $categoria){
+    $sql = "SELECT servico_id, servico_nome, servico_classe, servico_descricao FROM servico WHERE servico_classe = ? ORDER BY servico_nome ASC";
+
+    $stmt = $conexao->prepare($sql);
+    if (!$stmt) {
+        return [];
+    }
+
+    $stmt->bind_param("s", $categoria);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $servicos = [];
+    while ($servico = $resultado->fetch_assoc()) {
+        $servicos[] = $servico;
+    }
+
+    $stmt->close();
+
+    return $servicos;
+}
+
+function listarServicos($servicos){
+    if (empty($servicos)) {
+        echo "<div class='sem-resultados'>Nenhum serviço encontrado nesta categoria.</div>";
+        return;
+    }
+    foreach ($servicos as $servico) {
+        echo "<div class='servico'>
+                <h3>". htmlspecialchars($servico['servico_nome']) ."</h3>
+                <span class='categoria'>". htmlspecialchars($servico['servico_classe']) ."</span>
+                <p class='descricao-servico'>". nl2br(htmlspecialchars($servico['servico_descricao'])) ."</p>
+                </div>";
+    }
+}
+
+
 ?>
