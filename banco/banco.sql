@@ -5783,7 +5783,7 @@ VALUES ('Usuario Teste', 'teste@email.com', '123456', '2000-05-15', '12345678900
 
 INSERT INTO usuarios
 (usuarios_nome, usuarios_email, usuarios_senha, usuarios_idade, usuarios_cpf, usuarios_sexo, usuario_img)
-VALUES ('Adm', 'adm@gmail.com', 'adm123', '01-01-01', '067-011-069-77', 'm', '../fotos/upadr.jpeg');
+VALUES ('Adm', 'adm@gmail.com', 'adm123', '01-01-01', '067-011-069-77', 'm', '../fotos/upadr.jpeg');  
 
 
 DROP TABLE IF EXISTS `banco`.`view1`;
