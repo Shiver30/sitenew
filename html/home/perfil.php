@@ -30,6 +30,8 @@ if (isset($dados) && !empty($dados)){
         echo "<td>" . htmlspecialchars($d['usuarios_sexo']). "</td>";
         echo "<td>" . htmlspecialchars($d['usuarios_email']). "</td>";   
     }
+
+       echo" <a href='../chat/chat_fim.php'>Perfil</a> ";
 }
 ?>
 
