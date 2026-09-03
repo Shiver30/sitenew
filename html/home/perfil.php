@@ -24,14 +24,19 @@ $dados = listarPerfil($conexao, $id);
 
 if (isset($dados) && !empty($dados)){
 
-    while($d = $dados ->fetch_assoc()){    
-        echo "<td>" . htmlspecialchars($d['usuarios_nome']) . "</td>";
-        echo "<td>" . htmlspecialchars($d['usuarios_idade']). "</td>";
-        echo "<td>" . htmlspecialchars($d['usuarios_sexo']). "</td>";
-        echo "<td>" . htmlspecialchars($d['usuarios_email']). "</td>";   
+    while($d = $dados ->fetch_assoc()){   
+        echo"<tr>";
+            echo "<td>" . htmlspecialchars($d['usuarios_nome']) . "</td>";
+            echo "<td>" . htmlspecialchars($d['usuarios_idade']). "</td>";
+            echo "<td>" . htmlspecialchars($d['usuarios_sexo']). "</td>";
+            echo "<td>" . htmlspecialchars($d['usuarios_email']). "</td>";
+        echo"</tr>"; 
     }
 
+
        echo" <a href='../chat/chat_fim.php'>Perfil</a> ";
+       echo"<br>";
+       echo" <a href='home.php'>voltar</a> "; 
 }
 ?>
 
