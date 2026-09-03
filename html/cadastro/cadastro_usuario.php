@@ -30,35 +30,35 @@ if (isset($_POST['enviar'])) {
     $estado = $_POST['estado'] ?? '';
     $cidade = $_POST['cidade'] ?? '';
 
-        
-        if (isset($foto) && !empty($foto['name'])) {
-            $upload = uploadCapa($foto);
-            if (isset($upload)) {
-                $foto_user = $upload;
+
+    if (isset($foto) && !empty($foto['name'])) {
+        $upload = uploadCapa($foto);
+        if (isset($upload)) {
+            $foto_user = $upload;
+        } else {
+            $mensagem = "<p class='mensagem erro'>Erro ao fazer upload da imagem. O formato pode ser inválido ou o arquivo pode ter mais de 2MB.</p>";
+            $foto_user = null;
+        }
+    } else {
+        $foto_user = "../fotos/upadr.jpeg";
+    }
+
+    if ($foto_user !== null) {
+        $salvar = cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user);
+        if (isset($salvar)) {
+            $fim = cadastroEndereco($conexao, $salvar, $cidade);
+
+            if (isset($fim)) {
+                header("Location: ../login.php");
+                exit();
             } else {
-                $mensagem = "<p class='mensagem erro'>Erro ao fazer upload da imagem. O formato pode ser inválido ou o arquivo pode ter mais de 2MB.</p>";
-                $foto_user = null;
+                echo "<p style='color: red;'>Erro ao salvar o endereço.</p>";
+                exit();
             }
         } else {
-            $foto_user = "../fotos/upadr.jpeg";
+            $mensagem = "<p class='mensagem erro'>Erro ao salvar no banco de dados.</p>";
         }
-        
-        if ($foto_user !== null) {
-            $salvar = cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $foto_user);
-            if (isset($salvar)) {
-                $fim = cadastroEndereco($conexao, $salvar, $cidade);
-            
-                if (isset($fim)) {
-                    header("Location: ../login.php");
-                    exit();
-                } else {
-                    echo "<p style='color: red;'>Erro ao salvar o endereço.</p>";
-                    exit();
-                }
-            } else {
-                $mensagem = "<p class='mensagem erro'>Erro ao salvar no banco de dados.</p>";
-            }
-        }
+    }
 }
 ?>
 
@@ -441,11 +441,8 @@ if (isset($_POST['enviar'])) {
                     <!-- FOTO -->
                     <div class="campo campo-foto">
                         <label for="foto">Foto de perfil:</label>
-                        <input type="file" name="foto" id="foto" accept="image/*" >
-                        <span class="ajuda">
-                            Selecione uma imagem para usar como foto de perfil.
-                            Tamanho máximo: 2MB.
-                        </span>
+                        <input type="file" name="foto" id="foto" accept="image/*">
+                        <span class="ajuda">Selecione uma imagem para usar como foto de perfil. Tamanho máximo: 2MB.</span>
                     </div>
                 </div>
 
@@ -490,7 +487,6 @@ if (isset($_POST['enviar'])) {
                 function validarSenha() {
                     const senha = document.getElementById("senha").value;
                     const senhaConfirmacao = document.getElementById("senhaConfirmacao").value;
-
                     if (senha !== senhaConfirmacao) {
                         alert("As senhas não coincidem!");
                         return false;
@@ -500,20 +496,13 @@ if (isset($_POST['enviar'])) {
 
                 // função da cidade e estado nas opções
                 const cidades = <?= json_encode($cidades); ?>;
-
                 const estado = document.getElementById("estado");
                 const cidade = document.getElementById("cidade");
-
                 estado.addEventListener("change", function() {
-
                     const idEstado = this.value;
-
                     cidade.innerHTML = '<option value="">Selecione uma cidade</option>';
-
                     cidades.forEach(function(item) {
-
                         if (item.cidade_estado_id == idEstado) {
-
                             cidade.innerHTML +=
                                 `<option value="${item.cidade_id}">
                     ${item.cidade_nome}
@@ -534,9 +523,5 @@ if (isset($_POST['enviar'])) {
 
     <!-- RODAPÉ -->
     <footer>
-
-        <p>
-            &copy; 2026 - WorkMach
-        </p>
-
+        <?php require_once "include/rodape.php"; ?>
     </footer>

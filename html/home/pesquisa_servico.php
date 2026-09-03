@@ -4,13 +4,25 @@ require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
 verificarLogin();
 
-$categoria = $_POST['categoria'] ?? '';
-$servicos = [];
-$termo = $_POST['nome'];
+// $categoria = $_POST['categoria'] ?? '';
+// $servicos = [];
+// $termo = $_POST['nome'];
 
-if (!empty($categoria)) {
+// $servicos = buscarUsuarios($conexao, $categoria, $termo);
+
+// if (!empty($categoria)) {
+//     $servicos = buscarUsuarios($conexao, $categoria, $termo);
+// }
+
+$categoria = $_POST['categoria'] ?? '';
+$termo = $_POST['nome'] ?? '';
+
+$servicos = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $servicos = buscarUsuarios($conexao, $categoria, $termo);
 }
+
 
 ?>
 
@@ -232,10 +244,8 @@ if (!empty($categoria)) {
 
 <body>
     <header>
-
         <div class="logo">WorkMatch</div>
         <nav><a href="home.php">Voltar para Home</a></nav>
-
     </header>
 
 
@@ -245,16 +255,13 @@ if (!empty($categoria)) {
             <p class="descricao">Escolha uma categoria para encontrar serviços disponíveis.</p>
 
             <!-- FORMULÁRIO -->
-
             <form method="POST" class="form-pesquisa">
 
 
                 Nome: <br>
-                <input type="text" name = "nome">
-
-                <select name="categoria" required>
-
-                    <option value="">Selecione uma categoria</option>
+                <input type="text" name="nome">
+                <select name="categoria">
+                    <option value="">Todas as categorias</option>
                     <option value="Aulas Particulares" <?= $categoria === 'Aulas Particulares' ? 'selected' : '' ?>>Aulas Particulares</option>
                     <option value="Reformas e Reparos" <?= $categoria === 'Reformas e Reparos' ? 'selected' : '' ?>>Reformas e Reparos</option>
                     <option value="Cuidados Pessoais" <?= $categoria === 'Cuidados Pessoais' ? 'selected' : '' ?>>Cuidados Pessoais</option>
@@ -265,23 +272,35 @@ if (!empty($categoria)) {
                     <option value="Transporte e Mudanças" <?= $categoria === 'Transporte e Mudanças' ? 'selected' : '' ?>>Transporte e Mudanças</option>
                     <option value="Consultoria e Negócios" <?= $categoria === 'Consultoria e Negócios' ? 'selected' : '' ?>>Consultoria e Negócios</option>
                     <option value="Outros Serviços" <?= $categoria === 'Outros Serviços' ? 'selected' : '' ?>>Outros Serviços</option>
-
                 </select>
-
-
                 <button type="submit" class="btn-pesquisar">Pesquisar</button>
-
             </form>
-
 
             <!-- RESULTADOS -->
 
-            <?php if (!empty($categoria)): ?>
+           <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
 
-                <h2 class="resultado-titulo">Serviços encontrados em: <?= htmlspecialchars($categoria) ?></h2>
-                <?php listarServicos($servicos); ?>
+    <h2 class="resultado-titulo">
+        <?php if (!empty($categoria)): ?>
 
-            <?php endif; ?>
+            Serviços encontrados em:
+            <?= htmlspecialchars($categoria) ?>
+
+        <?php elseif (!empty($termo)): ?>
+
+            Serviços encontrados para:
+            <?= htmlspecialchars($termo) ?>
+
+        <?php else: ?>
+
+            Todos os serviços
+
+        <?php endif; ?>
+    </h2>
+
+    <?php listarServicos($servicos); ?>
+
+<?php endif; ?>
 
 
         </div>
@@ -290,7 +309,7 @@ if (!empty($categoria)) {
 
 
     <footer>
-        <p>&copy; 2026 - WorkMatch</p>
+        <?php require_once "include/rodape.php"; ?>
     </footer>
 
 

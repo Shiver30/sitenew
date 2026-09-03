@@ -15,7 +15,7 @@ if (isset($_POST['enviar'])) {
         header("Location: ../home/home.php");
         exit;
     } else {
-        $mensagem = "Erro no login.";
+        $mensagem = "Email ou senha incorretos";
     }
 }
 ?>
@@ -264,7 +264,7 @@ if (isset($_POST['enviar'])) {
 
     <header>
 
-        <div class="logo">Sistema de Serviços</div>
+        <div class="logo">WorkMatch</div>
         <nav>
             <a href="../index.php">Início</a>
         </nav>
@@ -316,11 +316,7 @@ if (isset($_POST['enviar'])) {
     <!-- RODAPÉ -->
 
     <footer>
-
-        <p>
-            &copy; 2026 - Sistema de Serviços
-        </p>
-
+        <?php  require_once "include/rodape.php"; ?>
     </footer>
 
 </body>

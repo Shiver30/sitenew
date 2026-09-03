@@ -206,48 +206,104 @@ function listarConversas($conexao, $id_usuario_logado) {
 
 // Função para pesquisar 
 
-function buscarUsuarios($conexao, $termo, $categoria = null) {
-    // Iniciamos a query base. Usamos DISTINCT para não retornar o mesmo usuário 
-    // repetido caso ele tenha mais de um serviço na mesma categoria.
-    $sql = "SELECT DISTINCT u.* FROM usuarios u ";
+function buscarUsuarios($conexao, $categoria = '', $termo = '') {
 
-    // Se a categoria foi informada, fazemos as junções necessárias usando a tabela 'usn'
+    $sql = "SELECT DISTINCT 
+                s.servico_nome,
+                s.servico_classe,
+                s.servico_descricao
+            FROM usuarios u
+            INNER JOIN usn ON u.usuarios_id = usn.usn_usuarios_id
+            INNER JOIN servico s ON usn.usn_servico_id = s.servico_id
+            WHERE 1=1";
+
+    $parametros = [];
+    $tipos = "";
+
+    // Filtra pela categoria somente se ela foi informada
     if (!empty($categoria)) {
-        $sql .= "INNER JOIN usn ON u.usuarios_id = usn.usn_usuarios_id ";
-        $sql .= "INNER JOIN servico s ON usn.usn_servico_id = s.servico_id ";
-        $sql .= "WHERE u.usuarios_nome LIKE ? AND s.servico_classe = ?";
-    } else {
-        $sql .= "WHERE u.usuarios_nome LIKE ?";
+        $sql .= " AND s.servico_classe = ?";
+        $parametros[] = $categoria;
+        $tipos .= "s";
+    }
+
+    // Filtra pelo nome somente se foi informado
+    if (!empty($termo)) {
+        $sql .= " AND s.servico_nome LIKE ?";
+        $termoLike = "%" . $termo . "%";
+        $parametros[] = $termoLike;
+        $tipos .= "s";
     }
 
     $stmt = $conexao->prepare($sql);
-    
-    // Verifica se a preparação falhou
+
     if (!$stmt) {
-        return []; 
+        return [];
     }
 
-    $termoLike = "%" . $termo . "%";
-
-    // O bind_param muda dependendo da quantidade de variáveis na nossa query
-    if (!empty($categoria)) {
-        $stmt->bind_param("ss", $termoLike, $categoria);
-    } else {
-        $stmt->bind_param("s", $termoLike);
+    // Só faz bind se houver parâmetros
+    if (!empty($parametros)) {
+        $stmt->bind_param($tipos, ...$parametros);
     }
 
     $stmt->execute();
+
     $resultado = $stmt->get_result();
-    
-    $usuarios = [];
+
+    $servicos = [];
+
     while ($linha = $resultado->fetch_assoc()) {
-        $usuarios[] = $linha;
+        $servicos[] = $linha;
     }
 
     $stmt->close();
 
-    return $usuarios;
+    return $servicos;
 }
+
+
+// function buscarUsuarios($conexao, $termo, $categoria = null) {
+//     // Iniciamos a query base. Usamos DISTINCT para não retornar o mesmo usuário 
+//     // repetido caso ele tenha mais de um serviço na mesma categoria.
+//     $sql = "SELECT DISTINCT u.* FROM usuarios u ";
+
+//     // Se a categoria foi informada, fazemos as junções necessárias usando a tabela 'usn'
+//     if (!empty($categoria)) {
+//         $sql .= "INNER JOIN usn ON u.usuarios_id = usn.usn_usuarios_id ";
+//         $sql .= "INNER JOIN servico s ON usn.usn_servico_id = s.servico_id ";
+//         $sql .= "WHERE u.usuarios_nome LIKE ? AND s.servico_classe = ?";
+//     } else {
+//         $sql .= "WHERE u.usuarios_nome LIKE ?";
+//     }
+
+//     $stmt = $conexao->prepare($sql);
+    
+//     // Verifica se a preparação falhou
+//     if (!$stmt) {
+//         return []; 
+//     }
+
+//     $termoLike = "%" . $termo . "%";
+
+//     // O bind_param muda dependendo da quantidade de variáveis na nossa query
+//     if (!empty($categoria)) {
+//         $stmt->bind_param("ss", $termoLike, $categoria);
+//     } else {
+//         $stmt->bind_param("s", $termoLike);
+//     }
+
+//     $stmt->execute();
+//     $resultado = $stmt->get_result();
+    
+//     $usuarios = [];
+//     while ($linha = $resultado->fetch_assoc()) {
+//         $usuarios[] = $linha;
+//     }
+
+//     $stmt->close();
+
+//     return $usuarios;
+// }
 
 
 function listarServicos($servicos){
@@ -260,7 +316,7 @@ function listarServicos($servicos){
                 <h3>". htmlspecialchars($servico['servico_nome']) ."</h3>
                 <span class='categoria'>". htmlspecialchars($servico['servico_classe']) ."</span>
                 <p class='descricao-servico'>". nl2br(htmlspecialchars($servico['servico_descricao'])) ."</p>
-                </div>";
+              </div>";
     }
 }
 

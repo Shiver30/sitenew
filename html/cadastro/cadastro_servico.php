@@ -251,24 +251,14 @@ if (isset($_POST['cadastro'])) {
 
                 <!-- NOME DO SERVIÇO -->
                 <div class="campo">
-                    <label for="nome_servico">
-                        Nome do serviço:
-                    </label>
-
-                    <input
-                        type="text"
-                        id="nome_servico"
-                        name="nome_servico"
-                        placeholder="Digite o nome do serviço"
-                        required>
+                    <label for="nome_servico">Nome do serviço:</label>
+                    <input type="text" id="nome_servico" name="nome_servico" placeholder="Digite o nome do serviço" required>
                 </div>
 
 
                 <!-- TIPO DO SERVIÇO -->
                 <div class="campo">
-                    <label for="tipoServico">
-                        Classe do serviço:
-                    </label>
+                    <label for="tipoServico">Classe do serviço:</label>
 
                     <select name="tipoServico" id="tipoServico" required>
 
@@ -289,33 +279,15 @@ if (isset($_POST['cadastro'])) {
 
                 <!-- DESCRIÇÃO -->
                 <div class="campo">
-                    <label for="descricao_servico">
-                        Descrição do serviço:
-                    </label>
-
-                    <textarea
-                        id="descricao_servico"
-                        name="descricao_servico"
-                        placeholder="Digite a descrição do serviço"></textarea>
+                    <label for="descricao_servico">Descrição do serviço:</label>
+                    <textarea id="descricao_servico" name="descricao_servico" placeholder="Digite a descrição do serviço"></textarea>
                 </div>
 
 
                 <!-- BOTÕES -->
                 <div class="botoes">
-
-                    <a
-                        href="../home/home.php"
-                        class="btn btn-voltar">
-                        Voltar
-                    </a>
-
-                    <button
-                        type="submit"
-                        class="btn btn-cadastrar"
-                        name = "cadastro">
-                        Cadastrar Serviço
-                    </button>
-
+                    <a href="../home/home.php" class="btn btn-voltar">Voltar</a>
+                    <button type="submit" class="btn btn-cadastrar" name = "cadastro">Cadastrar Serviço</button>
                 </div>
 
             </form>
@@ -327,7 +299,7 @@ if (isset($_POST['cadastro'])) {
 
     <!-- RODAPÉ -->
     <footer>
-        <p>&copy; 2026 - Sistema de Serviços</p>
+        <?php  require_once "include/rodape.php"; ?>
     </footer>
 
 </body>

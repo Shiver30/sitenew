@@ -80,7 +80,6 @@ if ($id_usuario !== null) {
     <title>WorkMatch</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -239,67 +238,54 @@ if ($id_usuario !== null) {
             }
 
         }
-
     </style>
 
 </head>
 
 <body>
 
-<header>
-
-    <div class="logo">WorkMatch</div>
-    <a href="../index.php?logout=1" class="btn-sair">Sair</a>
-
-</header>
+    <header>
+        <div class="logo">WorkMatch</div>
+        <a href="../index.php?logout=1" class="btn-sair">Sair</a>
+    </header>
 
 
-<main>
+    <main>
 
 
-    <!-- ===============================
+        <!-- ===============================
          USUÁRIO LOGADO
     ================================ -->
+        <section class="usuario-area">
+            <img src="<?= htmlspecialchars($caminho_foto) ?>" alt="Foto do usuário" class="foto-usuario">
+            <div class="usuario-info">
+                <h1>Olá, <?= htmlspecialchars($nome_usuario) ?>!</h1>
+                <p>Você está logado no sistema.</p>
+            </div>
 
-    <section class="usuario-area">
-
-        <img src="<?= htmlspecialchars($caminho_foto) ?>"alt="Foto do usuário" class="foto-usuario">
-
-        <div class="usuario-info">
-
-            <h1>Olá, <?= htmlspecialchars($nome_usuario) ?>!</h1>
-            <p>Você está logado no sistema.</p>
-
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- ===============================
+        <!-- ===============================
          MENU
     ================================ -->
+        <section class="menu">
 
-    <section class="menu">
+            <h2>Menu</h2>
+            <a href="pesquisa.php">Pesquisa de usuários</a>
+            <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
+            <a href="pesquisa_servico.php">Pesquisar Serviços</a>
+            <a href="../chat/lista_conversas.php">Lista de conversas</a>
 
-        <h2>Menu</h2>
-        <a href="pesquisa.php">Pesquisa de usuários</a>
-        <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
-        <a href="pesquisa_servico.php">Pesquisar Serviços</a>
-        <a href="../chat/lista_conversas.php">Lista de conversas</a>
-
-    </section>
-
-
-</main>
+        </section>
 
 
-<footer>
+    </main>
 
-    <p>
-        &copy; 2026 - WorkMatch
-    </p>
 
-</footer>
+    <footer>
+        <?php require_once "include/rodape.php"; ?>
+    </footer>
 
 
 </body>
