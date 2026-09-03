@@ -1,3 +1,16 @@
+<?php
+session_start();
+require_once "../conexao.php";
+require_once "../funcoes/funcoes.php";
+verificarLogin();
+
+$id = $_SESSION['usuarios_id'];
+
+$dados = listarPerfil($conexao, $id);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +19,19 @@
     <title>Document</title>
 </head>
 <body>
-    
 
+<?php
 
-    <footer>
-        <?php  require_once "include/rodape.php"; ?>
-    </footer>
+if (isset($dados) && !empty($dados)){
+
+    while($d = $dados ->fetch_assoc()){    
+        echo "<td>" . htmlspecialchars($d['usuarios_nome']) . "</td>";
+        echo "<td>" . htmlspecialchars($d['usuarios_idade']). "</td>";
+        echo "<td>" . htmlspecialchars($d['usuarios_sexo']). "</td>";
+        echo "<td>" . htmlspecialchars($d['usuarios_email']). "</td>";   
+    }
+}
+?>
 
 </body>
 </html>

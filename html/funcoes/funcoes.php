@@ -322,13 +322,15 @@ function listarServicos($servicos){
 
 // Lista de perfil
 
-function listarPerfil($conexao, $id){
-        $sql = "SELECT * FROM usuarios WHERE id=?";
-    
+function listarPerfil($conexao, $id) {
+    $sql = "SELECT * FROM usuarios WHERE usuarios_id = ?";
     $stmt = $conexao->prepare($sql);
+    if (!$stmt) {
+        return false;
+    }
     $stmt->bind_param("i", $id);
     $stmt->execute();
-    
-    return $stmt->get_result(); 
+    return $stmt->get_result();
 }
+
 ?>

@@ -276,7 +276,7 @@ if ($id_usuario !== null) {
         <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
         <a href="pesquisa_servico.php">Pesquisar Serviços</a>
         <a href="../chat/lista_conversas.php">Lista de conversas</a>
-        <a href="pefil.php"></a>
+        <a href="perfil.php">Perfil</a>
 
     </section>
 
