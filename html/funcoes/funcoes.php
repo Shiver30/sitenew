@@ -320,5 +320,15 @@ function listarServicos($servicos){
     }
 }
 
+// Lista de perfil
 
+function listarPerfil($conexao, $id){
+        $sql = "SELECT * FROM usuarios WHERE id=?";
+    
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    
+    return $stmt->get_result(); 
+}
 ?>
