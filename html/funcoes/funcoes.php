@@ -145,19 +145,6 @@ function cadastroServico($conexao, $idUsuario, $nomeServico, $tipoServico, $desc
 
 // FUNÇÕES DA PÁGINA
 
-// Função para pesquisar
-
-function pesquisarNome($conexao, $termo)
-{
-    $sql = "SELECT * FROM usuarios WHERE usuarios_nome LIKE ? ";
-    $comando = mysqli_prepare($conexao, $sql);
-    $termo = "%" . $termo . "%";
-    mysqli_stmt_bind_param($comando, "s", $termo);
-    mysqli_stmt_execute($comando);
-    $resultado = mysqli_stmt_get_result($comando);
-    return $resultado;
-}
-
 // Função para listar os estados e cidades do banco de dados
 
 function listarEstados($conexao)
@@ -204,39 +191,64 @@ function listarConversas($conexao, $id_usuario_logado) {
             WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) 
             AND u.usuarios_id != ?"; // Para não trazer o nome do próprio usuário logado
 
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
-    mysqli_stmt_execute($comando);
-    
-    $resultado = mysqli_stmt_get_result($comando);
-    $lista_conversas = [];
-    while ($conversa = mysqli_fetch_assoc($resultado)) {
-        $lista_conversas[] = $conversa;
-    }
-    mysqli_stmt_close($comando);
-    return $lista_conversas;
-}
+            $comando = mysqli_prepare($conexao, $sql);
+            mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
+            mysqli_stmt_execute($comando);
 
-function buscarServicosPorCategoria($conexao, $categoria){
-    $sql = "SELECT servico_id, servico_nome, servico_classe, servico_descricao FROM servico WHERE servico_classe = ? ORDER BY servico_nome ASC";
+            $resultado = mysqli_stmt_get_result($comando);
+            $lista_conversas = [];
+            while ($conversa = mysqli_fetch_assoc($resultado)) {
+                $lista_conversas[] = $conversa;
+            }
+            mysqli_stmt_close($comando);
+            return $lista_conversas;
+            }
+
+// Função para pesquisar 
+
+function buscarUsuarios($conexao, $termo, $categoria = null) {
+    // Iniciamos a query base. Usamos DISTINCT para não retornar o mesmo usuário 
+    // repetido caso ele tenha mais de um serviço na mesma categoria.
+    $sql = "SELECT DISTINCT u.* FROM usuarios u ";
+
+    // Se a categoria foi informada, fazemos as junções necessárias usando a tabela 'usn'
+    if (!empty($categoria)) {
+        $sql .= "INNER JOIN usn ON u.usuarios_id = usn.usn_usuarios_id ";
+        $sql .= "INNER JOIN servico s ON usn.usn_servico_id = s.servico_id ";
+        $sql .= "WHERE u.usuarios_nome LIKE ? AND s.servico_classe = ?";
+    } else {
+        $sql .= "WHERE u.usuarios_nome LIKE ?";
+    }
 
     $stmt = $conexao->prepare($sql);
+    
+    // Verifica se a preparação falhou
     if (!$stmt) {
-        return [];
+        return []; 
     }
 
-    $stmt->bind_param("s", $categoria);
+    $termoLike = "%" . $termo . "%";
+
+    // O bind_param muda dependendo da quantidade de variáveis na nossa query
+    if (!empty($categoria)) {
+        $stmt->bind_param("ss", $termoLike, $categoria);
+    } else {
+        $stmt->bind_param("s", $termoLike);
+    }
+
     $stmt->execute();
     $resultado = $stmt->get_result();
-    $servicos = [];
-    while ($servico = $resultado->fetch_assoc()) {
-        $servicos[] = $servico;
+    
+    $usuarios = [];
+    while ($linha = $resultado->fetch_assoc()) {
+        $usuarios[] = $linha;
     }
 
     $stmt->close();
 
-    return $servicos;
+    return $usuarios;
 }
+
 
 function listarServicos($servicos){
     if (empty($servicos)) {

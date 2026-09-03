@@ -4,11 +4,12 @@ require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
 verificarLogin();
 
-$categoria = $_GET['categoria'] ?? '';
+$categoria = $_POST['categoria'] ?? '';
 $servicos = [];
+$termo = $_POST['nome'];
 
 if (!empty($categoria)) {
-    $servicos = buscarServicosPorCategoria($conexao, $categoria);
+    $servicos = buscarUsuarios($conexao, $categoria, $termo);
 }
 
 ?>
@@ -245,7 +246,11 @@ if (!empty($categoria)) {
 
             <!-- FORMULÁRIO -->
 
-            <form method="GET" class="form-pesquisa">
+            <form method="POST" class="form-pesquisa">
+
+
+                Nome: <br>
+                <input type="text" name = "nome">
 
                 <select name="categoria" required>
 
