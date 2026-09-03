@@ -277,9 +277,8 @@ if ($id_usuario !== null) {
             <a href="pesquisa_servico.php">Pesquisar Serviços</a>
             <a href="../chat/lista_conversas.php">Lista de conversas</a>
 
-<<<<<<< Updated upstream
         </section>
-=======
+        
         <h2>Menu</h2>
         <a href="pesquisa.php">Pesquisa de usuários</a>
         <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
@@ -288,7 +287,6 @@ if ($id_usuario !== null) {
         <a href="pefil.php"></a>
 
     </section>
->>>>>>> Stashed changes
 
 
     </main>
