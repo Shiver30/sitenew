@@ -271,14 +271,6 @@ if ($id_usuario !== null) {
     ================================ -->
         <section class="menu">
 
-            <h2>Menu</h2>
-            <a href="pesquisa.php">Pesquisa de usuários</a>
-            <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
-            <a href="pesquisa_servico.php">Pesquisar Serviços</a>
-            <a href="../chat/lista_conversas.php">Lista de conversas</a>
-
-        </section>
-        
         <h2>Menu</h2>
         <a href="pesquisa.php">Pesquisa de usuários</a>
         <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
