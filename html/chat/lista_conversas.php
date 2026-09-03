@@ -1,8 +1,7 @@
 <?php
 session_start();
-
+require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
-require_once "../conecao.php";
 verificarLogin();
 
 
