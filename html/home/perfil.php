@@ -9,6 +9,7 @@ $id = $_SESSION['usuarios_id'];
 $dados = listarPerfil($conexao, $id);
 
 
+
 ?>
 
 <!DOCTYPE html>

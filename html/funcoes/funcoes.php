@@ -180,30 +180,6 @@ function listarCidades($conexao, $estado_id)
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// CHAT DE USUARIOS //
-// ( NÃO MISTURAR AS OUTRAS FUNÇÕES A ESTA ÁREA) //
-
-function listarConversas($conexao, $id_usuario_logado) {
-    // Busca conversas onde o usuário logado é o usuario_1 ou usuario_2
-    $sql = "SELECT c.conversa_id, u.usuarios_nome, u.usuario_img 
-            FROM conversas c
-            JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
-            WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) 
-            AND u.usuarios_id != ?"; // Para não trazer o nome do próprio usuário logado
-
-            $comando = mysqli_prepare($conexao, $sql);
-            mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
-            mysqli_stmt_execute($comando);
-
-            $resultado = mysqli_stmt_get_result($comando);
-            $lista_conversas = [];
-            while ($conversa = mysqli_fetch_assoc($resultado)) {
-                $lista_conversas[] = $conversa;
-            }
-            mysqli_stmt_close($comando);
-            return $lista_conversas;
-            }
-
 // Função para pesquisar 
 
 function buscarUsuarios($conexao, $categoria = '', $termo = '') {
@@ -297,4 +273,60 @@ function listarServicos($servicos){
 // CHAT
 
 // Lista de conversas
+
+function listarConversas ($conexao, $id) {
+    // Busca as conversas onde o usuário logado participa (como usuário 1 ou 2)
+    // E junta com a tabela de usuários para trazer os dados da outra pessoa (id diferente do logado)
+    $sql = "SELECT c.conversa_id, u.usuarios_nome, u.usuario_img 
+            FROM conversas c
+            JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
+            WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) 
+            AND u.usuarios_id != ?"; 
+
+    $comando = mysqli_prepare($conexao, $sql);
+    
+    if (!$comando) {
+        return [];
+    }
+
+    mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
+    mysqli_stmt_execute($comando);
+    
+    $resultado = mysqli_stmt_get_result($comando);
+    $lista_conversas = [];
+    
+    while ($conversa = mysqli_fetch_assoc($resultado)) {
+        $lista_conversas[] = $conversa;
+    }
+    
+    mysqli_stmt_close($comando);
+    return $lista_conversas;
+};
+
+// Busca as mensagens de uma conversa específica
+function listarMensagens($conexao, $id_conversa) {
+    $sql = "SELECT * FROM mensagem WHERE mensagem_conversa_id = ? ORDER BY mensagem_hora ASC";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $id_conversa);
+    mysqli_stmt_execute($comando);
+    
+    $resultado = mysqli_stmt_get_result($comando);
+    $mensagens = [];
+    while ($msg = mysqli_fetch_assoc($resultado)) {
+        $mensagens[] = $msg;
+    }
+    mysqli_stmt_close($comando);
+    return $mensagens;
+}
+
+// Salva uma nova mensagem no banco
+function enviarMensagem($conexao, $id_conversa, $id_usuario, $texto) {
+    $sql = "INSERT INTO mensagem (mensagem_conversa_id, mensagem_usuarios_id, mensagem_texto) VALUES (?, ?, ?)";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "iis", $id_conversa, $id_usuario, $texto);
+    
+    $sucesso = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    return $sucesso;
+}
 ?>
