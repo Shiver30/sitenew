@@ -293,15 +293,45 @@ function listarServicos($servicos)
 
 // Lista de conversas
 
+// function listarConversas($conexao, $id)
+// {
+//     // Busca as conversas onde o usuário logado participa (como usuário 1 ou 2)
+//     // E junta com a tabela de usuários para trazer os dados da outra pessoa (id diferente do logado)
+//     $sql = "SELECT c.conversa_id, u.usuarios_nome, u.usuario_img 
+//             FROM conversas c
+//             JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
+//             WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) 
+//             AND u.usuarios_id != ?";
+
+//     $comando = mysqli_prepare($conexao, $sql);
+
+//     if (!$comando) {
+//         return [];
+//     }
+
+//     mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
+//     mysqli_stmt_execute($comando);
+
+//     $resultado = mysqli_stmt_get_result($comando);
+//     $lista_conversas = [];
+
+//     while ($conversa = mysqli_fetch_assoc($resultado)) {
+//         $lista_conversas[] = $conversa;
+//     }
+
+//     mysqli_stmt_close($comando);
+//     return $lista_conversas;
+// };
+
 function listarConversas($conexao, $id)
 {
-    // Busca as conversas onde o usuário logado participa (como usuário 1 ou 2)
-    // E junta com a tabela de usuários para trazer os dados da outra pessoa (id diferente do logado)
-    $sql = "SELECT c.conversa_id, u.usuarios_nome, u.usuario_img 
+    $sql = "SELECT DISTINCT 
+                c.conversa_id,
+                u.usuarios_nome,
+                u.usuario_img
             FROM conversas c
             JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
-            WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) 
-            AND u.usuarios_id != ?";
+            WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) AND u.usuarios_id != ?";
 
     $comando = mysqli_prepare($conexao, $sql);
 
@@ -309,7 +339,8 @@ function listarConversas($conexao, $id)
         return [];
     }
 
-    mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
+    mysqli_stmt_bind_param($comando, "iii", $id, $id, $id);
+
     mysqli_stmt_execute($comando);
 
     $resultado = mysqli_stmt_get_result($comando);
@@ -320,8 +351,9 @@ function listarConversas($conexao, $id)
     }
 
     mysqli_stmt_close($comando);
+
     return $lista_conversas;
-};
+}
 
 // Busca as mensagens de uma conversa específica
 function listarMensagens($conexao, $id_conversa)

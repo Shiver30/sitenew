@@ -178,7 +178,7 @@ $mensagens = listarMensagens($conexao, $id_conversa);
             </div>
 
             <!-- FORMULÁRIO DE DIGITAÇÃO -->
-            <form class="area-envio" method="POST" action="chat_fim.php">
+            <form class="area-envio" method="POST" action="chat_fim.php?id_conversa=<?= $id_conversa ?>">
                 <!-- autofocus faz o cursor já nascer piscando no campo de texto -->
                 <input type="text" name="mensagem_texto" placeholder="Digite sua mensagem..." required autofocus autocomplete="off">
                 <button type="submit" class="btn-enviar">Enviar</button>
