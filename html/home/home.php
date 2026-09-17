@@ -284,7 +284,7 @@ if ($id_usuario !== null) {
 
 
     <footer>
-        <?php require_once "include/rodape.php"; ?>
+        <?php require_once "../include/rodape.php"; ?>
     </footer>
 
 

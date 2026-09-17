@@ -27,13 +27,20 @@ if (isset($dados) && !empty($dados)){
 
     while($d = $dados ->fetch_assoc()){   
         echo"<tr>";
-            echo "<td>" . htmlspecialchars($d['usuarios_nome']) . "</td>";
-            echo "<td>" . htmlspecialchars($d['usuarios_idade']). "</td>";
-            echo "<td>" . htmlspecialchars($d['usuarios_sexo']). "</td>";
-            echo "<td>" . htmlspecialchars($d['usuarios_email']). "</td>";
+            echo "<td>" . htmlspecialchars($d['usuarios_nome']) . "</td> <br>";
+            echo "<td>" . htmlspecialchars($d['usuarios_idade']). "</td> <br>";
+            if($d['usuarios_sexo'] == 'm'){
+                echo "<td>" . htmlspecialchars("masculino"). "</td> <br>";
+            }
+            elseif($d['usuarios_sexo'] == 'f'){
+                echo "<td>" . htmlspecialchars("feminino"). "</td> <br>";
+            }
+            else{
+                echo "<td>" . htmlspecialchars("Não informado"). "</td> <br>";
+            }
         echo"</tr>"; 
     }
-       echo" <a href='../chat/chat_fim.php'>Comversar</a> ";
+       echo" <a href='../chat/chat_fim.php'>Conversar</a> ";
        echo"<br>";
        echo" <a href='home.php'>voltar</a> "; 
 }

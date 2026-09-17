@@ -523,5 +523,5 @@ if (isset($_POST['enviar'])) {
 
     <!-- RODAPÉ -->
     <footer>
-        <?php require_once "include/rodape.php"; ?>
+        <?php require_once "../include/rodape.php"; ?>
     </footer>
