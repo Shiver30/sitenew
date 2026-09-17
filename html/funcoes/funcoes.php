@@ -8,7 +8,7 @@ function login($conexao, $email, $senha)
 {
     $sql = "SELECT * FROM usuarios WHERE usuarios_email = ? AND usuarios_senha = ?";
     $stmt = $conexao->prepare($sql);
-    
+
     if (!$stmt) {
         return false;
     }
@@ -22,7 +22,7 @@ function login($conexao, $email, $senha)
         $_SESSION['usuario_nome'] = $usuario['usuarios_nome'];
         $_SESSION['usuarios_id'] = $usuario['usuarios_id'];
         $stmt->close();
-        
+
         return true;
     }
     $stmt->close();
@@ -32,11 +32,12 @@ function login($conexao, $email, $senha)
 
 // vereficar loguin
 
-function verificarLogin(){
+function verificarLogin()
+{
     // return isset($_SESSION['usuario']);
     if (!isset($_SESSION['usuarios_id'])) {
         header("Location: ../login.php");
-    exit;
+        exit;
     }
 }
 
@@ -69,15 +70,16 @@ function cadastrarUsuario($conexao, $nome, $email, $senha, $data, $cpf, $sexo, $
 
 // Cadastro endereço
 
-function cadastroEndereco($conexao, $salvar, $cidade) {
+function cadastroEndereco($conexao, $salvar, $cidade)
+{
     $sql = "INSERT INTO endereco (endereco_usuarios_id, endereco_cidade_id) VALUES (?, ?)";
 
     $comando = mysqli_prepare($conexao, $sql);
     // Alterado para "is" para aceitar o ID do usuário (int) e a Cidade (int)
-    mysqli_stmt_bind_param($comando, "ii", $salvar, $cidade); 
+    mysqli_stmt_bind_param($comando, "ii", $salvar, $cidade);
     $resultado = mysqli_stmt_execute($comando);
     mysqli_stmt_close($comando);
-    
+
     return $resultado;
 }
 
@@ -111,13 +113,13 @@ function cadastroServico($conexao, $idUsuario, $nomeServico, $tipoServico, $desc
 {
     $sqlServico = "INSERT INTO servico (servico_nome, servico_descricao, servico_classe) VALUES (?, ?, ?)";
     $stmtServico = mysqli_prepare($conexao, $sqlServico);
-    
+
     if (!$stmtServico) {
         return false;
     }
 
     mysqli_stmt_bind_param($stmtServico, "sss", $nomeServico, $descricaoServico, $tipoServico);
-    
+
     if (mysqli_stmt_execute($stmtServico)) {
         // 2. Pega o ID gerado para o novo serviço
         $idServicoCriado = mysqli_insert_id($conexao);
@@ -182,9 +184,11 @@ function listarCidades($conexao, $estado_id)
 
 // Função para pesquisar 
 
-function buscarUsuarios($conexao, $categoria = '', $termo = '') {
+function buscarUsuarios($conexao, $categoria = '', $termo = '')
+{
 
     $sql = "SELECT DISTINCT 
+                u.usuarios_id,
                 s.servico_nome,
                 s.servico_classe,
                 s.servico_descricao
@@ -240,7 +244,8 @@ function buscarUsuarios($conexao, $categoria = '', $termo = '') {
 
 // Lista de perfil
 
-function listarPerfil($conexao, $id) {
+function listarPerfil($conexao, $id)
+{
     $sql = "SELECT * FROM usuarios WHERE usuarios_id = ?";
     $stmt = $conexao->prepare($sql);
     if (!$stmt) {
@@ -253,63 +258,79 @@ function listarPerfil($conexao, $id) {
 
 
 // Lista de serviço
-function listarServicos($servicos){
+function listarServicos($servicos)
+{
     if (empty($servicos)) {
-            echo "<div class='sem-resultados'>Nenhum serviço encontrado nesta categoria.</div>";
-            return;
-        }
-        foreach ($servicos as $servico) {
-            echo "<div class='servico'>
-            <h3>". htmlspecialchars($servico['servico_nome']) ."</h3>
-                    <span class='categoria'>". htmlspecialchars($servico['servico_classe']) ."</span>
-                    <p class='descricao-servico'>". nl2br(htmlspecialchars($servico['servico_descricao'])) ."</p>
-                    </div>";
-                }
-            }
-     
-            
+        echo "<div class='sem-resultados'>Nenhum serviço encontrado nesta categoria.</div>";
+        return;
+    }
+
+    foreach ($servicos as $servico) {
+
+        $idUsuario = (int) $servico['usuarios_id'];
+        $nomeServico = htmlspecialchars($servico['servico_nome']);
+        $classe = htmlspecialchars($servico['servico_classe']);
+        $descricao = nl2br(htmlspecialchars($servico['servico_descricao']));
+
+        echo "<div class='servico'>
+                <h3>
+                    <a href='perfil.php?id={$idUsuario}'>
+                        {$nomeServico}
+                    </a>
+                </h3>
+                <span class='categoria'>{$classe}</span>
+                <p class='descricao-servico'>{$descricao}</p>
+              </div>";
+    }
+}
+
+// INCREMENTAR -> Colocar link do perfil do usuário que está disponibilizando o serviço
+
+
 /////////////////////////////////////////////////////////////////////////////
 
 // CHAT
 
 // Lista de conversas
 
-function listarConversas ($conexao, $id) {
+function listarConversas($conexao, $id)
+{
     // Busca as conversas onde o usuário logado participa (como usuário 1 ou 2)
     // E junta com a tabela de usuários para trazer os dados da outra pessoa (id diferente do logado)
     $sql = "SELECT c.conversa_id, u.usuarios_nome, u.usuario_img 
             FROM conversas c
             JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
             WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) 
-            AND u.usuarios_id != ?"; 
+            AND u.usuarios_id != ?";
 
     $comando = mysqli_prepare($conexao, $sql);
-    
+
     if (!$comando) {
         return [];
     }
 
     mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
     mysqli_stmt_execute($comando);
-    
+
     $resultado = mysqli_stmt_get_result($comando);
     $lista_conversas = [];
-    
+
     while ($conversa = mysqli_fetch_assoc($resultado)) {
         $lista_conversas[] = $conversa;
     }
-    
+
     mysqli_stmt_close($comando);
     return $lista_conversas;
 };
 
 // Busca as mensagens de uma conversa específica
-function listarMensagens($conexao, $id_conversa) {
+function listarMensagens($conexao, $id_conversa)
+{
     $sql = "SELECT * FROM mensagem WHERE mensagem_conversa_id = ? ORDER BY mensagem_hora ASC";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $id_conversa);
     mysqli_stmt_execute($comando);
-    
+
     $resultado = mysqli_stmt_get_result($comando);
     $mensagens = [];
     while ($msg = mysqli_fetch_assoc($resultado)) {
@@ -320,13 +341,64 @@ function listarMensagens($conexao, $id_conversa) {
 }
 
 // Salva uma nova mensagem no banco
-function enviarMensagem($conexao, $id_conversa, $id_usuario, $texto) {
+function enviarMensagem($conexao, $id_conversa, $id_usuario, $texto)
+{
     $sql = "INSERT INTO mensagem (mensagem_conversa_id, mensagem_usuarios_id, mensagem_texto) VALUES (?, ?, ?)";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "iis", $id_conversa, $id_usuario, $texto);
-    
+
     $sucesso = mysqli_stmt_execute($comando);
     mysqli_stmt_close($comando);
     return $sucesso;
 }
-?>
+
+function encontrarOuCriarConversa($conexao, $meu_id, $outro_usuario_id)
+{
+    // Impede criar conversa consigo mesmo
+    if ($meu_id == $outro_usuario_id) {
+        return false;
+    }
+
+    // Procura se já existe uma conversa entre os dois usuários
+    $sql = "SELECT conversa_id 
+            FROM conversas
+            WHERE (usuario_1_id = ? AND usuario_2_id = ?)
+               OR (usuario_1_id = ? AND usuario_2_id = ?)
+            LIMIT 1";
+
+    $comando = mysqli_prepare($conexao, $sql);
+
+    if (!$comando) {
+        return false;
+    }
+
+    mysqli_stmt_bind_param($comando, "iiii", $meu_id, $outro_usuario_id, $outro_usuario_id, $meu_id);
+    mysqli_stmt_execute($comando);
+    $resultado = mysqli_stmt_get_result($comando);
+
+    if ($conversa = mysqli_fetch_assoc($resultado)) {
+        $id_conversa = $conversa['conversa_id'];
+        mysqli_stmt_close($comando);
+        return $id_conversa;
+    }
+    mysqli_stmt_close($comando);
+    // Se não existe, cria uma nova conversa
+
+    $sql = "INSERT INTO conversas (usuario_1_id, usuario_2_id) VALUES (?, ?)";
+    $comando = mysqli_prepare($conexao, $sql);
+
+    if (!$comando) {
+        return false;
+    }
+
+    mysqli_stmt_bind_param($comando, "ii", $meu_id, $outro_usuario_id);
+    $sucesso = mysqli_stmt_execute($comando);
+
+    if (!$sucesso) {
+        mysqli_stmt_close($comando);
+        return false;
+    }
+    $id_conversa = mysqli_insert_id($conexao);
+    mysqli_stmt_close($comando);
+    return $id_conversa;
+}

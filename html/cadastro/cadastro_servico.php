@@ -299,7 +299,7 @@ if (isset($_POST['cadastro'])) {
 
     <!-- RODAPÉ -->
     <footer>
-        <?php  require_once "include/rodape.php"; ?>
+        <?php  require_once "../include/rodape.php"; ?>
     </footer>
 
 </body>
