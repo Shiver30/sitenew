@@ -6,9 +6,10 @@ verificarLogin(); // Garante que ninguém acesse sem estar logado
 
 $meu_id = $_SESSION['usuarios_id'];
 
+
 // Verifica se o ID da conversa foi passado na URL
 if (!isset($_GET['id_conversa']) || empty($_GET['id_conversa'])) {
-    header("Location: lista_chats.php"); // Se não tem ID, manda de volta pra lista
+    header("Location: lista_conversas.php"); // Se não tem ID, manda de volta pra lista
     exit;
 }
 
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         enviarMensagem($conexao, $id_conversa, $meu_id, $texto_mensagem);
         
         // Redireciona para a mesma página para evitar envio duplicado ao atualizar a tela (F5)
-        header("Location: chat.php?id_conversa=" . $id_conversa);
+        header("Location: chat_fim.php?id_conversa=" . $id_conversa);
         exit;
     }
 }
@@ -148,7 +149,7 @@ $mensagens = listarMensagens($conexao, $id_conversa);
 
     <header>
         <div class="logo">WorkMatch - Chat</div>
-        <nav><a href="lista_chats.php">Voltar para Conversas</a></nav>
+        <nav><a href="lista_conversas.php">Voltar para Conversas</a></nav>
     </header>
 
     <main>
@@ -177,7 +178,7 @@ $mensagens = listarMensagens($conexao, $id_conversa);
             </div>
 
             <!-- FORMULÁRIO DE DIGITAÇÃO -->
-            <form class="area-envio" method="POST" action="chat.php?id_conversa=<?= $id_conversa ?>">
+            <form class="area-envio" method="POST" action="chat_fim.php">
                 <!-- autofocus faz o cursor já nascer piscando no campo de texto -->
                 <input type="text" name="mensagem_texto" placeholder="Digite sua mensagem..." required autofocus autocomplete="off">
                 <button type="submit" class="btn-enviar">Enviar</button>

@@ -4,7 +4,9 @@ require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
 verificarLogin();
 
-
+if (isset($_GET['id'])){
+    $_SESSION['id_2'] = $_GET['id'];
+}
 $id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['usuarios_id'];
 
 $dados = listarPerfil($conexao, $id);

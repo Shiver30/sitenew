@@ -352,10 +352,11 @@ function enviarMensagem($conexao, $id_conversa, $id_usuario, $texto)
     return $sucesso;
 }
 
-function encontrarOuCriarConversa($conexao, $meu_id, $outro_usuario_id)
+// Cria ou Encontra Conversas
+function encontrarOuCriarConversa($conexao, $meu_id, $id)
 {
     // Impede criar conversa consigo mesmo
-    if ($meu_id == $outro_usuario_id) {
+    if ($meu_id == $id) {
         return false;
     }
 
@@ -372,7 +373,7 @@ function encontrarOuCriarConversa($conexao, $meu_id, $outro_usuario_id)
         return false;
     }
 
-    mysqli_stmt_bind_param($comando, "iiii", $meu_id, $outro_usuario_id, $outro_usuario_id, $meu_id);
+    mysqli_stmt_bind_param($comando, "iiii", $meu_id, $id, $id, $meu_id);
     mysqli_stmt_execute($comando);
     $resultado = mysqli_stmt_get_result($comando);
 
@@ -391,7 +392,7 @@ function encontrarOuCriarConversa($conexao, $meu_id, $outro_usuario_id)
         return false;
     }
 
-    mysqli_stmt_bind_param($comando, "ii", $meu_id, $outro_usuario_id);
+    mysqli_stmt_bind_param($comando, "ii", $meu_id, $id);
     $sucesso = mysqli_stmt_execute($comando);
 
     if (!$sucesso) {
@@ -402,3 +403,5 @@ function encontrarOuCriarConversa($conexao, $meu_id, $outro_usuario_id)
     mysqli_stmt_close($comando);
     return $id_conversa;
 }
+
+?>
