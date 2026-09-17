@@ -262,64 +262,6 @@ function buscarUsuarios($conexao, $categoria = '', $termo = '') {
 }
 
 
-// function buscarUsuarios($conexao, $termo, $categoria = null) {
-//     // Iniciamos a query base. Usamos DISTINCT para não retornar o mesmo usuário 
-//     // repetido caso ele tenha mais de um serviço na mesma categoria.
-//     $sql = "SELECT DISTINCT u.* FROM usuarios u ";
-
-//     // Se a categoria foi informada, fazemos as junções necessárias usando a tabela 'usn'
-//     if (!empty($categoria)) {
-//         $sql .= "INNER JOIN usn ON u.usuarios_id = usn.usn_usuarios_id ";
-//         $sql .= "INNER JOIN servico s ON usn.usn_servico_id = s.servico_id ";
-//         $sql .= "WHERE u.usuarios_nome LIKE ? AND s.servico_classe = ?";
-//     } else {
-//         $sql .= "WHERE u.usuarios_nome LIKE ?";
-//     }
-
-//     $stmt = $conexao->prepare($sql);
-    
-//     // Verifica se a preparação falhou
-//     if (!$stmt) {
-//         return []; 
-//     }
-
-//     $termoLike = "%" . $termo . "%";
-
-//     // O bind_param muda dependendo da quantidade de variáveis na nossa query
-//     if (!empty($categoria)) {
-//         $stmt->bind_param("ss", $termoLike, $categoria);
-//     } else {
-//         $stmt->bind_param("s", $termoLike);
-//     }
-
-//     $stmt->execute();
-//     $resultado = $stmt->get_result();
-    
-//     $usuarios = [];
-//     while ($linha = $resultado->fetch_assoc()) {
-//         $usuarios[] = $linha;
-//     }
-
-//     $stmt->close();
-
-//     return $usuarios;
-// }
-
-
-function listarServicos($servicos){
-    if (empty($servicos)) {
-        echo "<div class='sem-resultados'>Nenhum serviço encontrado nesta categoria.</div>";
-        return;
-    }
-    foreach ($servicos as $servico) {
-        echo "<div class='servico'>
-                <h3>". htmlspecialchars($servico['servico_nome']) ."</h3>
-                <span class='categoria'>". htmlspecialchars($servico['servico_classe']) ."</span>
-                <p class='descricao-servico'>". nl2br(htmlspecialchars($servico['servico_descricao'])) ."</p>
-              </div>";
-    }
-}
-
 // Lista de perfil
 
 function listarPerfil($conexao, $id) {
@@ -333,4 +275,26 @@ function listarPerfil($conexao, $id) {
     return $stmt->get_result();
 }
 
+
+// Lista de serviço
+function listarServicos($servicos){
+    if (empty($servicos)) {
+            echo "<div class='sem-resultados'>Nenhum serviço encontrado nesta categoria.</div>";
+            return;
+        }
+        foreach ($servicos as $servico) {
+            echo "<div class='servico'>
+            <h3>". htmlspecialchars($servico['servico_nome']) ."</h3>
+                    <span class='categoria'>". htmlspecialchars($servico['servico_classe']) ."</span>
+                    <p class='descricao-servico'>". nl2br(htmlspecialchars($servico['servico_descricao'])) ."</p>
+                    </div>";
+                }
+            }
+     
+            
+/////////////////////////////////////////////////////////////////////////////
+
+// CHAT
+
+// Lista de conversas
 ?>
