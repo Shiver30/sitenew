@@ -11,10 +11,10 @@ verificarLogin();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mensagens</title>
+<title>Conversas</title>
 </head>
 <body>
 
-<h1>Mensagens</h1>
+<h1>Conversas</h1>
 
 </body>

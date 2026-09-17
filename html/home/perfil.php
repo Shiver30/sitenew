@@ -32,9 +32,7 @@ if (isset($dados) && !empty($dados)){
             echo "<td>" . htmlspecialchars($d['usuarios_email']). "</td>";
         echo"</tr>"; 
     }
-
-
-       echo" <a href='../chat/chat_fim.php'>Perfil</a> ";
+       echo" <a href='../chat/chat_fim.php'>Comversar</a> ";
        echo"<br>";
        echo" <a href='home.php'>voltar</a> "; 
 }
