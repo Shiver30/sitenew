@@ -35,7 +35,7 @@ $dados = listarPerfil($conexao, $id);
             echo "<td>" . htmlspecialchars($d['usuarios_nome']) . "</td> <br>";
             echo "<td>" . htmlspecialchars($d['usuarios_idade']) . "</td> <br>";
             echo "<td>" . htmlspecialchars($d['usuarios_email']) . "</td> <br>";
-            echo "<td>" . htmlspecialchars($d['usuarios_img']) . "</td> <br>";        
+            echo "<td>" . htmlspecialchars($d['usuario_img']) . "</td> <br>";        
             if ($d['usuarios_sexo'] == 'm') {
                 echo "<td>" . htmlspecialchars("masculino") . "</td> <br>";
             } elseif ($d['usuarios_sexo'] == 'f') {
