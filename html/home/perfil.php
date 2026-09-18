@@ -12,8 +12,7 @@ $id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['usuarios_id'];
 $dados = listarPerfil($conexao, $id);
 
 if (isset($_POST['enviar'])){
-
-    $avaliação = 
+// Não finalizado
 }
 
 ?>
@@ -92,8 +91,8 @@ if (isset($_POST['enviar'])){
     </form>
 
 
-      <input type="hidden" name="user" value="<?php echo $nota; ?>">
-      <input type="hidden" name="film" value="<?php echo $descrição; ?>">
+      <!-- <input type="hidden" name="user" value="<?php // echo $nota; ?>"> -->
+      <!-- <input type="hidden" name="film" value="<?php // echo $descrição; ?>"> -->
 
   </main>
 
