@@ -14,6 +14,7 @@ if (!isset($_GET['id_conversa']) || empty($_GET['id_conversa'])) {
 }
 $id_conversa = (int)$_GET['id_conversa'];
 
+$usuario_conversa = buscarOutroUsuarioConversa($conexao, $id_conversa, $meu_id);
 // Retorna as mensagens para o JavaScript
 if (isset($_GET['buscar_mensagens'])) {
     $mensagens = listarMensagens($conexao, $id_conversa);
@@ -27,10 +28,10 @@ if (isset($_GET['buscar_mensagens'])) {
 // LÓGICA DE ENVIAR MENSAGEM
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $texto_mensagem = trim($_POST['mensagem_texto']);
-    
+
     if (!empty($texto_mensagem)) {
         enviarMensagem($conexao, $id_conversa, $meu_id, $texto_mensagem);
-        
+
         // Redireciona para a mesma página para evitar envio duplicado ao atualizar a tela (F5)
         header("Location: chat_fim.php?id_conversa=" . $id_conversa);
         exit;
@@ -44,30 +45,71 @@ $mensagens = listarMensagens($conexao, $id_conversa);
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat - WorkMatch</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; color: #333; height: 100vh; display: flex; flex-direction: column; }
-        
-        header { background-color: #222; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 20px; font-weight: bold; }
-        header a { color: white; text-decoration: none; padding: 8px 12px; border-radius: 5px; font-size: 14px; background-color: #444; }
-        header a:hover { background-color: #555; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        main { flex: 1; display: flex; justify-content: center; padding: 20px; overflow: hidden; }
-        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #222;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #444;
+        }
+
+        header a:hover {
+            background-color: #555;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
         /* JANELA DO CHAT */
-        .chat-container { 
-            width: 100%; 
-            max-width: 800px; 
-            background-color: white; 
-            border-radius: 10px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-            display: flex; 
-            flex-direction: column; 
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
 
@@ -95,7 +137,7 @@ $mensagens = listarMensagens($conexao, $id_conversa);
         .balao .hora {
             display: block;
             font-size: 10px;
-            color: rgba(0,0,0,0.5);
+            color: rgba(0, 0, 0, 0.5);
             margin-top: 5px;
             text-align: right;
         }
@@ -103,7 +145,8 @@ $mensagens = listarMensagens($conexao, $id_conversa);
         /* Mensagem enviada pelo usuário logado (Direita) */
         .minha-mensagem {
             align-self: flex-end;
-            background-color: #dcf8c6; /* Cor verde estilo WhatsApp */
+            background-color: #dcf8c6;
+            /* Cor verde estilo WhatsApp */
             border-bottom-right-radius: 2px;
         }
 
@@ -112,7 +155,7 @@ $mensagens = listarMensagens($conexao, $id_conversa);
             align-self: flex-start;
             background-color: #ffffff;
             border-bottom-left-radius: 2px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         /* FORMULÁRIO DE ENVIO */
@@ -132,7 +175,7 @@ $mensagens = listarMensagens($conexao, $id_conversa);
             font-size: 15px;
             outline: none;
         }
-        
+
         .area-envio input[type="text"]:focus {
             border-color: #007bff;
         }
@@ -151,6 +194,41 @@ $mensagens = listarMensagens($conexao, $id_conversa);
         .btn-enviar:hover {
             background-color: #0056b3;
         }
+
+        .cabecalho-chat {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background-color: #222;
+            color: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .foto-chat {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+
+        .sem-foto {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .info-chat h2 {
+            font-size: 17px;
+            margin: 0;
+        }
+
+        .info-chat span {
+            font-size: 12px;
+            color: #ccc;
+        }
     </style>
 </head>
 
@@ -163,22 +241,36 @@ $mensagens = listarMensagens($conexao, $id_conversa);
 
     <main>
         <div class="chat-container">
-            
+            <div class="cabecalho-chat">
+                <?php if (!empty($usuario_conversa['usuario_img'])): ?>
+                    <img src="<?= htmlspecialchars($usuario_conversa['usuario_img']) ?>" alt="Foto do usuário" class="foto-chat">
+
+                <?php else: ?>
+                    <div class="foto-chat sem-foto">👤</div>
+                <?php endif; ?>
+
+                <div class="info-chat">
+                    <h2><?= htmlspecialchars($usuario_conversa['usuarios_nome']) ?></h2>
+                    <span>Conversa</span>
+                </div>
+
+            </div>
+
             <!-- EXIBIÇÃO DAS MENSAGENS -->
             <div class="area-mensagens" id="areaMensagens">
-                
+
                 <?php if (count($mensagens) > 0): ?>
                     <?php foreach ($mensagens as $msg): ?>
-                        
+
                         <!-- Verifica se a mensagem é sua ou da outra pessoa -->
                         <?php $classe_balao = ($msg['mensagem_usuarios_id'] == $meu_id) ? 'minha-mensagem' : 'outra-mensagem'; ?>
-                        
+
                         <div class="balao <?= $classe_balao ?>">
                             <?= htmlspecialchars($msg['mensagem_texto']) ?>
                             <!-- Formata a hora para mostrar no cantinho do balão -->
                             <span class="hora"><?= date('H:i', strtotime($msg['mensagem_hora'])) ?></span>
                         </div>
-                        
+
                     <?php endforeach; ?>
                 <?php else: ?>
                     <p style="text-align: center; color: #888; margin-top: 20px;">Nenhuma mensagem ainda. Envie um "Olá" para começar!</p>
@@ -199,8 +291,80 @@ $mensagens = listarMensagens($conexao, $id_conversa);
     <!-- Script simples para garantir que a barra de rolagem desça para a última mensagem -->
     <script>
         const areaMensagens = document.getElementById('areaMensagens');
+        const idConversa = <?= $id_conversa ?>;
+        const meuId = <?= $meu_id ?>;
+
+        let quantidadeMensagens = <?= count($mensagens) ?>;
+
+        // Mantém o chat na última mensagem
         areaMensagens.scrollTop = areaMensagens.scrollHeight;
+
+        async function atualizarMensagens() {
+
+            try {
+
+                const resposta = await fetch(
+                    'chat_fim.php?id_conversa=' + idConversa + '&buscar_mensagens=1'
+                );
+
+                const mensagens = await resposta.json();
+
+                // Só atualiza se a quantidade de mensagens mudou
+                if (mensagens.length !== quantidadeMensagens) {
+
+                    quantidadeMensagens = mensagens.length;
+
+                    areaMensagens.innerHTML = '';
+
+                    mensagens.forEach(msg => {
+
+                        const balao = document.createElement('div');
+
+                        balao.classList.add('balao');
+
+                        if (parseInt(msg.mensagem_usuarios_id) === meuId) {
+                            balao.classList.add('minha-mensagem');
+                        } else {
+                            balao.classList.add('outra-mensagem');
+                        }
+
+                        const texto = document.createTextNode(
+                            msg.mensagem_texto
+                        );
+
+                        balao.appendChild(texto);
+
+                        const hora = document.createElement('span');
+
+                        hora.classList.add('hora');
+
+                        const data = new Date(
+                            msg.mensagem_hora.replace(' ', 'T')
+                        );
+
+                        hora.textContent =
+                            data.getHours().toString().padStart(2, '0') +
+                            ':' +
+                            data.getMinutes().toString().padStart(2, '0');
+
+                        balao.appendChild(hora);
+
+                        areaMensagens.appendChild(balao);
+                    });
+
+                    // Desce para a última mensagem
+                    areaMensagens.scrollTop = areaMensagens.scrollHeight;
+                }
+
+            } catch (erro) {
+                console.error('Erro ao atualizar mensagens:', erro);
+            }
+        }
+
+        // Verifica novas mensagens a cada 1 segundo
+        setInterval(atualizarMensagens, 1000);
     </script>
 
 </body>
+
 </html>

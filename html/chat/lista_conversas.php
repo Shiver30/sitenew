@@ -80,13 +80,35 @@ $dados = listarConversas($conexao, $id);
         /* LISTA DE CHATS */
         .chat-item {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 15px;
+            padding: 15px 18px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            background-color: #fafafa;
+            margin-bottom: 12px;
+            background-color: #fff;
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-info h3 {
+            margin: 0;
+        }
+
+        .btn-chat {
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn-voltar {
+            color: #0000ee;
+            margin-left: 20px;
         }
 
         .chat-info h3 {

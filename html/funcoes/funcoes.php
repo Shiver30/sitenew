@@ -436,6 +436,33 @@ function encontrarOuCriarConversa($conexao, $meu_id, $id)
     return $id_conversa;
 }
 
+<<<<<<< Updated upstream
 
+=======
+function buscarOutroUsuarioConversa($conexao, $id_conversa, $meu_id)
+{
+    $sql = "SELECT u.usuarios_id, u.usuarios_nome, u.usuario_img
+            FROM conversas c JOIN usuarios u 
+                ON u.usuarios_id = c.usuario_1_id 
+                OR u.usuarios_id = c.usuario_2_id
+            WHERE c.conversa_id = ? AND u.usuarios_id != ? LIMIT 1";
+
+    $comando = mysqli_prepare($conexao, $sql);
+
+    if (!$comando) {
+        return false;
+    }
+
+    mysqli_stmt_bind_param($comando, "ii", $id_conversa, $meu_id);
+    mysqli_stmt_execute($comando);
+
+    $resultado = mysqli_stmt_get_result($comando);
+    $usuario = mysqli_fetch_assoc($resultado);
+
+    mysqli_stmt_close($comando);
+
+    return $usuario;
+}
+>>>>>>> Stashed changes
 
 ?>
