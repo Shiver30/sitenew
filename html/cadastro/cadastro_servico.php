@@ -235,7 +235,7 @@ if (isset($_POST['cadastro'])) {
         </div>
 
         <nav>
-            <a href="../index.php">Início</a>
+            <a href="../home/home.php">Início</a>
         </nav>
     </header>
 
