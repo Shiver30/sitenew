@@ -436,4 +436,6 @@ function encontrarOuCriarConversa($conexao, $meu_id, $id)
     return $id_conversa;
 }
 
+
+
 ?>

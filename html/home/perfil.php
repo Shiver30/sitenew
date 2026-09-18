@@ -61,9 +61,43 @@ $dados = listarPerfil($conexao, $id);
     }
     ?>
 
+<p>
+
+      <!-- CONTEÚDO  -->
+  <main class="avaliacao-container">
+    <form action="../saves/save_avaliacao.php" method="POST" class="avaliacao-form">
+      <h2 class="titulo-avaliacao">Avalie o usuario</h2>
+
+      <label class="label-nota">Nota:</label>
+      <div class="rating">
+        <input type="radio" id="star5" name="nota" value="5">
+        <label for="star5" title="5 estrelas">★</label>
+        <input type="radio" id="star4" name="nota" value="4">
+        <label for="star4" title="4 estrelas">★</label>
+        <input type="radio" id="star3" name="nota" value="3">
+        <label for="star3" title="3 estrelas">★</label>
+        <input type="radio" id="star2" name="nota" value="2">
+        <label for="star2" title="2 estrelas">★</label>
+        <input type="radio" id="star1" name="nota" value="1">
+        <label for="star1" title="1 estrela">★</label>
+      </div>
+
+      <label for="desc" class="label-desc">Comentário:</label> <br>
+      <textarea id="desc" name="desc" class="input-desc" placeholder="Escreva aqui sua opinião..."></textarea> <br>
+
+
+      <input type="hidden" name="user" value="<?php echo $nota; ?>">
+      <input type="hidden" name="film" value="<?php echo $descrição; ?>">
+
+      <button type="submit" class="btn-enviar">Enviar Avaliação</button> não esta funcionado
+  </main>
+    
+</p>
+
 <footer>
    <?php require_once "../include/navegacao.php"; ?>
 </footer>
+
 </body>
 
 </html>

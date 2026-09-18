@@ -184,6 +184,10 @@ $dados = listarConversas($conexao, $id);
             ?>
         </div>
     </main>
+    
+    <footer>
+        <?php require_once "../include/navegacao.php"; ?>
+    </footer>
 
     <footer>
         <p>&copy; 2026 - WorkMatch</p>
