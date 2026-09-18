@@ -436,7 +436,6 @@ function encontrarOuCriarConversa($conexao, $meu_id, $id)
     return $id_conversa;
 }
 
-
 function buscarOutroUsuarioConversa($conexao, $id_conversa, $meu_id)
 {
     $sql = "SELECT u.usuarios_id, u.usuarios_nome, u.usuario_img
