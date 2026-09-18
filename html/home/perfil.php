@@ -66,7 +66,7 @@ $dados = listarPerfil($conexao, $id);
       <!-- CONTEÚDO  -->
   <main class="avaliacao-container">
     <form action="../saves/save_avaliacao.php" method="POST" class="avaliacao-form">
-      <h2 class="titulo-avaliacao">Avalie o usuario</h2>
+      <h2 class="">Avalie o usuario</h2>
 
       <label class="label-nota">Nota:</label>
       <div class="rating">
@@ -82,16 +82,18 @@ $dados = listarPerfil($conexao, $id);
         <label for="star1" title="1 estrela">★</label>
       </div>
 
-      <label for="desc" class="label-desc">Comentário:</label> <br>
+      <label for="desc" class="">Comentário:</label> <br>
       <textarea id="desc" name="desc" class="input-desc" placeholder="Escreva aqui sua opinião..."></textarea> <br>
+
+        <button type="submit" class="">Enviar Avaliação</button> não esta funcionado
+      </form>
 
 
       <input type="hidden" name="user" value="<?php echo $nota; ?>">
       <input type="hidden" name="film" value="<?php echo $descrição; ?>">
 
-      <button type="submit" class="btn-enviar">Enviar Avaliação</button> não esta funcionado
   </main>
-    
+
 </p>
 
 <footer>
