@@ -436,9 +436,7 @@ function encontrarOuCriarConversa($conexao, $meu_id, $id)
     return $id_conversa;
 }
 
-<<<<<<< Updated upstream
 
-=======
 function buscarOutroUsuarioConversa($conexao, $id_conversa, $meu_id)
 {
     $sql = "SELECT u.usuarios_id, u.usuarios_nome, u.usuario_img
@@ -463,6 +461,5 @@ function buscarOutroUsuarioConversa($conexao, $id_conversa, $meu_id)
 
     return $usuario;
 }
->>>>>>> Stashed changes
 
 ?>
