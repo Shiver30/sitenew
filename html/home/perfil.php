@@ -11,7 +11,10 @@ $id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['usuarios_id'];
 
 $dados = listarPerfil($conexao, $id);
 
+if (isset($_POST['enviar'])){
 
+    $avaliação = 
+}
 
 ?>
 
@@ -65,10 +68,10 @@ $dados = listarPerfil($conexao, $id);
 
       <!-- CONTEÚDO  -->
   <main class="avaliacao-container">
-    <form action="../saves/save_avaliacao.php" method="POST" class="avaliacao-form">
+    <form action="" method="POST" class="avaliacao-form">
       <h2 class="">Avalie o usuario</h2>
 
-      <label class="label-nota">Nota:</label>
+      <label class="">Nota:</label>
       <div class="rating">
         <input type="radio" id="star5" name="nota" value="5">
         <label for="star5" title="5 estrelas">★</label>
@@ -85,8 +88,8 @@ $dados = listarPerfil($conexao, $id);
       <label for="desc" class="">Comentário:</label> <br>
       <textarea id="desc" name="desc" class="input-desc" placeholder="Escreva aqui sua opinião..."></textarea> <br>
 
-        <button type="submit" class="">Enviar Avaliação</button> não esta funcionado
-      </form>
+        <button type="submit" name="enviar" >Enviar Avaliação</button> não esta funcionado
+    </form>
 
 
       <input type="hidden" name="user" value="<?php echo $nota; ?>">

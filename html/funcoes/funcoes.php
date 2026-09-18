@@ -284,6 +284,12 @@ function listarServicos($servicos)
     }
 }
 
+// AVALIAÇÂO
+
+function avaliacao($conexao, ){
+    
+};
+
 // INCREMENTAR -> Colocar link do perfil do usuário que está disponibilizando o serviço
 
 
