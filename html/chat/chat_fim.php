@@ -12,8 +12,17 @@ if (!isset($_GET['id_conversa']) || empty($_GET['id_conversa'])) {
     header("Location: lista_conversas.php"); // Se não tem ID, manda de volta pra lista
     exit;
 }
-
 $id_conversa = (int)$_GET['id_conversa'];
+
+// Retorna as mensagens para o JavaScript
+if (isset($_GET['buscar_mensagens'])) {
+    $mensagens = listarMensagens($conexao, $id_conversa);
+
+    header('Content-Type: application/json');
+    echo json_encode($mensagens);
+    exit;
+}
+
 
 // LÓGICA DE ENVIAR MENSAGEM
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
