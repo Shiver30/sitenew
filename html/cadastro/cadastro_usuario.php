@@ -334,6 +334,14 @@ if (isset($_POST['enviar'])) {
                 flex-direction: column;
             }
         }
+
+        .invalido {
+            color: red;
+        }
+
+        .valido {
+            color: green;
+        }
     </style>
 
 </head>
@@ -387,7 +395,10 @@ if (isset($_POST['enviar'])) {
                     <div class="campo">
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+                        <p id="regra-email" class="invalido">Email inválido</p>
                     </div>
+
+
 
 
                     <!-- SENHAS -->
@@ -395,6 +406,7 @@ if (isset($_POST['enviar'])) {
                         <div class="campo">
                             <label for="senha">Senha:</label>
                             <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                            <button type="button" id="btn-mostrarSenha" class="btn">Mostrar</button>
                         </div>
 
 
@@ -402,6 +414,16 @@ if (isset($_POST['enviar'])) {
                             <label for="senhaConfirmacao"> Confirme sua senha: </label>
                             <input type="password" id="senhaConfirmacao" name="senhaConfirmacao" placeholder="Confirme sua senha" required>
                         </div>
+
+                        <div class="">
+                            <ul>
+                                <li id="regra-quantidade" class="invalido">Ter no mínimo 8 caracteres</li>
+                                <li id="regra-numero" class="invalido">Ter pelo menos um número </li>
+                                <li id="regra-maiuscula" class="invalido">Ter pelo menos uma letra maiúscula</li>
+                                <li id="regra-especial" class="invalido">Ter pelo menos um caractere especial</li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
 
@@ -484,6 +506,8 @@ if (isset($_POST['enviar'])) {
 
             <script>
                 // Função de validar senha
+
+
                 function validarSenha() {
                     const senha = document.getElementById("senha").value;
                     const senhaConfirmacao = document.getElementById("senhaConfirmacao").value;
@@ -493,6 +517,66 @@ if (isset($_POST['enviar'])) {
                     }
                     return true;
                 }
+
+                function validar(regra, valor) {
+                    if (valor) {
+                        regra.classList.remove('invalido');
+                        regra.classList.add('valido');
+                    } else {
+                        regra.classList.remove('valido');
+                        regra.classList.add('invalido');
+                    }
+                }
+
+                const campoSenha = document.getElementById('senha');
+                const quantidade = document.getElementById('regra-quantidade');
+                const numero = document.getElementById('regra-numero');
+                const maiuscula = document.getElementById('regra-maiuscula');
+                const especial = document.getElementById('regra-especial');
+                const botaoMostrarSenha = document.getElementById('btn-mostrarSenha');
+
+
+                campoSenha.addEventListener('input', () => {
+                    const tamanhoMinimo = campoSenha.value.length >= 8;
+                    const temNumero = /[0-9]/.test(campoSenha.value);
+                    const temMaiuscula = /[A-Z]/.test(campoSenha.value);
+                    const temEspecial = /[^A-Za-z0-9]/.test(campoSenha.value);
+
+                    validar(quantidade, tamanhoMinimo);
+                    validar(numero, temNumero);
+                    validar(maiuscula, temMaiuscula);
+                    validar(especial, temEspecial);
+                })
+
+                botaoMostrarSenha.addEventListener('click', () => {
+                    if (campoSenha.type == 'password') {
+                        campoSenha.type = 'text';
+                        botaoMostrar.textContent = 'Ocultar';
+                    } else {
+                        campoSenha.type = 'password';
+                        botaoMostrar.textContent = 'Mostrar';
+                    }
+                })
+
+                const campoEmail = document.getElementById('email');
+                const regraEmail = document.getElementById('regra-email');
+
+                campoEmail.addEventListener('input', () => {
+                    // Verifica se o email possui um formato básico válido
+                    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(campoEmail.value);
+
+                    // Altera a cor da regra de acordo com o resultado
+                    validar(regraEmail, emailValido);
+
+                    // Altera o texto exibido para o usuário
+                    if (emailValido) {
+                        regraEmail.textContent = 'Email válido';
+                    } else {
+                        regraEmail.textContent = 'Email inválido';
+                    }
+                });
+
+
 
                 // função da cidade e estado nas opções
                 const cidades = <?= json_encode($cidades); ?>;
