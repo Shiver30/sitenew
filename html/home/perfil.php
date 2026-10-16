@@ -12,7 +12,11 @@ $id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['usuarios_id'];
 $dados = listarPerfil($conexao, $id);
 
 if (isset($_POST['enviar'])){
-// Não finalizado
+
+    $nota = $_POST['notas'];
+    $comen = $_POST['desc'] ?? '';
+
+    $avaliacao = avaliacao( $conexao, $nota, $comen );
 }
 
 ?>
@@ -72,31 +76,29 @@ if (isset($_POST['enviar'])){
 
       <label class="">Nota:</label>
       <div class="rating">
-        <input type="radio" id="star5" name="nota" value="5">
+        <input type="radio" id="star5" name="notas" value="5">
         <label for="star5" title="5 estrelas">★</label>
-        <input type="radio" id="star4" name="nota" value="4">
+        <input type="radio" id="star4" name="notas" value="4">
         <label for="star4" title="4 estrelas">★</label>
-        <input type="radio" id="star3" name="nota" value="3">
+        <input type="radio" id="star3" name="notas" value="3">
         <label for="star3" title="3 estrelas">★</label>
-        <input type="radio" id="star2" name="nota" value="2">
+        <input type="radio" id="star2" name="notas" value="2">
         <label for="star2" title="2 estrelas">★</label>
-        <input type="radio" id="star1" name="nota" value="1">
+        <input type="radio" id="star1" name="notas" value="1">
         <label for="star1" title="1 estrela">★</label>
       </div>
 
-      <label for="desc" class="">Comentário:</label> <br>
+      <label for="desc" class="" name="comentario">Comentário:</label> <br>
       <textarea id="desc" name="desc" class="input-desc" placeholder="Escreva aqui sua opinião..."></textarea> <br>
 
-        <button type="submit" name="enviar" >Enviar Avaliação</button> não esta funcionado
+        <button type="submit" name="enviar" >Enviar Avaliação</button> 
     </form>
-
-
-      <!-- <input type="hidden" name="user" value="<?php // echo $nota; ?>"> -->
-      <!-- <input type="hidden" name="film" value="<?php // echo $descrição; ?>"> -->
 
   </main>
 
 </p>
+
+
 
 <footer>
    <?php require_once "../include/navegacao.php"; ?>

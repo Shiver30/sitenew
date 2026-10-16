@@ -286,9 +286,21 @@ function listarServicos($servicos)
 
 // AVALIAÇÂO
 
-function avaliacao($conexao, ){
+function avaliacao($conexao, $nota, $comen){
+    $id = $_SESSION['id_2'];
+    $sql = "INSERT INTO avaliacao (avaliacao_nota, avaliacao_descricao, avaliacao_usuarios_id) 
+    values (?, ?, ?)";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "ssi", $nota, $comen, $id);
+    mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    header('location: ../home/perfil.php');
     
 };
+
+// LISTAR AVALIAÇÔES
+
+function listarAvaliacao($conexao, $id)
 
 // INCREMENTAR -> Colocar link do perfil do usuário que está disponibilizando o serviço
 
