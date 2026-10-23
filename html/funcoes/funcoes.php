@@ -294,52 +294,25 @@ function avaliacao($conexao, $nota, $comen){
     mysqli_stmt_bind_param($comando, "ssi", $nota, $comen, $id);
     mysqli_stmt_execute($comando);
     mysqli_stmt_close($comando);
-    header('location: ../home/perfil.php');
+    header('location: ../home/perfil.php?id=' . $id);
     
 };
 
 // LISTAR AVALIAÇÔES
 
-function listarAvaliacao($conexao, $id)
-
-// INCREMENTAR -> Colocar link do perfil do usuário que está disponibilizando o serviço
-
-
-/////////////////////////////////////////////////////////////////////////////
-
-// CHAT
-
-// Lista de conversas
-
-// function listarConversas($conexao, $id)
-// {
-//     // Busca as conversas onde o usuário logado participa (como usuário 1 ou 2)
-//     // E junta com a tabela de usuários para trazer os dados da outra pessoa (id diferente do logado)
-//     $sql = "SELECT c.conversa_id, u.usuarios_nome, u.usuario_img 
-//             FROM conversas c
-//             JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
-//             WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) 
-//             AND u.usuarios_id != ?";
-
-//     $comando = mysqli_prepare($conexao, $sql);
-
-//     if (!$comando) {
-//         return [];
-//     }
-
-//     mysqli_stmt_bind_param($comando, "iii", $id_usuario_logado, $id_usuario_logado, $id_usuario_logado);
-//     mysqli_stmt_execute($comando);
-
-//     $resultado = mysqli_stmt_get_result($comando);
-//     $lista_conversas = [];
-
-//     while ($conversa = mysqli_fetch_assoc($resultado)) {
-//         $lista_conversas[] = $conversa;
-//     }
-
-//     mysqli_stmt_close($comando);
-//     return $lista_conversas;
-// };
+function listarAvaliacao($conexao, $id){
+    $sql = "SELECT * FROM avaliacao WHERE avaliacao_usuarios_id = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $id);
+    mysqli_stmt_execute($comando);
+    $resultado = mysqli_stmt_get_result($comando);
+    $avaliacoes = [];
+    while ($avaliacao = mysqli_fetch_assoc($resultado)) {
+        $avaliacoes[] = $avaliacao;
+    }
+    mysqli_stmt_close($comando);
+    return $avaliacoes;
+};
 
 function listarConversas($conexao, $id)
 {
