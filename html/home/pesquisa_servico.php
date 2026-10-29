@@ -4,16 +4,6 @@ require_once "../conexao.php";
 require_once "../funcoes/funcoes.php";
 verificarLogin();
 
-// $categoria = $_POST['categoria'] ?? '';
-// $servicos = [];
-// $termo = $_POST['nome'];
-
-// $servicos = buscarUsuarios($conexao, $categoria, $termo);
-
-// if (!empty($categoria)) {
-//     $servicos = buscarUsuarios($conexao, $categoria, $termo);
-// }
-
 $categoria = $_POST['categoria'] ?? '';
 $termo = $_POST['nome'] ?? '';
 

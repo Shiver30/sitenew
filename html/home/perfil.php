@@ -94,16 +94,16 @@ if (isset($_POST['enviar'])) {
 
             echo "<label class='avaliacao-label'>Nota:</label>";
             echo "<div class='rating'>";
-            echo "<input type='radio' id='star1' name='notas' value='1'>";
-            echo "<label for='star1' title='1 estrelas'>★</label>";
-            echo "<input type='radio' id='star2' name='notas' value='2'>";
-            echo "<label for='star2' title='2 estrelas'>★</label>";
-            echo "<input type='radio' id='star3' name='notas' value='3'>";
-            echo "<label for='star3' title='3 estrelas'>★</label>";
-            echo "<input type='radio' id='star4' name='notas' value='4'>";
-            echo "<label for='star4' title='4 estrelas'>★</label>";
             echo "<input type='radio' id='star5' name='notas' value='5'>";
             echo "<label for='star5' title='5 estrelas'>★</label>";
+            echo "<input type='radio' id='star4' name='notas' value='4'>";
+            echo "<label for='star3' title='4 estrelas'>★</label>";
+            echo "<input type='radio' id='star3' name='notas' value='3'>";
+            echo "<label for='star3' title='3 estrelas'>★</label>";
+            echo "<input type='radio' id='star2' name='notas' value='2'>";
+            echo "<label for='star2' title='2 estrelas'>★</label>";
+            echo "<input type='radio' id='star1' name='notas' value='1'>";
+            echo "<label for='star1' title='1 estrelas'>★</label>";
             echo "</div>";
             echo "<label for='desc' class='avaliacao-label' name='comentario'>Comentário:</label> <br>";
             echo "<textarea id='desc' name='desc' class='input-desc' placeholder='Escreva aqui sua opinião...'></textarea> <br>";
