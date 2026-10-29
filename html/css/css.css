@@ -1,24 +1,55 @@
 
-/* =========================
-   PERFIL DO USUÁRIO
-========================= */
+/* =========================================
+   WORKMATCH — ESTILOS DO PERFIL E AVALIAÇÕES
+========================================= */
+
+/* ---------- CONFIGURAÇÕES GERAIS ---------- */
+
+.perfil-container,
+.avaliacao-container,
+.avaliacoes-lista {
+    width: calc(100% - 30px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---------- PERFIL DO USUÁRIO ---------- */
 
 .perfil-container {
-    max-width: 850px;
-    margin: 40px auto;
+    max-width: 800px;
+    margin-top: 35px;
+    margin-bottom: 35px;
     padding: 30px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
 }
 
 .perfil-container h1,
 .perfil-container h2 {
-    color: #333;
-    margin-bottom: 20px;
+    color: #222;
 }
 
-/* DADOS DO USUÁRIO */
+.perfil-cabecalho {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.perfil-cabecalho h1 {
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+.perfil-foto {
+    width: 130px;
+    height: 130px;
+    margin-bottom: 15px;
+    border: 4px solid #e9ecef;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Informações do perfil */
 
 .perfil-dados {
     display: flex;
@@ -30,235 +61,13 @@
 .perfil-dados p {
     margin: 0;
     padding: 12px 15px;
-    background-color: #f8f9fa;
+    background: #f8f9fa;
     border-radius: 6px;
     overflow-wrap: anywhere;
 }
 
 .perfil-dados strong {
     color: #333;
-}
-
-/* BOTÕES E LINKS DO PERFIL */
-
-.perfil-acoes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 20px 0 30px;
-}
-
-.perfil-acoes a {
-    display: inline-block;
-    padding: 10px 18px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-conversar {
-    background-color: #0d6efd;
-    color: #fff;
-}
-
-.btn-conversar:hover {
-    background-color: #0b5ed7;
-    color: #fff;
-}
-
-.btn-voltar-perfil {
-    background-color: #6c757d;
-    color: #fff;
-}
-
-.btn-voltar-perfil:hover {
-    background-color: #5c636a;
-    color: #fff;
-}
-
-/* =========================
-   FORMULÁRIO DE AVALIAÇÃO
-========================= */
-
-.avaliacao-container {
-    max-width: 650px;
-    margin: 30px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-}
-
-.avaliacao-title {
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 24px;
-}
-
-.avaliacao-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.avaliacao-label {
-    display: block;
-    font-weight: bold;
-    color: #444;
-    margin-bottom: 5px;
-}
-
-/* ESTRELAS */
-
-.rating {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    align-self: flex-start;
-    gap: 5px;
-    margin: 5px 0 20px;
-}
-
-.rating input {
-    display: none;
-}
-
-.rating label {
-    font-size: 38px;
-    line-height: 1;
-    color: #d5d9df;
-    cursor: pointer;
-    transition: color 0.2s, transform 0.2s;
-}
-
-.rating label:hover,
-.rating label:hover ~ label,
-.rating input:checked ~ label {
-    color: #f1c40f;
-}
-
-.rating label:hover {
-    transform: scale(1.1);
-}
-
-/* COMENTÁRIO */
-
-.input-desc {
-    width: 100%;
-    min-height: 120px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    font-family: Arial, sans-serif;
-    font-size: 15px;
-    resize: vertical;
-}
-
-.input-desc:focus {
-    outline: none;
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
-}
-
-/* BOTÃO DE ENVIAR */
-
-.avaliacao-form button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 6px;
-    background-color: #198754;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.avaliacao-form button:hover {
-    background-color: #157347;
-}
-
-/* =========================
-   AVALIAÇÕES RECEBIDAS
-========================= */
-
-.avaliacoes-lista {
-    max-width: 850px;
-    margin: 30px auto;
-}
-
-.avaliacoes-lista h2 {
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.avaliacao {
-    margin-bottom: 15px;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    overflow-wrap: anywhere;
-}
-
-.avaliacao p {
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-.avaliacao p:last-child {
-    margin-bottom: 0;
-}
-
-.nota-estrelas {
-    color: #f1c40f;
-    font-size: 20px;
-    letter-spacing: 2px;
-}
-
-.sem-avaliacoes {
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    color: #666;
-    text-align: center;
-}
-
-
-/* =========================
-   PERFIL DO USUÁRIO
-========================= */
-
-.perfil-container {
-    max-width: 800px;
-    width: calc(100% - 30px);
-    margin: 35px auto;
-    padding: 30px;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-}
-
-.perfil-cabecalho {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.perfil-cabecalho h1 {
-    font-size: 28px;
-    color: #222;
-    margin-bottom: 8px;
-}
-
-.perfil-foto {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #e9ecef;
-    margin-bottom: 15px;
 }
 
 .perfil-informacoes {
@@ -269,6 +78,7 @@
 }
 
 .perfil-item {
+    min-width: 0;
     padding: 16px;
     background: #f8f9fa;
     border: 1px solid #e9ecef;
@@ -278,9 +88,9 @@
 
 .perfil-item strong {
     display: block;
+    margin-bottom: 6px;
     color: #6c757d;
     font-size: 13px;
-    margin-bottom: 6px;
 }
 
 .perfil-item span {
@@ -288,12 +98,14 @@
     font-size: 16px;
 }
 
+/* Ações do perfil */
+
 .perfil-acoes {
     display: flex;
     justify-content: center;
-    gap: 12px;
     flex-wrap: wrap;
-    margin-top: 20px;
+    gap: 12px;
+    margin: 20px 0 30px;
 }
 
 .perfil-acoes a {
@@ -302,81 +114,35 @@
     border-radius: 7px;
     text-decoration: none;
     font-weight: bold;
+    transition: background-color 0.2s ease;
 }
 
 .btn-conversar {
     background: #0d6efd;
-    color: white;
+    color: #fff;
 }
 
 .btn-conversar:hover {
     background: #0b5ed7;
-    color: white;
+    color: #fff;
 }
 
 .btn-voltar-perfil {
     background: #6c757d;
-    color: white;
+    color: #fff;
 }
 
 .btn-voltar-perfil:hover {
     background: #5c636a;
-    color: white;
+    color: #fff;
 }
 
-/* =========================
-   AVALIAÇÕES RECEBIDAS
-========================= */
-
-.avaliacoes-lista {
-    max-width: 800px;
-    width: calc(100% - 30px);
-    margin: 25px auto;
-}
-
-.avaliacoes-lista h2 {
-    font-size: 23px;
-    margin-bottom: 18px;
-    color: #222;
-}
-
-.avaliacao {
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    overflow-wrap: anywhere;
-}
-
-.avaliacao p {
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-.nota-estrelas {
-    color: #f1c40f;
-    font-size: 22px;
-    letter-spacing: 2px;
-}
-
-.sem-avaliacoes {
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    color: #666;
-    text-align: center;
-}
-
-/* =========================
-   FORMULÁRIO DE AVALIAÇÃO
-========================= */
+/* ---------- FORMULÁRIO DE AVALIAÇÃO ---------- */
 
 .avaliacao-container {
     max-width: 650px;
-    width: calc(100% - 30px);
-    margin: 25px auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
     padding: 28px;
     background: #fff;
     border-radius: 12px;
@@ -384,9 +150,9 @@
 }
 
 .avaliacao-title {
+    margin-bottom: 20px;
     color: #222;
     font-size: 23px;
-    margin-bottom: 20px;
 }
 
 .avaliacao-form {
@@ -396,9 +162,12 @@
 }
 
 .avaliacao-label {
-    font-weight: bold;
+    margin-bottom: 5px;
     color: #444;
+    font-weight: bold;
 }
+
+/* Avaliação por estrelas */
 
 .rating {
     display: flex;
@@ -414,10 +183,11 @@
 }
 
 .rating label {
+    color: #d5d9df;
     font-size: 38px;
     line-height: 1;
-    color: #d5d9df;
     cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .rating label:hover,
@@ -425,6 +195,12 @@
 .rating input:checked ~ label {
     color: #f1c40f;
 }
+
+.rating label:hover {
+    transform: scale(1.1);
+}
+
+/* Campo de comentário */
 
 .input-desc {
     width: 100%;
@@ -442,54 +218,152 @@
     box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
 }
 
+/* Botão de envio */
+
 .avaliacao-form button {
-    padding: 12px;
+    padding: 12px 20px;
     border: none;
     border-radius: 7px;
     background: #198754;
-    color: white;
+    color: #fff;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .avaliacao-form button:hover {
     background: #157347;
 }
 
-/* =========================
-   RESPONSIVIDADE
-========================= */
+/* ---------- AVALIAÇÕES RECEBIDAS ---------- */
+
+.avaliacoes-lista {
+    max-width: 800px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.avaliacoes-lista h2 {
+    margin-bottom: 18px;
+    color: #222;
+    font-size: 23px;
+}
+
+.avaliacao {
+    margin-bottom: 15px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    overflow-wrap: anywhere;
+}
+
+.avaliacao p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.avaliacao p:last-child {
+    margin-bottom: 0;
+}
+
+.nota-estrelas {
+    color: #f1c40f;
+    font-size: 22px;
+    letter-spacing: 2px;
+}
+
+.sem-avaliacoes {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    color: #666;
+    text-align: center;
+}
+
+
+/* =========================================
+   NAVEGAÇÃO PRINCIPAL — WORKMATCH
+========================================= */
+
+.navegacao {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 20px;
+
+    background-color: #ffffff;
+    border-top: 3px solid #0d6efd;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navegacao-link {
+    display: inline-block;
+    padding: 10px 16px;
+
+    color: #0d6efd;
+    background-color: #f1f6ff;
+
+    border: 1px solid #d8e6ff;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.navegacao-link:hover {
+    color: #ffffff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    transform: translateY(-2px);
+}
+
+.navegacao-link:focus-visible {
+    outline: 3px solid rgba(13, 110, 253, 0.35);
+    outline-offset: 3px;
+}
+
+/* Navegação em telas pequenas */
+
+@media (max-width: 600px) {
+    .navegacao {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px;
+        gap: 8px;
+    }
+
+    .navegacao-link {
+        text-align: center;
+    }
+}
+
+
+/* ---------- RESPONSIVIDADE ---------- */
 
 @media (max-width: 600px) {
     .perfil-container,
     .avaliacao-container,
     .avaliacoes-lista {
-        width: auto;
-        margin: 20px 12px;
+        width: calc(100% - 24px);
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .perfil-container,
     .avaliacao-container {
-        padding: 20px;
-    }
-
-    .perfil-acoes {
-        flex-direction: column;
-    }
-
-    .perfil-acoes a {
-        text-align: center;
-    }
-
-    .rating label {
-        font-size: 34px;
-    }
-
-    .avaliacao-title {
-        font-size: 21px;
-    }
-
-    .perfil-container {
         padding: 20px;
     }
 
@@ -509,11 +383,11 @@
         text-align: center;
     }
 
-    .avaliacao-container {
-        padding: 20px;
-    }
-
     .rating label {
         font-size: 34px;
+    }
+
+    .avaliacao-title {
+        font-size: 21px;
     }
 }
