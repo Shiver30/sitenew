@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `banco`.`avaliacao` (
   `avaliacao_nota` TINYINT NOT NULL,
   `avaliacao_descricao` VARCHAR(255) NULL DEFAULT NULL,
   `avaliacao_usuarios_id` INT NOT NULL,
-  `avaliacao_avaliador_id` INT NULL,
+  `avaliacao_avaliador_id` INT NOT NULL,
   PRIMARY KEY (`avaliacao_id`),
   INDEX `fk_avaliacao_usuarios1_idx` (`avaliacao_usuarios_id` ASC) VISIBLE,
   CONSTRAINT `fk_avaliacao_usuarios1`

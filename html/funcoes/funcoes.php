@@ -314,23 +314,13 @@ function listarAvaliacao($conexao, $id2 ){
 };
 
 // Ja avaliou
-function jaAvaliou($conexao, $id_avaliador, $id_perfil) {
-    $sql = "SELECT avaliacao_id
-            FROM avaliacao
-            WHERE avaliacao_avaliador_id = ?
-              AND avaliacao_usuarios_id = ?";
+function jaAvaliou($conexao, $id1, $id2) {
+    $sql = "SELECT avaliacao_id FROM avaliacao WHERE avaliacao_avaliador_id = ?
+    AND avaliacao_usuarios_id = ?";
 
     $comando = mysqli_prepare($conexao, $sql);
-
-    mysqli_stmt_bind_param(
-        $comando,
-        "ii",
-        $id_avaliador,
-        $id_perfil
-    );
-
+    mysqli_stmt_bind_param( $comando, "ii", $id_avaliador, $id_perfil );
     mysqli_stmt_execute($comando);
-
     $resultado = mysqli_stmt_get_result($comando);
     $jaAvaliou = mysqli_num_rows($resultado) > 0;
 
