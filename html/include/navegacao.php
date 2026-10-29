@@ -1,9 +1,18 @@
-<?php
-    echo "<a href='../cadastro/cadastro_servico.php'>Cadastro de serviços</a> <br>";
-    echo "<a href='../home/pesquisa_servico.php'>Pesquisar Serviços</a> <br>";
-    echo "<a href='../chat/lista_conversas.php'>Lista de conversas</a> <br>";
-    echo "<a href='../home/perfil.php'>Perfil</a> <br>";
 
+<nav class="navegacao">
+    <a class="navegacao-link" href="../cadastro/cadastro_servico.php">
+        Cadastro de serviços
+    </a>
 
-?>
+    <a class="navegacao-link" href="../home/pesquisa_servico.php">
+        Pesquisar serviços
+    </a>
 
+    <a class="navegacao-link" href="../chat/lista_conversas.php">
+        Lista de conversas
+    </a>
+
+    <a class="navegacao-link" href="../home/perfil.php">
+        Perfil
+    </a>
+</nav>
