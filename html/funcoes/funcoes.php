@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../conexao.php';
 
 // Cadastro e Login
@@ -300,7 +299,7 @@ function avaliacao($conexao, $nota, $comen){
 
 // LISTAR AVALIAÇÔES
 
-function listarAvaliacao($conexao, $id){
+function listarAvaliacao($conexao, $id2){
     $sql = "SELECT * FROM avaliacao WHERE avaliacao_usuarios_id = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $id);
@@ -313,6 +312,34 @@ function listarAvaliacao($conexao, $id){
     mysqli_stmt_close($comando);
     return $avaliacoes;
 };
+
+// Ja avaliou
+function jaAvaliou($conexao, $id_avaliador, $id_perfil) {
+    $sql = "SELECT avaliacao_id
+            FROM avaliacao
+            WHERE avaliacao_avaliador_id = ?
+              AND avaliacao_usuarios_id = ?";
+
+    $comando = mysqli_prepare($conexao, $sql);
+
+    mysqli_stmt_bind_param(
+        $comando,
+        "ii",
+        $id_avaliador,
+        $id_perfil
+    );
+
+    mysqli_stmt_execute($comando);
+
+    $resultado = mysqli_stmt_get_result($comando);
+    $jaAvaliou = mysqli_num_rows($resultado) > 0;
+
+    mysqli_stmt_close($comando);
+
+    return $jaAvaliou;
+}
+
+// Mensagem
 
 function listarConversas($conexao, $id)
 {

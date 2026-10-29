@@ -7,9 +7,11 @@ verificarLogin();
 if (isset($_GET['id'])) {
     $_SESSION['id_2'] = $_GET['id'];
 }
-$id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['usuarios_id'];
+$id2 = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['usuarios_id'];
 
-$dados = listarPerfil($conexao, $id);
+$id1 = $_SESSION['usuarios_id'];
+
+$dados = listarPerfil($conexao, $id2);
 
 if (isset($_POST['enviar'])) {
     if (!isset($_POST['notas'])) {
@@ -58,7 +60,7 @@ if (isset($_POST['enviar'])) {
             echo "<td>" . htmlspecialchars($d['usuarios_nome']) . "</td> <br>";
             echo "<td>" . htmlspecialchars($d['usuarios_idade']) . "</td> <br>";
             echo "<td>" . htmlspecialchars($d['usuarios_email']) . "</td> <br>";
-            echo "<td>" . htmlspecialchars($d['usuario_img']) . "</td> <br>";
+            echo "<td><img src='" . htmlspecialchars($d['usuario_img']) . "' alt='Imagem do usuário' width='100'></td>";
             if ($d['usuarios_sexo'] == 'm') {
                 echo "<td>" . htmlspecialchars("masculino") . "</td> <br>";
             } elseif ($d['usuarios_sexo'] == 'f') {
@@ -70,7 +72,7 @@ if (isset($_POST['enviar'])) {
         }
 
         $meu_id = $_SESSION['usuarios_id'];
-        $id_conversa = encontrarOuCriarConversa($conexao, $meu_id, $id);
+        $id_conversa = encontrarOuCriarConversa($conexao, $meu_id, $id2);
 
         if ($id_conversa !== false) {
             echo "<a href='../chat/chat_fim.php?id_conversa={$id_conversa}'>Conversar</a>";
@@ -82,11 +84,11 @@ if (isset($_POST['enviar'])) {
     ?>
 
     <p>
-        <!-- CONTEÚDO  -->
+    <?php
 
-        <?php
+    $jaavaliou = jaAvaliou( $conexao, $id1, $id2);
 
-        if ($_SESSION['usuarios_id'] != $id) {
+        if (!$jaavaliou && $id1 != $id2) {
 
             echo "<main class='avaliacao-container'>";
             echo "<form action='' method='POST' class='avaliacao-form'>";
@@ -112,14 +114,13 @@ if (isset($_POST['enviar'])) {
 
             echo "</main>";
         }
-        ?>
 
+    ?>
 
-        Avaliações recebidas:
         Avaliações recebidas:
 
         <?php
-        $avaliacoes = listarAvaliacao($conexao, $id);
+        $avaliacoes = listarAvaliacao($conexao, $id2);
 
         if (!empty($avaliacoes)) {
             foreach ($avaliacoes as $avaliacao) {
