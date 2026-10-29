@@ -49,6 +49,7 @@ if (isset($_POST['enviar'])) {
 
 </head>
 
+
 <body>
 
     <?php
@@ -113,7 +114,10 @@ if (isset($_POST['enviar'])) {
             echo "</form>";
 
             echo "</main>";
+        } else{
+            echo "";
         }
+        
 
     ?>
 

@@ -299,7 +299,7 @@ function avaliacao($conexao, $nota, $comen){
 
 // LISTAR AVALIAÇÔES
 
-function listarAvaliacao($conexao, $id2){
+function listarAvaliacao($conexao, $id2 ){
     $sql = "SELECT * FROM avaliacao WHERE avaliacao_usuarios_id = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $id);
