@@ -23,6 +23,11 @@
             <span class="nav-icone">♙</span>
             <span>Perfil</span>
         </a>
+
+        <a class="navegacao-link" href="../home/home.php">
+            <span class="nav-icone">⌂</span>
+            <span>Menu</span>
+        </a>
     </nav>
 
     <div class="sidebar-rodape">

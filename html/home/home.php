@@ -17,9 +17,6 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-// ===============================
-// VERIFICA SE O USUÁRIO ESTÁ LOGADO
-// ===============================
 
 verificarLogin();
 
@@ -27,13 +24,9 @@ verificarLogin();
 // DADOS DO USUÁRIO
 // ===============================
 
-$nome_usuario = $_SESSION['usuario_nome'] ;
-$id_usuario = $_SESSION['usuarios_id'] ;
+$nome_usuario = $_SESSION['usuario_nome'];
+$id_usuario = $_SESSION['usuarios_id'];
 
-
-// ===============================
-// FOTO DO USUÁRIO
-// ===============================
 
 $caminho_foto = "../imagens/padrao.png";
 
@@ -72,13 +65,9 @@ if ($id_usuario !== null) {
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>WorkMatch</title>
-
     <style>
         * {
             box-sizing: border-box;
@@ -241,7 +230,6 @@ if ($id_usuario !== null) {
     </style>
 
 </head>
-
 <body>
 
     <header>
@@ -271,13 +259,13 @@ if ($id_usuario !== null) {
     ================================ -->
         <section class="menu">
 
-        <h2>Menu</h2>
-        <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
-        <a href="pesquisa_servico.php">Pesquisar Serviços</a>
-        <a href="../chat/lista_conversas.php">Lista de conversas</a>
-        <a href="perfil.php">Perfil</a>
+            <h2>Menu</h2>
+            <a href="../cadastro/cadastro_servico.php">Cadastro de serviços</a>
+            <a href="pesquisa_servico.php">Pesquisar Serviços</a>
+            <a href="../chat/lista_conversas.php">Lista de conversas</a>
+            <a href="perfil.php">Perfil</a>
 
-    </section>
+        </section>
 
 
     </main>
