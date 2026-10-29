@@ -463,3 +463,65 @@ body {
     }
 }
 
+
+/* =========================================
+   CENTRALIZAÇÃO DAS INFORMAÇÕES DO PERFIL
+========================================= */
+
+.perfil-container {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Centraliza os dados apresentados em grade */
+.perfil-informacoes {
+    justify-items: center;
+}
+
+/* Faz os cartões ocuparem toda a largura disponível */
+.perfil-item {
+    width: 100%;
+    text-align: center;
+}
+
+/* Centraliza os dados caso o perfil use parágrafos */
+.perfil-dados {
+    align-items: center;
+}
+
+.perfil-dados p {
+    width: 100%;
+    text-align: center;
+}
+
+/* Centraliza os botões de ação */
+.perfil-acoes {
+    justify-content: center;
+}
+
+/* Centraliza o título e a foto */
+.perfil-cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Centraliza as avaliações recebidas */
+.avaliacoes-lista {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsividade */
+@media (max-width: 700px) {
+    .perfil-container,
+    .avaliacoes-lista {
+        max-width: 100%;
+    }
+
+    .perfil-informacoes {
+        grid-template-columns: 1fr;
+    }
+}
