@@ -355,15 +355,10 @@ function jaAvaliou($conexao, $id1, $id2) {
 
 // Mensagem
 
-function listarConversas($conexao, $id)
-{
-    $sql = "SELECT DISTINCT 
-                c.conversa_id,
-                u.usuarios_nome,
-                u.usuario_img
-            FROM conversas c
-            JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
-            WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) AND u.usuarios_id != ?";
+function listarConversas($conexao, $id){
+    $sql = "SELECT DISTINCT  c.conversa_id, u.usuarios_nome, u.usuario_img FROM conversas c 
+    JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
+     WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) AND u.usuarios_id != ?";
 
     $comando = mysqli_prepare($conexao, $sql);
 
@@ -372,7 +367,6 @@ function listarConversas($conexao, $id)
     }
 
     mysqli_stmt_bind_param($comando, "iii", $id, $id, $id);
-
     mysqli_stmt_execute($comando);
 
     $resultado = mysqli_stmt_get_result($comando);

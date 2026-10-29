@@ -525,3 +525,170 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* ---------- ESTRELAS DENTRO DA CAIXINHA DE AVALIAÇÃO ---------- */
+
+.avaliacao .nota-estrelas {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: #f1c40f;
+    font-size: 22px;
+    letter-spacing: 2px;
+}
+
+.avaliacao .nota-texto {
+    margin-left: 8px;
+    color: #666;
+    font-size: 14px;
+    letter-spacing: normal;
+}
+
+
+/* =========================================
+   AVALIAÇÕES RECEBIDAS — LAYOUT CENTRALIZADO
+========================================= */
+
+/* Área que contém todas as avaliações */
+.avaliacoes-lista {
+    width: calc(100% - 40px);
+    max-width: 800px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+}
+
+/* Título das avaliações */
+.avaliacoes-lista h2 {
+    width: 100%;
+    padding: 15px 20px;
+    margin: 0 0 20px;
+    border-radius: 30px;
+    background: #dedede;
+    color: #222;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* Caixinha individual de cada avaliação */
+.avaliacoes-lista .avaliacao {
+    width: 85%;
+    max-width: 600px;
+    margin: 0;
+    padding: 18px 25px;
+    background: #dedede;
+    border: none;
+    border-radius: 30px;
+    box-shadow: none;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* Texto do comentário */
+.avaliacoes-lista .avaliacao p {
+    margin: 0 0 8px;
+    color: #222;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Estrelas dentro da caixinha */
+.avaliacoes-lista .avaliacao .nota-estrelas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin: 0;
+    color: #f1c40f;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+/* Nota numérica */
+.avaliacoes-lista .avaliacao .nota-texto {
+    margin-left: 5px;
+    color: #555;
+    font-size: 12px;
+    letter-spacing: normal;
+}
+
+/* Mensagem quando não existem avaliações */
+.avaliacoes-lista .sem-avaliacoes {
+    width: 85%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #dedede;
+    text-align: center;
+}
+
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+    .avaliacoes-lista {
+        width: calc(100% - 20px);
+        gap: 25px;
+    }
+
+    .avaliacoes-lista .avaliacao {
+        width: 95%;
+        padding: 15px 18px;
+    }
+
+    .avaliacoes-lista h2 {
+        font-size: 16px;
+    }
+}
+
+
+/* Centralização da seção de avaliações recebidas */
+.avaliacoes-lista {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100% - 40px);
+    max-width: 800px;
+    margin: 30px auto;
+    gap: 25px;
+}
+
+.avaliacoes-lista h2 {
+    width: 90%;
+    margin: 0;
+    padding: 15px 20px;
+    background: #dedede;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.avaliacoes-lista .avaliacao {
+    width: 85%;
+    max-width: 600px;
+    margin: 0;
+    padding: 18px 25px;
+    background: #dedede;
+    border: none;
+    border-radius: 30px;
+    box-shadow: none;
+    text-align: center;
+}
+
+.avaliacoes-lista .nota-estrelas {
+    justify-content: center;
+}
+
+@media (max-width: 600px) {
+    .avaliacoes-lista {
+        width: calc(100% - 20px);
+    }
+
+    .avaliacoes-lista .avaliacao {
+        width: 95%;
+        padding: 15px;
+    }
+}
+
+

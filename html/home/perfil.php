@@ -21,7 +21,6 @@ if (isset($_POST['enviar'])) {
         echo "<script>
             alert('Por favor, selecione uma nota antes de enviar a avaliação.');
         </script>";
-
     } else {
 
         $nota = (int) $_POST['notas'];
@@ -44,8 +43,7 @@ if (isset($_POST['enviar'])) {
     <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
     <!-- CSS principal do WorkMatch -->
     <link rel="stylesheet" href="../css/css.css">
@@ -88,16 +86,15 @@ if (isset($_POST['enviar'])) {
     ?>
 
     <p>
-    <?php
+        <?php
 
-    $jaavaliou = jaAvaliou( $conexao, $id1, $id2);
+        $jaavaliou = jaAvaliou($conexao, $id1, $id2);
 
         if (!$jaavaliou && $id1 != $id2) {
 
             echo "<main class='avaliacao-container'>";
             echo "<form action='' method='POST' class='avaliacao-form'>";
             echo "<h2 class='avaliacao-title'>Avalie o usuario</h2>";
-
             echo "<label class='avaliacao-label'>Nota:</label>";
             echo "<div class='rating'>";
             echo "<input type='radio' id='star5' name='notas' value='5'>";
@@ -115,47 +112,46 @@ if (isset($_POST['enviar'])) {
             echo "<textarea id='desc' name='desc' class='input-desc' placeholder='Escreva aqui sua opinião...'></textarea> <br>";
             echo "<button type='submit' name='enviar' >Enviar Avaliação</button> ";
             echo "</form>";
-
             echo "</main>";
-        } else{
+        } else {
             echo "";
         }
-        
 
-    ?>
 
-        Avaliações recebidas:
+        ?>
+
+    <div class="avaliacoes-lista">
+
+        <h2>Opinião de outros usuários sobre esse usuário</h2>
 
         <?php
         $avaliacoes = listarAvaliacao($conexao, $id2);
 
         if (!empty($avaliacoes)) {
             foreach ($avaliacoes as $avaliacao) {
-                echo "<div class='avaliacao'>";
 
-                echo "<p><strong>Comentário:</strong> "
-                    . htmlspecialchars($avaliacao['avaliacao_descricao'] ?? 'Sem comentário')
-                    . "</p>";
-
-                echo "</div>";
-
-                $nota = (int)$avaliacao['avaliacao_nota'];
+                $nota = (int) $avaliacao['avaliacao_nota'];
                 $nota = max(0, min(5, $nota));
 
-                echo "<p><strong>Nota:</strong> ";
-
+                echo "<div class='avaliacao'>";
+                echo "<p><strong>Comentário:</strong><br>". htmlspecialchars($avaliacao['avaliacao_descricao'] ?? 'Sem comentário'). "</p>";
+                echo "<div class='nota-estrelas'>";
                 for ($i = 1; $i <= 5; $i++) {
-                    echo $i <= $nota
-                        ? "<span style='color: #f1c40f;'>★</span>"
-                        : "<span style='color: #ccc;'>★</span>";
+                    echo $i <= $nota? "★": "<span style='color:#ccc'>★</span>";
                 }
 
-                echo " ({$nota}/5)</p>";
+                echo "<span class='nota-texto'>($nota/5)</span>";
+                echo "</div>";
+                echo "</div>";
             }
         } else {
-            echo "<p>Este usuário ainda não recebeu avaliações.</p>";
+            echo "<p class='sem-avaliacoes'>
+            Este usuário ainda não recebeu avaliações.
+        </p>";
         }
         ?>
+    </div>
+
 
 
 
