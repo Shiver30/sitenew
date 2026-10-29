@@ -13,21 +13,24 @@ $id1 = $_SESSION['usuarios_id'];
 
 $dados = listarPerfil($conexao, $id2);
 
+
 if (isset($_POST['enviar'])) {
+
     if (!isset($_POST['notas'])) {
-        echo "<script>alert('Por favor, selecione uma nota antes de enviar a avaliação.');</script>";
+
+        echo "<script>
+            alert('Por favor, selecione uma nota antes de enviar a avaliação.');
+        </script>";
+
     } else {
-        $nota = $_POST['notas'];
-        $comen = $_POST['desc'] ?? '';
+
+        $nota = (int) $_POST['notas'];
+        $comen = trim($_POST['desc'] ?? '');
 
         $avaliacao = avaliacao($conexao, $nota, $comen);
     }
-
-    $nota = $_POST['notas'];
-    $comen = $_POST['desc'] ?? '';
-
-    $avaliacao = avaliacao($conexao, $nota, $comen);
 }
+
 
 ?>
 

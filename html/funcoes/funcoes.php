@@ -285,24 +285,48 @@ function listarServicos($servicos)
 
 // AVALIAÇÂO
 
-function avaliacao($conexao, $nota, $comen){
-    $id = $_SESSION['id_2'];
-    $sql = "INSERT INTO avaliacao (avaliacao_nota, avaliacao_descricao, avaliacao_usuarios_id) 
-    values (?, ?, ?)";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "ssi", $nota, $comen, $id);
-    mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    header('location: ../home/perfil.php?id=' . $id);
+// function avaliacao($conexao, $nota, $comen){
+//     $id = $_SESSION['id_2'];
+//     $sql = "INSERT INTO avaliacao (avaliacao_nota, avaliacao_descricao, avaliacao_usuarios_id) 
+//     values (?, ?, ?)";
+//     $comando = mysqli_prepare($conexao, $sql);
+//     mysqli_stmt_bind_param($comando, "ssi", $nota, $comen, $id);
+//     mysqli_stmt_execute($comando);
+//     mysqli_stmt_close($comando);
+//     header('location: ../home/perfil.php?id=' . $id);
     
-};
+// };
+
+function avaliacao($conexao, $nota, $comen) {
+
+    $id_avaliador = (int) $_SESSION['usuarios_id'];
+    $id_avaliado = (int) $_SESSION['id_2'];
+    $sql = "INSERT INTO avaliacao (avaliacao_nota, avaliacao_descricao, avaliacao_usuarios_id, avaliacao_avaliador_id) VALUES (?, ?, ?, ?)";
+    $comando = mysqli_prepare($conexao, $sql);
+
+    if (!$comando) {
+        return false;
+    }
+
+    mysqli_stmt_bind_param($comando, "isii", $nota, $comen, $id_avaliado, $id_avaliador);
+    $resultado = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+
+    if ($resultado) {
+        header('Location: ../home/perfil.php?id=' . $id_avaliado);
+        exit;
+    }
+
+    return false;
+}
+
 
 // LISTAR AVALIAÇÔES
 
 function listarAvaliacao($conexao, $id2 ){
-    $sql = "SELECT * FROM avaliacao WHERE avaliacao_usuarios_id = ?";
+    $sql = "SELECT * FROM avaliacao WHERE avaliacao_usuarios_id = ? ORDER BY avaliacao_id DESC";
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $id);
+    mysqli_stmt_bind_param($comando, "i", $id2);
     mysqli_stmt_execute($comando);
     $resultado = mysqli_stmt_get_result($comando);
     $avaliacoes = [];
@@ -319,7 +343,7 @@ function jaAvaliou($conexao, $id1, $id2) {
     AND avaliacao_usuarios_id = ?";
 
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param( $comando, "ii", $id_avaliador, $id_perfil );
+    mysqli_stmt_bind_param( $comando, "ii", $id1, $id2 );
     mysqli_stmt_execute($comando);
     $resultado = mysqli_stmt_get_result($comando);
     $jaAvaliou = mysqli_num_rows($resultado) > 0;
