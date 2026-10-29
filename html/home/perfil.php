@@ -55,34 +55,44 @@ if (isset($_POST['enviar'])) {
 
     <?php
 
+
     if (isset($dados) && !empty($dados)) {
 
         while ($d = $dados->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($d['usuarios_nome']) . "</td> <br>";
-            echo "<td>" . htmlspecialchars($d['usuarios_idade']) . "</td> <br>";
-            echo "<td>" . htmlspecialchars($d['usuarios_email']) . "</td> <br>";
-            echo "<td><img src='" . htmlspecialchars($d['usuario_img']) . "' alt='Imagem do usuário' width='100'></td>";
+
+            echo "<div class='perfil-container'>";
+            echo "<div class='perfil-cabecalho'>";
+            echo "<img class='perfil-foto' src='". htmlspecialchars($d['usuario_img']). "' alt='Foto de perfil'>";
+            echo "<h1>". htmlspecialchars($d['usuarios_nome']). "</h1>";
+            echo "</div>";
+            echo "<div class='perfil-dados'>";
+            echo "<p><strong>Idade:</strong> ". htmlspecialchars($d['usuarios_idade']). "</p>";
+            echo "<p><strong>E-mail:</strong> ". htmlspecialchars($d['usuarios_email']). "</p>";
+
             if ($d['usuarios_sexo'] == 'm') {
-                echo "<td>" . htmlspecialchars("masculino") . "</td> <br>";
+                $sexo = "Masculino";
             } elseif ($d['usuarios_sexo'] == 'f') {
-                echo "<td>" . htmlspecialchars("feminino") . "</td> <br>";
+                $sexo = "Feminino";
             } else {
-                echo "<td>" . htmlspecialchars("Não informado") . "</td> <br>";
+                $sexo = "Não informado";
             }
-            echo "</tr>";
+
+            echo "<p><strong>Sexo:</strong> ". htmlspecialchars($sexo). "</p>";
+            echo "</div>";
+            echo "</div>";
         }
 
         $meu_id = $_SESSION['usuarios_id'];
         $id_conversa = encontrarOuCriarConversa($conexao, $meu_id, $id2);
 
         if ($id_conversa !== false) {
-            echo "<a href='../chat/chat_fim.php?id_conversa={$id_conversa}'>Conversar</a>";
+            echo "<div class='perfil-acoes'>";
+            echo "<a class='btn-conversar' href='../chat/chat_fim.php?id_conversa=". (int) $id_conversa. "'>Conversar</a>";
+            echo "<a class='btn-voltar-perfil' href='home.php'>Voltar</a>";
+            echo "</div>";
         }
-
-        echo "<br>";
-        echo " <a href='home.php'>voltar</a> ";
     }
+
     ?>
 
     <p>
@@ -134,10 +144,10 @@ if (isset($_POST['enviar'])) {
                 $nota = max(0, min(5, $nota));
 
                 echo "<div class='avaliacao'>";
-                echo "<p><strong>Comentário:</strong><br>". htmlspecialchars($avaliacao['avaliacao_descricao'] ?? 'Sem comentário'). "</p>";
+                echo "<p><strong>Comentário:</strong><br>" . htmlspecialchars($avaliacao['avaliacao_descricao'] ?? 'Sem comentário') . "</p>";
                 echo "<div class='nota-estrelas'>";
                 for ($i = 1; $i <= 5; $i++) {
-                    echo $i <= $nota? "★": "<span style='color:#ccc'>★</span>";
+                    echo $i <= $nota ? "★" : "<span style='color:#ccc'>★</span>";
                 }
 
                 echo "<span class='nota-texto'>($nota/5)</span>";
