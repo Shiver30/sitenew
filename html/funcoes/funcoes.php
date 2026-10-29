@@ -358,7 +358,7 @@ function jaAvaliou($conexao, $id1, $id2) {
 function listarConversas($conexao, $id){
     $sql = "SELECT DISTINCT  c.conversa_id, u.usuarios_nome, u.usuario_img FROM conversas c 
     JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
-     WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) AND u.usuarios_id != ?";
+    WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) AND u.usuarios_id != ?";
 
     $comando = mysqli_prepare($conexao, $sql);
 
@@ -419,11 +419,7 @@ function encontrarOuCriarConversa($conexao, $meu_id, $id)
     }
 
     // Procura se já existe uma conversa entre os dois usuários
-    $sql = "SELECT conversa_id 
-            FROM conversas
-            WHERE (usuario_1_id = ? AND usuario_2_id = ?)
-               OR (usuario_1_id = ? AND usuario_2_id = ?)
-            LIMIT 1";
+    $sql = "SELECT conversa_id FROM conversas WHERE (usuario_1_id = ? AND usuario_2_id = ?) OR (usuario_1_id = ? AND usuario_2_id = ?) LIMIT 1";
 
     $comando = mysqli_prepare($conexao, $sql);
 
