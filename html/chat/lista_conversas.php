@@ -15,7 +15,7 @@ $dados = listarConversas($conexao, $id);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Conversas</title>
+    <title>WorkMatch - Minhas Conversas</title>
     <style>
         * {
             box-sizing: border-box;

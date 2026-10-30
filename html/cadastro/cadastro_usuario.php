@@ -120,291 +120,20 @@ if (isset($_POST['enviar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cadastro de Usuário</title>
-
-    <style>
-        /* =========================
-           CONFIGURAÇÕES GERAIS
-        ========================= */
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-
-        /* =========================
-           CABEÇALHO
-        ========================= */
-
-        header {
-            background-color: #222;
-            color: white;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-        }
-
-        nav a:hover {
-            background-color: #444;
-        }
-
-        /* CONTEÚDO */
-
-        main {
-            max-width: 750px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* FORMULÁRIO */
-
-        .form-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow:
-                0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .form-container h1 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .descricao-formulario {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-
-        /* SEÇÕES DO FORMULÁRIO */
-
-        .secao {
-            margin-top: 30px;
-            margin-bottom: 25px;
-        }
-
-        .secao:first-of-type {
-            margin-top: 0;
-        }
-
-        .secao h2 {
-            font-size: 20px;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .linha-secao {
-            width: 100%;
-            height: 2px;
-            background-color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        /* CAMPOS */
-
-        .campo {
-            margin-bottom: 20px;
-        }
-
-        .campo label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .campo input,
-        .campo select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: Arial, sans-serif;
-            font-size: 15px;
-            color: #333;
-            background-color: white;
-        }
-
-        .campo input:focus,
-        .campo select:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow:
-                0 0 0 2px rgba(0, 123, 255, 0.1);
-        }
-
-        /* CAMPOS EM DUAS COLUNAS */
-
-        .linha {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        /* FOTO */
-
-        .campo-foto {
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-        }
-
-        .campo-foto input {
-            background-color: white;
-            cursor: pointer;
-        }
-
-        .ajuda {
-            display: block;
-            margin-top: 7px;
-            color: #777;
-            font-size: 13px;
-        }
-
-        /* BOTÕES */
-
-        .botoes {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .btn-cadastrar {
-            background-color: #28a745;
-            color: white;
-            flex: 1;
-        }
-
-        .btn-cadastrar:hover {
-            background-color: #218838;
-        }
-
-        .btn-voltar {
-            background-color: #6c757d;
-            color: white;
-            flex: 1;
-        }
-
-        .btn-voltar:hover {
-            background-color: #5a6268;
-        }
-
-        /* MENSAGENS */
-
-        .mensagem {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .erro {
-            color: #721c24;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* RODAPÉ */
-
-        footer {
-            margin-top: 50px;
-            background-color: #222;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        /* RESPONSIVIDADE */
-
-        @media (max-width: 600px) {
-            header {
-                padding: 15px 20px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            main {
-                margin: 25px auto;
-            }
-
-            .form-container {
-                padding: 25px;
-            }
-
-            .linha {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-
-            .botoes {
-                flex-direction: column;
-            }
-        }
-
-        .invalido {
-            color: red;
-        }
-
-        .valido {
-            color: green;
-        }
-    </style>
-
+    <title>WorkMatch - Cadastro de Usuário</title>
+    
+    <link rel="stylesheet" href="../css/cadastro.css">
 </head>
 
-<body>
+<body class="pagina-cadastro-usuario">
 
     <!-- CABEÇALHO -->
 
-    <header>
+    <header class="cadastro-usuario-header">
 
-        <div class="logo">Cadastro de Usuário</div>
+        <div class="cadastro-usuario-logo">Cadastro de Usuário</div>
 
-        <nav>
+        <nav class="cadastro-usuario-nav">
             <a href="../index.php">Início</a>
         </nav>
 
@@ -412,7 +141,7 @@ if (isset($_POST['enviar'])) {
 
     <!-- CONTEÚDO -->
 
-    <main>
+    <main class="cadastro-usuario-mais">
 
         <div class="form-container">
 
@@ -830,6 +559,6 @@ if (isset($_POST['enviar'])) {
 
 
     <!-- RODAPÉ -->
-    <footer>
+    <footer class="cadastro-usuario-footer">
         <?php require_once "../include/rodape.php"; ?>
     </footer>
