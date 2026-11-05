@@ -239,7 +239,71 @@ function buscarUsuarios($conexao, $categoria = '', $termo = '')
 
     return $servicos;
 }
+// Pesquisa com filtro opcional por estado e cidade
+function buscarUsuariosPorLocal($conexao, $categoria = '', $termo = '', $estado_id = 0, $cidade_id = 0)
+{
+    // LEFT JOIN: sem filtro de local, a busca continua trazendo
+    // também usuários que não têm endereço cadastrado
+    $sql = "SELECT DISTINCT
+                u.usuarios_id,
+                s.servico_nome,
+                s.servico_classe,
+                s.servico_descricao
+            FROM usuarios u
+            INNER JOIN usn ON u.usuarios_id = usn.usn_usuarios_id
+            INNER JOIN servico s ON usn.usn_servico_id = s.servico_id
+            LEFT JOIN endereco e ON e.endereco_usuarios_id = u.usuarios_id
+            LEFT JOIN cidade c ON c.cidade_id = e.endereco_cidade_id
+            WHERE 1=1";
 
+    $parametros = [];
+    $tipos = "";
+
+    if (!empty($categoria)) {
+        $sql .= " AND s.servico_classe = ?";
+        $parametros[] = $categoria;
+        $tipos .= "s";
+    }
+
+    if (!empty($termo)) {
+        $sql .= " AND s.servico_nome LIKE ?";
+        $parametros[] = "%" . $termo . "%";
+        $tipos .= "s";
+    }
+
+    // Cidade é mais específica que estado: se vier cidade, ela prevalece
+    if ((int) $cidade_id > 0) {
+        $sql .= " AND c.cidade_id = ?";
+        $parametros[] = (int) $cidade_id;
+        $tipos .= "i";
+    } elseif ((int) $estado_id > 0) {
+        $sql .= " AND c.cidade_estado_id = ?";
+        $parametros[] = (int) $estado_id;
+        $tipos .= "i";
+    }
+
+    $stmt = $conexao->prepare($sql);
+
+    if (!$stmt) {
+        return [];
+    }
+
+    if (!empty($parametros)) {
+        $stmt->bind_param($tipos, ...$parametros);
+    }
+
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    $servicos = [];
+    while ($linha = $resultado->fetch_assoc()) {
+        $servicos[] = $linha;
+    }
+
+    $stmt->close();
+
+    return $servicos;
+}
 
 // Lista de perfil
 

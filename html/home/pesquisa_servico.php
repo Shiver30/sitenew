@@ -6,14 +6,23 @@ verificarLogin();
 
 $categoria = $_POST['categoria'] ?? '';
 $termo = $_POST['nome'] ?? '';
+$estado_id = (int) ($_POST['estado'] ?? 0);
+$cidade_id = (int) ($_POST['cidade'] ?? 0);
 
 $servicos = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $servicos = buscarUsuarios($conexao, $categoria, $termo);
+    $servicos = buscarUsuariosPorLocal($conexao, $categoria, $termo, $estado_id, $cidade_id);
 }
 
+// Estados e cidades para os selects
+$estados = listarEstados($conexao);
 
+$cidades = [];
+$resultadoCidades = mysqli_query($conexao, "SELECT * FROM cidade ORDER BY cidade_nome");
+while ($cidade = mysqli_fetch_assoc($resultadoCidades)) {
+    $cidades[] = $cidade;
+}
 ?>
 
 <!DOCTYPE html>
@@ -95,17 +104,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 30px;
         }
 
-        .form-pesquisa select {
-            flex: 1;
+        .form-pesquisa {
+            flex-wrap: wrap;
+        }
 
+        .form-pesquisa select,
+        .form-pesquisa input[type="text"] {
+            flex: 1 1 180px;
             padding: 12px;
-
             border: 1px solid #ccc;
-
             border-radius: 5px;
-
             font-size: 15px;
-
             background-color: white;
         }
 
@@ -249,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                 Nome: <br>
-                <input type="text" name="nome">
+                <input type="text" name="nome" placeholder="Nome do serviço" value="<?= htmlspecialchars($termo) ?>">
                 <select name="categoria">
                     <option value="">Todas as categorias</option>
                     <option value="Aulas Particulares" <?= $categoria === 'Aulas Particulares' ? 'selected' : '' ?>>Aulas Particulares</option>
@@ -263,34 +272,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Consultoria e Negócios" <?= $categoria === 'Consultoria e Negócios' ? 'selected' : '' ?>>Consultoria e Negócios</option>
                     <option value="Outros Serviços" <?= $categoria === 'Outros Serviços' ? 'selected' : '' ?>>Outros Serviços</option>
                 </select>
+
+                <select name="estado" id="estado">
+                    <option value="">Todos os estados</option>
+                    <?php foreach ($estados as $estado): ?>
+                        <option value="<?= (int) $estado['estado_id'] ?>" <?= (int) $estado['estado_id'] === $estado_id ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($estado['estado_nome']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <select name="cidade" id="cidade">
+                    <option value="">Todas as cidades</option>
+                </select>
+
                 <button type="submit" class="btn-pesquisar">Pesquisar</button>
             </form>
 
             <!-- RESULTADOS -->
 
-           <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+            <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
 
-    <h2 class="resultado-titulo">
-        <?php if (!empty($categoria)): ?>
+                <h2 class="resultado-titulo">
+                    <?php if (!empty($categoria)): ?>
 
-            Serviços encontrados em:
-            <?= htmlspecialchars($categoria) ?>
+                        Serviços encontrados em:
+                        <?= htmlspecialchars($categoria) ?>
 
-        <?php elseif (!empty($termo)): ?>
+                    <?php elseif (!empty($termo)): ?>
 
-            Serviços encontrados para:
-            <?= htmlspecialchars($termo) ?>
+                        Serviços encontrados para:
+                        <?= htmlspecialchars($termo) ?>
 
-        <?php else: ?>
+                    <?php else: ?>
 
-            Todos os serviços
+                        Todos os serviços
 
-        <?php endif; ?>
-    </h2>
+                    <?php endif; ?>
+                </h2>
 
-    <?php listarServicos($servicos); ?>
+                <?php listarServicos($servicos); ?>
 
-<?php endif; ?>
+            <?php endif; ?>
 
 
         </div>
@@ -301,6 +324,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <footer>
         <?php require_once "../include/rodape.php"; ?>
     </footer>
+
+    <script>
+        const cidades = <?= json_encode($cidades, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+        const campoEstado = document.getElementById("estado");
+        const campoCidade = document.getElementById("cidade");
+        const cidadeSelecionada = <?= (int) $cidade_id ?>;
+
+        function carregarCidades(idEstado, idSelecionada) {
+            campoCidade.innerHTML = '<option value="">Todas as cidades</option>';
+
+            if (!idEstado) {
+                campoCidade.disabled = true;
+                return;
+            }
+
+            cidades.forEach(function(item) {
+                if (item.cidade_estado_id == idEstado) {
+                    const opcao = document.createElement('option');
+                    opcao.value = item.cidade_id;
+                    opcao.textContent = item.cidade_nome;
+                    if (idSelecionada && item.cidade_id == idSelecionada) {
+                        opcao.selected = true;
+                    }
+                    campoCidade.appendChild(opcao);
+                }
+            });
+
+            campoCidade.disabled = false;
+        }
+
+        campoEstado.addEventListener("change", function() {
+            carregarCidades(this.value, 0);
+        });
+
+        // Restaura as cidades depois de pesquisar
+        carregarCidades(campoEstado.value, cidadeSelecionada);
+    </script>
 
 
 </body>
