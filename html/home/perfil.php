@@ -13,6 +13,10 @@ $id1 = $_SESSION['usuarios_id'];
 
 $dados = listarPerfil($conexao, $id2);
 
+$endereco =  localizacaoPerfil($conexao, $id2);
+
+$emprego = servicosUsuario($conexao, $id2);
+
 
 if (isset($_POST['enviar'])) {
 
@@ -97,10 +101,51 @@ if (isset($_POST['enviar'])) {
 
     <p>
         <?php
+        //  endereço
+        while ($lendereco = $endereco->fetch_assoc()) {
+
+        echo "Cidade: " . $endereco['cidade_nome'];
+        echo "<br>";
+
+        echo "Estado: " . $endereco['estado_nome'];
+        echo "<br>";
+
+        echo "UF: " . $endereco['estado_uf'];
+
+}
+        ?>
+    </p>
+
+    <p>
+        <?php
+            if ($emprego && $emprego->num_rows > 0) {
+
+            while ($servico = $emprego->fetch_assoc()) {
+
+                echo "<h3>" .
+                htmlspecialchars($servico['servico_nome']) .
+                "</h3>";
+
+                echo "<p><strong>Classe:</strong> " .
+                htmlspecialchars($servico['servico_classe']) .
+                "</p>";
+
+            }
+
+            } else {
+
+                echo " ";
+
+    }
+        ?>
+    </p>
+
+    <p>
+        <?php
 
         $jaavaliou = jaAvaliou($conexao, $id1, $id2);
 
-        if (!$jaavaliou && $id1 != $id2) {
+        if (!$jaavaliou && $id1 != $id2 && $emprego->num_rows > 0) {
 
             echo "<main class='avaliacao-container'>";
             echo "<form action='' method='POST' class='avaliacao-form'>";

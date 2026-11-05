@@ -283,19 +283,33 @@ function listarServicos($servicos)
     }
 }
 
-// AVALIAÇÂO
+// Lista Cidade e Estado do Usuario no Perfil
 
-// function avaliacao($conexao, $nota, $comen){
-//     $id = $_SESSION['id_2'];
-//     $sql = "INSERT INTO avaliacao (avaliacao_nota, avaliacao_descricao, avaliacao_usuarios_id) 
-//     values (?, ?, ?)";
-//     $comando = mysqli_prepare($conexao, $sql);
-//     mysqli_stmt_bind_param($comando, "ssi", $nota, $comen, $id);
-//     mysqli_stmt_execute($comando);
-//     mysqli_stmt_close($comando);
-//     header('location: ../home/perfil.php?id=' . $id);
-    
-// };
+function localizacaoPerfil ($conexao, $id2){
+    $sql = "SELECT u.usuarios_nome, c.cidade_nome, e.estado_nome, e.estado_uf FROM endereco en INNER JOIN usuarios u ON en.endereco_usuarios_id = u.usuarios_id INNER JOIN cidade c ON en.endereco_cidade_id = c.cidade_id INNER JOIN estado e
+    ON c.cidade_estado_id = e.estado_id WHERE u.usuarios_id = ?";
+
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $id2);
+    $stmt->execute();
+
+    return $stmt->get_result();
+
+}
+
+
+// Lista empregos usuarios
+function servicosUsuario($conexao, $id2) {
+
+    $sql = "SELECT s.servico_id, s.servico_nome, s.servico_classe, s.servico_descricao  FROM usn u INNER JOIN servico s
+    ON u.usn_servico_id = s.servico_id WHERE u.usn_usuarios_id = ?";
+
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $id2);
+    $stmt->execute();
+    return $stmt->get_result();
+
+}
 
 function avaliacao($conexao, $nota, $comen) {
 
