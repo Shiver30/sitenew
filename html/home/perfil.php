@@ -102,15 +102,16 @@ if (isset($_POST['enviar'])) {
     <p>
         <?php
         //  endereço
+        
         while ($lendereco = $endereco->fetch_assoc()) {
 
-        echo "Cidade: " . $endereco['cidade_nome'];
+        echo "Cidade: " . $lendereco['cidade_nome'];
         echo "<br>";
 
-        echo "Estado: " . $endereco['estado_nome'];
+        echo "Estado: " . $lendereco['estado_nome'];
         echo "<br>";
 
-        echo "UF: " . $endereco['estado_uf'];
+        echo "UF: " . $lendereco['estado_uf'];
 
 }
         ?>
@@ -217,3 +218,4 @@ if (isset($_POST['enviar'])) {
 </body>
 
 </html>
+0
