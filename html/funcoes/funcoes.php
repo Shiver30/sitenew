@@ -307,14 +307,14 @@ function buscarUsuariosPorLocal($conexao, $categoria = '', $termo = '', $estado_
 
 // Lista de perfil
 
-function listarPerfil($conexao, $id)
+function listarPerfil($conexao, $id2)
 {
     $sql = "SELECT * FROM usuarios WHERE usuarios_id = ?";
     $stmt = $conexao->prepare($sql);
     if (!$stmt) {
         return false;
     }
-    $stmt->bind_param("i", $id);
+    $stmt->bind_param("i", $id2);
     $stmt->execute();
     return $stmt->get_result();
 }
@@ -434,12 +434,10 @@ function jaAvaliou($conexao, $id1, $id2) {
 // Mensagem
 
 function listarConversas($conexao, $id){
-    $sql = "SELECT DISTINCT  c.conversa_id, u.usuarios_nome, u.usuario_img FROM conversas c 
-    JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id)
-    WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) AND u.usuarios_id != ?";
+    $sql = "SELECT DISTINCT c.conversa_id, u.usuarios_id, u.usuarios_nome,
+    u.usuario_img FROM conversas c JOIN usuarios u ON (u.usuarios_id = c.usuario_1_id OR u.usuarios_id = c.usuario_2_id) WHERE (c.usuario_1_id = ? OR c.usuario_2_id = ?) AND u.usuarios_id != ?";
 
     $comando = mysqli_prepare($conexao, $sql);
-
     if (!$comando) {
         return [];
     }
@@ -539,13 +537,10 @@ function encontrarOuCriarConversa($conexao, $meu_id, $id)
 function buscarOutroUsuarioConversa($conexao, $id_conversa, $meu_id)
 {
     $sql = "SELECT u.usuarios_id, u.usuarios_nome, u.usuario_img
-            FROM conversas c JOIN usuarios u 
-                ON u.usuarios_id = c.usuario_1_id 
-                OR u.usuarios_id = c.usuario_2_id
-            WHERE c.conversa_id = ? AND u.usuarios_id != ? LIMIT 1";
+    FROM conversas c JOIN usuarios u ON u.usuarios_id = c.usuario_1_id 
+    OR u.usuarios_id = c.usuario_2_id WHERE c.conversa_id = ? AND u.usuarios_id != ? LIMIT 1";
 
     $comando = mysqli_prepare($conexao, $sql);
-
     if (!$comando) {
         return false;
     }

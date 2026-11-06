@@ -184,19 +184,30 @@ $dados = listarConversas($conexao, $id);
             <?php
             if (count($dados) > 0) {
                 foreach ($dados as $chat) {
-                    // Tratamento das variáveis antes de imprimir
-                    $nome = htmlspecialchars($chat['usuarios_nome']);
-                    $id = htmlspecialchars($chat['conversa_id']);
 
-                    echo "<div class='chat-item'>
-                        <div class='chat-info'>
-                            <h3>{$nome}</h3>
-                        </div>
-                        <a href='chat_fim.php?id_conversa={$id}' class='btn-chat'>Abrir Conversa</a>
+                $nome = htmlspecialchars($chat['usuarios_nome']);
+                $id_conversa = (int) $chat['conversa_id'];
+                 $id_usuario = (int) $chat['usuarios_id'];
 
-        <a href='../home/home.php'>Voltar</a>
-      </div>";
-                }
+                echo "
+                <div class='chat-item'>
+
+                <div class='chat-info'>
+                <h3>
+                <a href='../home/perfil.php?id={$id_usuario}' class='link-perfil'>
+                {$nome}
+                </a>
+                </h3>
+                </div>
+
+                <a href='chat_fim.php?id_conversa={$id_conversa}' class='btn-chat'>
+                Abrir Conversa
+                </a>
+
+                <a href='../home/home.php'>Voltar</a>
+
+                </div>";
+            }
             } else {
                 echo "<div class='sem-resultados'>
                         Você ainda não iniciou nenhuma conversa. Pesquise por serviços para começar a conversar!
