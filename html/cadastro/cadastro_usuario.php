@@ -122,7 +122,7 @@ if (isset($_POST['enviar'])) {
 
     <title>WorkMatch - Cadastro de Usuário</title>
     
-    <link rel="stylesheet" href="../css/cadastro.css">
+    <link rel="stylesheet" href="../css/css.css">
 </head>
 
 <body class="pagina-cadastro-usuario">
@@ -141,7 +141,7 @@ if (isset($_POST['enviar'])) {
 
     <!-- CONTEÚDO -->
 
-    <main class="cadastro-usuario-mais">
+    <main class="cadastro-usuario-main">
 
         <div class="form-container">
 

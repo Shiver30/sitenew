@@ -296,131 +296,6 @@ html, body {
 }
 
 
-/* =========================================
-   BARRA LATERAL — WORKMATCH
-========================================= */
-
-.barra-lateral {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-
-    display: flex;
-    flex-direction: column;
-
-    width: 260px;
-    height: 100vh;
-    height: 100dvh;
-    padding: 28px 18px;
-
-    background-color: #ffffff;
-    border-right: 1px solid #e5eaf2;
-    box-shadow: 3px 0 15px rgba(25, 50, 90, 0.04);
-}
-
-.sidebar-logo {
-    padding: 0 12px 30px;
-
-    color: #26364b;
-    font-size: 25px;
-    font-weight: 800;
-    letter-spacing: -0.8px;
-}
-
-.sidebar-logo-destaque {
-    color: #0d6efd;
-}
-
-.navegacao {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-}
-
-.navegacao-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    width: 100%;
-    padding: 13px 14px;
-
-    color: #526176;
-    background-color: transparent;
-
-    border-radius: 9px;
-
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease;
-}
-
-.nav-icone {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 24px;
-    min-width: 24px;
-
-    color: #718198;
-    font-size: 22px;
-    line-height: 1;
-}
-
-.navegacao-link:hover {
-    color: #0d6efd;
-    background-color: #eef5ff;
-}
-
-.navegacao-link:hover .nav-icone {
-    color: #0d6efd;
-}
-
-.navegacao-link:focus-visible {
-    outline: 3px solid rgba(13, 110, 253, 0.3);
-    outline-offset: 2px;
-}
-
-.sidebar-rodape {
-    margin-top: auto;
-    padding: 18px 12px 0;
-
-    color: #8793a5;
-    border-top: 1px solid #edf0f5;
-
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-/* =========================================
-   AJUSTES PARA TELAS PEQUENAS
-========================================= */
-
-@media (max-width: 700px) {
-    .barra-lateral {
-        width: 210px;
-        padding: 22px 12px;
-    }
-
-    .sidebar-logo {
-        padding-left: 8px;
-        font-size: 22px;
-    }
-
-    .navegacao-link {
-        gap: 8px;
-        padding: 12px 9px;
-        font-size: 12px;
-    }
-}
-
 
 /* ---------- RESPONSIVIDADE ---------- */
 
@@ -461,39 +336,7 @@ html, body {
     .avaliacao-title {
         font-size: 21px;
     }
-}
-
-
-/* ESTRUTURA DAS PÁGINAS LOGADAS */
-body.pagina-logada {
-    margin: 0;
-    padding-left: 260px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-}
-
-/* Barra lateral */
-.barra-lateral {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 260px;
-    margin: 0;
-}
-
-/* Responsividade */
-@media (max-width: 700px) {
-    body.pagina-logada {
-        padding-left: 210px;
-    }
-
-    .barra-lateral {
-        width: 210px;
-    }
-}
+}   
 
 /* =========================================
    CENTRALIZAÇÃO DAS INFORMAÇÕES DO PERFIL
@@ -1189,3 +1032,168 @@ body.pagina-logada.pagina-cadastro-servico {
     }
 }
 
+/* =========================================
+   BARRA LATERAL
+========================================= */
+
+.barra-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background-color: #212529;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+    z-index: 1000;
+    transition: width 0.3s ease;
+}
+
+.sidebar-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+
+.sidebar-logo {
+    font-size: 24px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.sidebar-logo-destaque {
+    color: #0d6efd;
+}
+
+.sidebar-toggle {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.navegacao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.navegacao-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+.navegacao-link:hover {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.nav-icone {
+    min-width: 25px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.sidebar-rodape {
+    margin-top: auto;
+    padding: 15px 5px;
+    font-size: 12px;
+    color: #adb5bd;
+    text-align: center;
+}
+
+/* =========================================
+   PÁGINAS LOGADAS
+========================================= */
+
+body.pagina-logada {
+    margin: 0;
+    padding-left: 260px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    transition: padding-left 0.3s ease;
+}
+
+/* =========================================
+   BARRA LATERAL RECOLHIDA
+========================================= */
+
+body.sidebar-recolhida {
+    padding-left: 76px;
+}
+
+body.sidebar-recolhida .barra-lateral {
+    width: 76px;
+    padding: 20px 10px;
+}
+
+body.sidebar-recolhida .sidebar-logo {
+    display: none;
+}
+
+body.sidebar-recolhida .sidebar-topo {
+    justify-content: center;
+}
+
+body.sidebar-recolhida .navegacao-link {
+    justify-content: center;
+    padding: 12px 5px;
+}
+
+body.sidebar-recolhida .navegacao-link span:nth-child(2) {
+    display: none;
+}
+
+body.sidebar-recolhida .sidebar-rodape {
+    display: none;
+}
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 700px) {
+    body.pagina-logada {
+        padding-left: 76px;
+    }
+
+    .barra-lateral {
+        width: 76px;
+        padding: 20px 10px;
+    }
+
+    .sidebar-logo {
+        display: none;
+    }
+
+    .sidebar-topo {
+        justify-content: center;
+    }
+
+    .navegacao-link {
+        justify-content: center;
+        padding: 12px 5px;
+    }
+
+    .navegacao-link span:nth-child(2) {
+        display: none;
+    }
+
+    .sidebar-rodape {
+        display: none;
+    }
+}
